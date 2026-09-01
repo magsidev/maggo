@@ -29,7 +29,18 @@ public final class PaneModel: Identifiable {
         self.currentURL = url
         self.history = [url]
         self.historyIndex = 0
+        self.sortOption = Self.defaultSortOption(for: url)
         loadItems()
+    }
+
+    public nonisolated static func defaultSortOption(for url: URL) -> FileSortOption {
+        let downloadsPath = FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Downloads").path
+        if url.path == downloadsPath || url.lastPathComponent.lowercased() == "downloads" {
+            // Newest downloads always on top by default
+            return FileSortOption(field: .dateModified, ascending: false, pinFoldersToTop: false)
+        } else {
+            return FileSortOption(field: .name, ascending: true, pinFoldersToTop: true)
+        }
     }
 
     public var canGoBack: Bool {
@@ -69,6 +80,7 @@ public final class PaneModel: Identifiable {
 
         history.append(url)
         historyIndex = history.count - 1
+        sortOption = Self.defaultSortOption(for: url)
         currentURL = url
         selectedURLs.removeAll()
         searchQuery = ""
@@ -79,14 +91,18 @@ public final class PaneModel: Identifiable {
     public func goBack() {
         guard canGoBack else { return }
         historyIndex -= 1
-        currentURL = history[historyIndex]
+        let url = history[historyIndex]
+        sortOption = Self.defaultSortOption(for: url)
+        currentURL = url
         selectedURLs.removeAll()
     }
 
     public func goForward() {
         guard canGoForward else { return }
         historyIndex += 1
-        currentURL = history[historyIndex]
+        let url = history[historyIndex]
+        sortOption = Self.defaultSortOption(for: url)
+        currentURL = url
         selectedURLs.removeAll()
     }
 

@@ -61,4 +61,25 @@ final class FileSystemServiceTests: XCTestCase {
         // Folders must always precede files, then alphabetical
         XCTAssertEqual(sorted.map(\.name), ["a_folder", "b_folder", "a_file.txt", "z_file.txt"])
     }
+
+    func testDownloadsSortPutsLatestOnTop() {
+        let now = Date()
+        let oneHourAgo = now.addingTimeInterval(-3600)
+        let oneDayAgo = now.addingTimeInterval(-86400)
+
+        let oldFolder = FileItem(url: URL(fileURLWithPath: "/tmp/old_folder"), name: "old_folder", isDirectory: true, dateModified: oneDayAgo)
+        let olderFile = FileItem(url: URL(fileURLWithPath: "/tmp/older.pdf"), name: "older.pdf", isDirectory: false, dateModified: oneHourAgo)
+        let newestDownloadedFile = FileItem(url: URL(fileURLWithPath: "/tmp/latest_download.zip"), name: "latest_download.zip", isDirectory: false, dateModified: now)
+
+        let downloadsSort = PaneModel.defaultSortOption(for: URL(fileURLWithPath: "/Users/test/Downloads"))
+        XCTAssertEqual(downloadsSort.field, .dateModified)
+        XCTAssertFalse(downloadsSort.ascending)
+        XCTAssertFalse(downloadsSort.pinFoldersToTop)
+
+        let sorted = downloadsSort.sort([oldFolder, olderFile, newestDownloadedFile])
+
+        // The latest downloaded item must be at the very top (index 0)
+        XCTAssertEqual(sorted.first?.name, "latest_download.zip")
+        XCTAssertEqual(sorted.map(\.name), ["latest_download.zip", "older.pdf", "old_folder"])
+    }
 }

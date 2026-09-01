@@ -29,20 +29,24 @@ public enum SortField: String, CaseIterable, Identifiable, Sendable {
 public struct FileSortOption: Sendable {
     public var field: SortField
     public var ascending: Bool
+    public var pinFoldersToTop: Bool
 
-    public init(field: SortField = .name, ascending: Bool = true) {
+    public init(field: SortField = .name, ascending: Bool = true, pinFoldersToTop: Bool = true) {
         self.field = field
         self.ascending = ascending
+        self.pinFoldersToTop = pinFoldersToTop
     }
 
     public func sort(_ items: [FileItem]) -> [FileItem] {
         items.sorted { item1, item2 in
-            // Folders always pinned to top (like Windows File Explorer / professional file managers)
-            let isDir1 = item1.isDirectory && !item1.isPackage
-            let isDir2 = item2.isDirectory && !item2.isPackage
+            if pinFoldersToTop {
+                // Folders pinned to top if requested
+                let isDir1 = item1.isDirectory && !item1.isPackage
+                let isDir2 = item2.isDirectory && !item2.isPackage
 
-            if isDir1 != isDir2 {
-                return isDir1 && !isDir2
+                if isDir1 != isDir2 {
+                    return isDir1 && !isDir2
+                }
             }
 
             let comparison: Bool

@@ -16,11 +16,30 @@ public struct FileListView: View {
             selection: $pane.selectedURLs,
             sortOrder: Binding(
                 get: {
-                    [KeyPathComparator(\FileItem.name, order: pane.sortOption.ascending ? .forward : .reverse)]
+                    let order: SortOrder = pane.sortOption.ascending ? .forward : .reverse
+                    switch pane.sortOption.field {
+                    case .dateModified:
+                        return [KeyPathComparator(\FileItem.dateModified, order: order)]
+                    case .size:
+                        return [KeyPathComparator(\FileItem.fileSize, order: order)]
+                    case .kind:
+                        return [KeyPathComparator(\FileItem.kindDescription, order: order)]
+                    default:
+                        return [KeyPathComparator(\FileItem.name, order: order)]
+                    }
                 },
                 set: { order in
                     if let first = order.first {
                         pane.sortOption.ascending = (first.order == .forward)
+                        if first.keyPath == \FileItem.dateModified {
+                            pane.sortOption.field = .dateModified
+                        } else if first.keyPath == \FileItem.fileSize {
+                            pane.sortOption.field = .size
+                        } else if first.keyPath == \FileItem.kindDescription {
+                            pane.sortOption.field = .kind
+                        } else {
+                            pane.sortOption.field = .name
+                        }
                     }
                 }
             )
@@ -46,7 +65,7 @@ public struct FileListView: View {
             }
             .width(min: 180, ideal: 260)
 
-            TableColumn("Date Modified", value: \.formattedDateModified) { item in
+            TableColumn("Date Modified", value: \.dateModified) { item in
                 Text(item.formattedDateModified)
                     .font(.caption)
                     .foregroundColor(.secondary)
