@@ -17,8 +17,15 @@ public struct MainView: View {
 
                 Divider()
 
-                // Active Tab Content (Panes)
-                if !appState.tabs.isEmpty {
+                // Active Content: Smart Pictures, Storage Overview, or File Panes
+                if appState.showSmartPictures {
+                    PicturesSmartView(appState: appState)
+                } else if let volume = appState.selectedVolumeForOverview {
+                    StorageOverviewView(volume: volume) {
+                        appState.selectedVolumeForOverview = nil
+                        appState.activePane.navigate(to: volume.url)
+                    }
+                } else if !appState.tabs.isEmpty {
                     PaneContainerView(tab: appState.activeTab, appState: appState)
                 }
 

@@ -22,6 +22,8 @@ public final class PaneModel: Identifiable {
     public var searchQuery: String = ""
     public var isLoading: Bool = false
     public var showHiddenFiles: Bool = false
+    public var folderSizes: [URL: String] = [:]
+    public var rawFolderSizes: [URL: Int64] = [:]
 
     public init(url: URL) {
         self.currentURL = url
@@ -110,10 +112,38 @@ public final class PaneModel: Identifiable {
                 guard self.currentURL == targetURL else { return }
                 self.items = fetched
                 self.isLoading = false
+                self.calculateFolderSizes(for: fetched)
             } catch {
                 guard self.currentURL == targetURL else { return }
                 self.items = []
                 self.isLoading = false
+            }
+        }
+    }
+
+    public func displaySize(for item: FileItem) -> String {
+        if item.isDirectory && !item.isPackage {
+            return folderSizes[item.url] ?? "Calculating…"
+        }
+        return item.formattedSize
+    }
+
+    private func calculateFolderSizes(for items: [FileItem]) {
+        let directories = items.filter { $0.isDirectory && !$0.isPackage }
+        guard !directories.isEmpty else { return }
+
+        for dir in directories {
+            // Check cache synchronously if available
+            Task {
+                if let cached = await FolderSizeService.shared.getCachedSize(for: dir.url, currentDateModified: dir.dateModified) {
+                    self.rawFolderSizes[dir.url] = cached
+                    self.folderSizes[dir.url] = ByteCountFormatter.string(fromByteCount: cached, countStyle: .file)
+                } else {
+                    self.folderSizes[dir.url] = "Calculating…"
+                    let size = await FolderSizeService.shared.calculateSize(for: dir.url, currentDateModified: dir.dateModified)
+                    self.rawFolderSizes[dir.url] = size
+                    self.folderSizes[dir.url] = ByteCountFormatter.string(fromByteCount: size, countStyle: .file)
+                }
             }
         }
     }

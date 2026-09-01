@@ -1,0 +1,434 @@
+---
+// PricingSection.astro
+---
+
+<section class="section-wrapper pricing-section" id="pricing">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="section-eyebrow">Fair &amp; Transparent Pricing</div>
+      <h2 class="section-title">
+        One price. No subscription.
+      </h2>
+      <p class="section-subtitle">
+        Own Maggo for $19.99. No monthly plan. No annual renewal. No account required to use the app.
+      </p>
+    </div>
+
+    <!-- Prominent Pricing Box -->
+    <div class="pricing-card-container">
+      <div class="pricing-main-card">
+        <div class="pricing-badge-corner">LIFETIME ACCESS</div>
+
+        <div class="pricing-header">
+          <span class="pricing-plan-title">Maggo Lifetime License</span>
+          <p class="pricing-plan-desc">Permanent ownership for you and all your personal Macs.</p>
+        </div>
+
+        <div class="pricing-figure-block">
+          <div class="figure-wrap">
+            <span class="currency-symbol">$</span>
+            <span class="price-value">19.99</span>
+          </div>
+          <div class="figure-meta">
+            <span class="payment-type">One-time payment</span>
+            <span class="no-recur-pill">Never rebilled</span>
+          </div>
+        </div>
+
+        <div class="pricing-divider"></div>
+
+        <ul class="pricing-features-list">
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span><strong>Full Maggo experience</strong> without artificial limitations</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span><strong>Lifetime support</strong> directly from the developer</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span><strong>Bug fixes and improvements</strong> for the lifetime of macOS</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span><strong>macOS compatibility updates</strong> (Sonoma, Sequoia &amp; beyond)</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span><strong>No subscription</strong> — ever</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span><strong>No recurring fees</strong> or hidden renewal charges</span>
+          </li>
+          <li>
+            <svg class="check-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span><strong>Use on all your Macs</strong> with a single license key</span>
+          </li>
+        </ul>
+
+        <div class="pricing-actions-wrap">
+          <a href="https://checkout.maggo.app" target="_blank" rel="noopener" class="btn btn-primary btn-lg pricing-cta-btn">
+            <span>Get Maggo — $19.99</span>
+          </a>
+
+          <div class="secondary-download-wrap">
+            <span class="or-separator">or test it on your Mac first:</span>
+            <a href="/downloads/Maggo-macOS.dmg" download class="dmg-download-link">
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Download Maggo-macOS.dmg (692 KB)
+            </a>
+          </div>
+        </div>
+
+        <p class="pricing-guarantee">
+          One payment. Keep using Maggo for as long as you want. 30-day money-back guarantee if you're not 100% satisfied.
+        </p>
+      </div>
+
+      <!-- 1-Line Web Installer Box for Power Users & Developers -->
+      <div class="terminal-installer-card">
+        <div class="terminal-header">
+          <div class="terminal-dots">
+            <span class="t-dot red"></span>
+            <span class="t-dot yellow"></span>
+            <span class="t-dot green"></span>
+          </div>
+          <span class="terminal-title">Terminal 1-Line Web Installer (Zero Prompts)</span>
+        </div>
+        <div class="terminal-body">
+          <code class="terminal-code" id="curlCmd">/bin/bash -c "$(curl -fsSL https://maggo.app/install.sh)"</code>
+          <button class="copy-cmd-btn" id="copyCmdBtn" title="Copy to clipboard">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <span id="copyBtnText">Copy</span>
+          </button>
+        </div>
+        <span class="terminal-subtext">
+          Downloads lightweight ad-hoc signed bundle (~350KB) directly into <code>/Applications</code> with Gatekeeper approval.
+        </span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .pricing-section {
+    background-color: var(--color-bg);
+  }
+
+  .section-header-center {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 3rem auto;
+  }
+
+  .pricing-card-container {
+    max-width: 680px;
+    margin: 0 auto;
+  }
+
+  .pricing-main-card {
+    background: #FFFFFF;
+    border: 2px solid var(--color-accent);
+    border-radius: var(--radius-xl);
+    padding: 3rem 2.5rem;
+    box-shadow: var(--shadow-lg), 0 0 0 6px var(--color-accent-subtle);
+    position: relative;
+    text-align: center;
+  }
+
+  @media (max-width: 640px) {
+    .pricing-main-card {
+      padding: 2rem 1.5rem;
+    }
+  }
+
+  .pricing-badge-corner {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--color-accent);
+    color: #FFFFFF;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 1.25rem;
+    border-radius: 9999px;
+    box-shadow: 0 4px 10px rgba(10, 132, 255, 0.4);
+  }
+
+  .pricing-header {
+    margin-bottom: 1.5rem;
+  }
+
+  .pricing-plan-title {
+    font-size: 1.5rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: var(--color-text-main);
+    display: block;
+    margin-bottom: 0.35rem;
+  }
+
+  .pricing-plan-desc {
+    font-size: 0.9375rem;
+    color: var(--color-text-muted);
+  }
+
+  .pricing-figure-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+    margin-bottom: 2rem;
+  }
+
+  .figure-wrap {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    line-height: 1;
+  }
+
+  .currency-symbol {
+    font-size: 2.25rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-top: 0.5rem;
+    margin-right: 0.2rem;
+  }
+
+  .price-value {
+    font-size: 5rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+    color: var(--color-text-main);
+  }
+
+  .figure-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .payment-type {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--color-text-body);
+  }
+
+  .no-recur-pill {
+    font-size: 0.75rem;
+    font-weight: 700;
+    background: #DCFCE7;
+    color: #15803D;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+  }
+
+  .pricing-divider {
+    height: 1px;
+    background: var(--color-border);
+    margin: 0 auto 2rem auto;
+    width: 100%;
+  }
+
+  .pricing-features-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: left;
+    max-width: 520px;
+    margin: 0 auto 2.5rem auto;
+  }
+
+  .pricing-features-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+    font-size: 0.9375rem;
+    color: var(--color-text-body);
+  }
+
+  .check-icon {
+    color: #10B981;
+    flex-shrink: 0;
+  }
+
+  .pricing-actions-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .pricing-cta-btn {
+    width: 100%;
+    max-width: 380px;
+    font-size: 1.125rem;
+    padding: 1rem 2rem;
+  }
+
+  .secondary-download-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.35rem;
+  }
+
+  .or-separator {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .dmg-download-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  .dmg-download-link:hover {
+    text-decoration: underline;
+  }
+
+  .pricing-guarantee {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    max-width: 480px;
+    margin: 0 auto;
+  }
+
+  /* Terminal Installer */
+  .terminal-installer-card {
+    margin-top: 2rem;
+    background: #0F172A;
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    color: #F8FAFC;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .terminal-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .terminal-dots {
+    display: flex;
+    gap: 5px;
+  }
+
+  .t-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+
+  .t-dot.red { background: #EF4444; }
+  .t-dot.yellow { background: #F59E0B; }
+  .t-dot.green { background: #10B981; }
+
+  .terminal-title {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #94A3B8;
+  }
+
+  .terminal-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: #1E293B;
+    border-radius: 6px;
+    padding: 0.65rem 0.85rem;
+    overflow-x: auto;
+  }
+
+  .terminal-code {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: #38BDF8;
+    white-space: nowrap;
+  }
+
+  .copy-cmd-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #F8FAFC;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 0.35rem 0.65rem;
+    border-radius: 4px;
+    transition: all 0.15s ease;
+  }
+
+  .copy-cmd-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+  }
+
+  .terminal-subtext {
+    display: block;
+    font-size: 0.75rem;
+    color: #64748B;
+    margin-top: 0.6rem;
+  }
+
+  .terminal-subtext code {
+    font-family: var(--font-mono);
+    color: #94A3B8;
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const copyCmdBtn = document.getElementById('copyCmdBtn');
+    const curlCmd = document.getElementById('curlCmd');
+    const copyBtnText = document.getElementById('copyBtnText');
+
+    if (copyCmdBtn && curlCmd && copyBtnText) {
+      copyCmdBtn.addEventListener('click', () => {
+        const text = curlCmd.textContent || '';
+        navigator.clipboard.writeText(text).then(() => {
+          copyBtnText.textContent = 'Copied!';
+          setTimeout(() => {
+            copyBtnText.textContent = 'Copy';
+          }, 2000);
+        });
+      });
+    }
+  });
+</script>

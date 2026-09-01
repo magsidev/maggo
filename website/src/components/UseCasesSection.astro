@@ -1,0 +1,207 @@
+---
+// UseCasesSection.astro
+---
+
+<section class="section-wrapper usecases-section" id="use-cases">
+  <div class="container">
+    <div class="section-header-center">
+      <div class="section-eyebrow">Targeted Solutions</div>
+      <h2 class="section-title">
+        Built for the way you work.
+      </h2>
+      <p class="section-subtitle">
+        Maggo is designed for real everyday pain points, without forcing you to re-architect how you use your Mac.
+      </p>
+    </div>
+
+    <div class="usecases-grid">
+      <!-- Use Case 1 -->
+      <div class="usecase-card">
+        <div class="usecase-icon-box">📥</div>
+        <h3 class="usecase-audience">People with messy Downloads folders</h3>
+        <div class="usecase-flow">
+          <span class="flow-action">Download something.</span>
+          <span class="flow-arrow">&darr;</span>
+          <span class="flow-action highlight">Move it where it belongs (⌘⇧M).</span>
+          <span class="flow-arrow">&darr;</span>
+          <span class="flow-action">Keep going.</span>
+        </div>
+        <p class="usecase-description">
+          Never let your Downloads folder become a chaotic graveyard again. Pick files, trigger Move To, and file them into archives instantly.
+        </p>
+      </div>
+
+      <!-- Use Case 2 -->
+      <div class="usecase-card">
+        <div class="usecase-icon-box">🗂️</div>
+        <h3 class="usecase-audience">People who work across multiple projects</h3>
+        <div class="usecase-flow single-line">
+          <span>Keep several project locations open in tabs (⌘T).</span>
+        </div>
+        <p class="usecase-description">
+          Instead of scattering 8 Finder windows across multiple virtual desktops, keep active repositories, design assets, and invoices neatly arranged in tabs within one unified window.
+        </p>
+      </div>
+
+      <!-- Use Case 3 -->
+      <div class="usecase-card">
+        <div class="usecase-icon-box">⚡</div>
+        <h3 class="usecase-audience">People who constantly move files</h3>
+        <div class="usecase-flow single-line">
+          <span>Move To • Copy To • Keyboard Shortcuts • Split View</span>
+        </div>
+        <p class="usecase-description">
+          No mouse fatigue. Select with arrow keys, press ⌘⇧M to fuzzy search destination, or press ⌘⇧S to drag between side-by-side panes with 100% precision.
+        </p>
+      </div>
+
+      <!-- Use Case 4 -->
+      <div class="usecase-card">
+        <div class="usecase-icon-box">💾</div>
+        <h3 class="usecase-audience">People who work with external drives</h3>
+        <div class="usecase-flow single-line">
+          <span>Navigate local and external storage from the same interface.</span>
+        </div>
+        <p class="usecase-description">
+          Mounted SSDs, USB sticks, and SD cards appear front-and-center in the sidebar alongside live storage capacity gauges and instant eject controls.
+        </p>
+      </div>
+
+      <!-- Use Case 5 -->
+      <div class="usecase-card usecase-wide">
+        <div class="usecase-icon-box">🎯</div>
+        <div class="usecase-wide-content">
+          <h3 class="usecase-audience">People who simply don't like Finder</h3>
+          <div class="usecase-quote">
+            "You don't need a complicated reason. Sometimes you just want a better file manager."
+          </div>
+          <p class="usecase-description">
+            Finder was designed for general consumer computing. Maggo is built specifically for users who value speed, intentional organization, and predictable daily productivity.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .usecases-section {
+    background-color: var(--color-bg-subtle);
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .section-header-center {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3.5rem auto;
+  }
+
+  .usecases-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .usecases-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .usecase-card {
+    background: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+
+  .usecase-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+    border-color: #CBD5E1;
+  }
+
+  .usecase-wide {
+    grid-column: 1 / -1;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 1.5rem;
+  }
+
+  @media (max-width: 640px) {
+    .usecase-wide {
+      flex-direction: column;
+    }
+  }
+
+  .usecase-icon-box {
+    font-size: 2.25rem;
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .usecase-wide .usecase-icon-box {
+    margin-bottom: 0;
+  }
+
+  .usecase-wide-content {
+    flex: 1;
+  }
+
+  .usecase-audience {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-text-main);
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+  }
+
+  .usecase-flow {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    background: #F8FAFC;
+    border: 1px solid #E2E8F0;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-text-body);
+    margin-bottom: 1rem;
+  }
+
+  .usecase-flow.single-line {
+    flex-direction: row;
+    align-items: center;
+    color: var(--color-accent);
+  }
+
+  .flow-action.highlight {
+    color: var(--color-accent);
+  }
+
+  .flow-arrow {
+    color: #94A3B8;
+    font-size: 0.75rem;
+  }
+
+  .usecase-quote {
+    font-size: 1.125rem;
+    font-weight: 600;
+    font-style: italic;
+    color: var(--color-text-main);
+    margin-bottom: 0.75rem;
+  }
+
+  .usecase-description {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-muted);
+  }
+</style>

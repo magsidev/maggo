@@ -85,3 +85,19 @@ Host `scripts/install.sh` on your website or GitHub Pages. Users can install Mag
 ### Option B: Direct DMG / Zip Download
 Host `Maggo-macOS.dmg` or `Maggo-macOS.zip` on your website. Add a small note for users:
 > *If macOS blocks the app on first launch, open **System Settings > Privacy & Security**, scroll down to **Security**, and click **"Open Anyway"**.*
+
+---
+
+## Marketing Website (Astro)
+
+The official commercial landing page for selling Maggo is located in `website/`:
+- Built with **Astro 5+** and pure native CSS.
+- One-page commercial architecture with topical SEO hierarchy (`/`).
+- Includes interactive macOS window demonstration and direct downloads (`.dmg`, `.zip`, and 1-line curl installer).
+
+To run locally:
+```bash
+cd website
+npm install
+npm run dev
+```

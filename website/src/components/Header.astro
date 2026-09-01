@@ -1,0 +1,189 @@
+---
+// Header.astro
+---
+
+<header class="site-header">
+  <div class="top-announcement">
+    <div class="container announcement-inner">
+      <span class="announcement-badge">Native macOS 14+</span>
+      <span class="announcement-text">Built in Swift 6 & SwiftUI • Launch in &lt;50ms • Zero subscription</span>
+      <a href="#pricing" class="announcement-link">Get Lifetime Access &rarr;</a>
+    </div>
+  </div>
+
+  <nav class="nav-container container">
+    <a href="/" class="brand" aria-label="Maggo Home">
+      <div class="brand-icon">
+        <svg viewBox="0 0 512 512" width="32" height="32" fill="none">
+          <rect x="32" y="32" width="448" height="448" rx="104" fill="#0A84FF" />
+          <rect x="96" y="128" width="144" height="256" rx="14" fill="#FFFFFF" />
+          <rect x="112" y="152" width="56" height="8" rx="4" fill="#0A84FF" />
+          <rect x="112" y="176" width="112" height="10" rx="4" fill="#E2E8F0" />
+          <rect x="112" y="196" width="88" height="10" rx="4" fill="#E2E8F0" />
+          <rect x="272" y="128" width="144" height="256" rx="14" fill="#FFFFFF" />
+          <rect x="288" y="152" width="64" height="8" rx="4" fill="#34C759" />
+          <rect x="288" y="176" width="104" height="10" rx="4" fill="#E2E8F0" />
+          <rect x="288" y="196" width="112" height="10" rx="4" fill="#E2E8F0" />
+          <circle cx="256" cy="256" r="20" fill="#0A84FF" />
+          <path d="M249 248 L263 256 L249 264" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+        </svg>
+      </div>
+      <span class="brand-name">Maggo</span>
+    </a>
+
+    <div class="nav-links">
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#demo" class="nav-link">Demo</a>
+      <a href="#familiar" class="nav-link">Familiar Design</a>
+      <a href="#comparison" class="nav-link">Why Maggo</a>
+      <a href="#use-cases" class="nav-link">Use Cases</a>
+      <a href="#pricing" class="nav-link">Pricing</a>
+      <a href="#faq" class="nav-link">FAQ</a>
+    </div>
+
+    <div class="nav-actions">
+      <a href="/downloads/Maggo-macOS.dmg" download class="btn btn-secondary nav-download-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+          <polyline points="7 10 12 15 17 10"/>
+          <line x1="12" y1="15" x2="12" y2="3"/>
+        </svg>
+        <span>Download DMG</span>
+      </a>
+      <a href="#pricing" class="btn btn-primary nav-buy-btn">
+        <span>Get Maggo — $19.99</span>
+      </a>
+    </div>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    background: rgba(255, 255, 255, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .top-announcement {
+    background-color: #0F172A;
+    color: #F8FAFC;
+    font-size: 0.75rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  .announcement-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .announcement-badge {
+    background: #0A84FF;
+    color: #FFFFFF;
+    padding: 0.1rem 0.5rem;
+    border-radius: 9999px;
+    font-weight: 600;
+    font-size: 0.7rem;
+    letter-spacing: 0.02em;
+  }
+
+  .announcement-text {
+    color: #CBD5E1;
+    font-weight: 400;
+  }
+
+  .announcement-link {
+    color: #60A5FA;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .announcement-link:hover {
+    color: #93C5FD;
+  }
+
+  .nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 4.25rem;
+  }
+
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-text-main);
+    letter-spacing: -0.02em;
+  }
+
+  .brand-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .brand-name {
+    font-size: 1.25rem;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.75rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    transition: color 0.15s ease;
+  }
+
+  .nav-link:hover {
+    color: var(--color-text-main);
+  }
+
+  .nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .nav-download-btn {
+    font-size: 0.85rem;
+    padding: 0.55rem 1rem;
+  }
+
+  .nav-buy-btn {
+    font-size: 0.85rem;
+    padding: 0.55rem 1.15rem;
+  }
+
+  @media (max-width: 960px) {
+    .nav-links {
+      display: none;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .announcement-text {
+      display: none;
+    }
+    .nav-download-btn {
+      display: none;
+    }
+  }
+</style>

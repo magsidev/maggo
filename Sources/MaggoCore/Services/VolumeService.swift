@@ -10,10 +10,32 @@ public struct VolumeItem: Identifiable, Hashable, Sendable {
     public let totalCapacity: Int64
     public let availableCapacity: Int64
     
-    public var formattedCapacity: String {
-        let freeStr = ByteCountFormatter.string(fromByteCount: availableCapacity, countStyle: .file)
-        let totalStr = ByteCountFormatter.string(fromByteCount: totalCapacity, countStyle: .file)
-        return "\(freeStr) free of \(totalStr)"
+    public var usedCapacity: Int64 {
+        max(0, totalCapacity - availableCapacity)
+    }
+
+    public var usedPercentage: Double {
+        guard totalCapacity > 0 else { return 0.0 }
+        return min(1.0, max(0.0, Double(usedCapacity) / Double(totalCapacity)))
+    }
+
+    public var formattedAvailable: String {
+        let size = ByteCountFormatter.string(fromByteCount: availableCapacity, countStyle: .file)
+        return "\(size) available"
+    }
+
+    public var formattedUsed: String {
+        let size = ByteCountFormatter.string(fromByteCount: usedCapacity, countStyle: .file)
+        return "\(size) used"
+    }
+
+    public var formattedTotal: String {
+        let size = ByteCountFormatter.string(fromByteCount: totalCapacity, countStyle: .file)
+        return "\(size) total"
+    }
+
+    public var formattedCapacitySummary: String {
+        "\(formattedAvailable) · \(formattedTotal)"
     }
 }
 
@@ -28,7 +50,8 @@ public final class VolumeService: @unchecked Sendable {
             .volumeIsRemovableKey,
             .volumeIsInternalKey,
             .volumeTotalCapacityKey,
-            .volumeAvailableCapacityForImportantUsageKey
+            .volumeAvailableCapacityForImportantUsageKey,
+            .volumeAvailableCapacityKey
         ]
 
         let paths = FileManager.default.mountedVolumeURLs(
@@ -39,12 +62,22 @@ public final class VolumeService: @unchecked Sendable {
         var volumes: [VolumeItem] = []
 
         for url in paths {
-            let values = try? url.resourceValues(forKeys: Set(keys))
-            let name = values?.volumeName ?? url.lastPathComponent
-            let isRemovable = values?.volumeIsRemovable ?? false
-            let isInternal = values?.volumeIsInternal ?? true
-            let total = Int64(values?.volumeTotalCapacity ?? 0)
-            let free = values?.volumeAvailableCapacityForImportantUsage ?? 0
+            guard let values = try? url.resourceValues(forKeys: Set(keys)) else { continue }
+            let name = values.volumeName ?? url.lastPathComponent
+            let isRemovable = values.volumeIsRemovable ?? false
+            let isInternal = values.volumeIsInternal ?? true
+            let total = Int64(values.volumeTotalCapacity ?? 0)
+            
+            let available: Int64
+            if let important = values.volumeAvailableCapacityForImportantUsage {
+                available = important
+            } else if let general = values.volumeAvailableCapacity {
+                available = Int64(general)
+            } else {
+                available = 0
+            }
+
+            guard total > 0 else { continue }
 
             volumes.append(
                 VolumeItem(
@@ -53,13 +86,12 @@ public final class VolumeService: @unchecked Sendable {
                     isRemovable: isRemovable,
                     isInternal: isInternal,
                     totalCapacity: total,
-                    availableCapacity: free
+                    availableCapacity: available
                 )
             )
         }
 
         return volumes.sorted { v1, v2 in
-            // Internal drives first, then alphabetical
             if v1.isInternal != v2.isInternal {
                 return v1.isInternal && !v2.isInternal
             }

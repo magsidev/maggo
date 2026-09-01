@@ -14,7 +14,7 @@ public struct SidebarView: View {
             ("Desktop", "desktopcomputer", homeURL.appendingPathComponent("Desktop")),
             ("Documents", "doc.text", homeURL.appendingPathComponent("Documents")),
             ("Downloads", "arrow.down.circle", homeURL.appendingPathComponent("Downloads")),
-            ("Pictures", "photo", homeURL.appendingPathComponent("Pictures")),
+            ("Pictures", "photo.stack.fill", homeURL.appendingPathComponent("Pictures")),
             ("Movies", "film", homeURL.appendingPathComponent("Movies")),
             ("Music", "music.note", homeURL.appendingPathComponent("Music")),
             ("Applications", "app.badge", URL(fileURLWithPath: "/Applications"))
@@ -26,10 +26,12 @@ public struct SidebarView: View {
             // Home / Quick Start
             Section {
                 Button {
+                    appState.showSmartPictures = false
+                    appState.selectedVolumeForOverview = nil
                     appState.activePane.navigate(to: homeURL)
                 } label: {
                     Label("Home", systemImage: "house.fill")
-                        .foregroundColor(appState.activePane.currentURL == homeURL ? .accentColor : .primary)
+                        .foregroundColor(!appState.showSmartPictures && appState.selectedVolumeForOverview == nil && appState.activePane.currentURL == homeURL ? .accentColor : .primary)
                 }
                 .buttonStyle(.plain)
             }
@@ -38,6 +40,8 @@ public struct SidebarView: View {
             Section("Favorites") {
                 ForEach(appState.favorites) { fav in
                     Button {
+                        appState.showSmartPictures = false
+                        appState.selectedVolumeForOverview = nil
                         appState.activePane.navigate(to: fav.url)
                     } label: {
                         HStack {
@@ -57,16 +61,34 @@ public struct SidebarView: View {
                 }
             }
 
-            // Standard Locations
+            // Standard & Smart Locations
             Section("Locations") {
                 ForEach(standardLocations, id: \.name) { loc in
                     Button {
-                        appState.activePane.navigate(to: loc.url)
+                        if loc.name == "Pictures" {
+                            appState.selectedVolumeForOverview = nil
+                            appState.showSmartPictures = true
+                        } else {
+                            appState.showSmartPictures = false
+                            appState.selectedVolumeForOverview = nil
+                            appState.activePane.navigate(to: loc.url)
+                        }
                     } label: {
                         HStack {
+                            let isActive = (loc.name == "Pictures" && appState.showSmartPictures) ||
+                                           (!appState.showSmartPictures && appState.selectedVolumeForOverview == nil && appState.activePane.currentURL.path == loc.url.path)
                             Label(loc.name, systemImage: loc.icon)
-                                .foregroundColor(appState.activePane.currentURL.path == loc.url.path ? .accentColor : .primary)
+                                .foregroundColor(isActive ? .accentColor : .primary)
                             Spacer()
+                            if loc.name == "Pictures" {
+                                Text("Smart")
+                                    .font(.system(size: 9, weight: .bold))
+                                    .foregroundColor(.accentColor)
+                                    .padding(.horizontal, 4)
+                                    .padding(.vertical, 1)
+                                    .background(Color.accentColor.opacity(0.12))
+                                    .cornerRadius(3)
+                            }
                         }
                     }
                     .buttonStyle(.plain)
@@ -77,7 +99,8 @@ public struct SidebarView: View {
             Section("This Mac") {
                 ForEach(appState.volumes) { volume in
                     Button {
-                        appState.activePane.navigate(to: volume.url)
+                        appState.showSmartPictures = false
+                        appState.selectedVolumeForOverview = volume
                     } label: {
                         VStack(alignment: .leading, spacing: 2) {
                             HStack {
@@ -86,13 +109,27 @@ public struct SidebarView: View {
                                 Text(volume.name)
                                     .fontWeight(.medium)
                             }
-                            Text(volume.formattedCapacity)
+                            Text(volume.formattedAvailable)
                                 .font(.system(size: 10))
                                 .foregroundColor(.secondary)
                         }
                         .padding(.vertical, 2)
                     }
                     .buttonStyle(.plain)
+                    .contextMenu {
+                        Button("Storage Overview") {
+                            appState.showSmartPictures = false
+                            appState.selectedVolumeForOverview = volume
+                        }
+                        Button("Browse Files Directly") {
+                            appState.showSmartPictures = false
+                            appState.selectedVolumeForOverview = nil
+                            appState.activePane.navigate(to: volume.url)
+                        }
+                        Button("Reveal in Finder") {
+                            appState.revealInFinder(url: volume.url)
+                        }
+                    }
                 }
             }
 
@@ -101,6 +138,8 @@ public struct SidebarView: View {
                 Section("Recent Locations") {
                     ForEach(appState.recentLocations.prefix(5), id: \.path) { url in
                         Button {
+                            appState.showSmartPictures = false
+                            appState.selectedVolumeForOverview = nil
                             appState.activePane.navigate(to: url)
                         } label: {
                             Label(url.lastPathComponent, systemImage: "clock")
@@ -113,6 +152,6 @@ public struct SidebarView: View {
             }
         }
         .listStyle(.sidebar)
-        .frame(minWidth: 190, idealWidth: 210, maxWidth: 260)
+        .frame(minWidth: 200, idealWidth: 220, maxWidth: 280)
     }
 }

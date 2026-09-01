@@ -1,0 +1,214 @@
+---
+// Footer.astro
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+  <div class="container footer-container">
+    <div class="footer-top">
+      <div class="footer-brand-col">
+        <a href="/" class="footer-brand">
+          <div class="brand-icon">
+            <svg viewBox="0 0 512 512" width="28" height="28" fill="none">
+              <rect x="32" y="32" width="448" height="448" rx="104" fill="#0A84FF" />
+              <rect x="96" y="128" width="144" height="256" rx="14" fill="#FFFFFF" />
+              <rect x="112" y="152" width="56" height="8" rx="4" fill="#0A84FF" />
+              <rect x="112" y="176" width="112" height="10" rx="4" fill="#E2E8F0" />
+              <rect x="272" y="128" width="144" height="256" rx="14" fill="#FFFFFF" />
+              <rect x="288" y="152" width="64" height="8" rx="4" fill="#34C759" />
+              <rect x="288" y="176" width="104" height="10" rx="4" fill="#E2E8F0" />
+              <circle cx="256" cy="256" r="20" fill="#0A84FF" />
+              <path d="M249 248 L263 256 L249 264" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </div>
+          <span class="brand-title">Maggo</span>
+        </a>
+        <p class="brand-pitch">
+          A simple, fast file manager for Mac that makes everyday file management easier.
+        </p>
+        <div class="specs-pill">
+          <span>Swift 6</span>
+          <span class="dot">•</span>
+          <span>SwiftUI</span>
+          <span class="dot">•</span>
+          <span>macOS 14+ Sonoma &amp; Sequoia</span>
+        </div>
+      </div>
+
+      <div class="footer-links-grid">
+        <div class="footer-col">
+          <span class="col-title">Navigation</span>
+          <ul class="col-links">
+            <li><a href="#features">Features</a></li>
+            <li><a href="#demo">Live Demo</a></li>
+            <li><a href="#problem">The Problem</a></li>
+            <li><a href="#familiar">Familiar Design</a></li>
+            <li><a href="#comparison">Finder Comparison</a></li>
+            <li><a href="#use-cases">Use Cases</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <span class="col-title">Product</span>
+          <ul class="col-links">
+            <li><a href="#pricing">Pricing ($19.99 Lifetime)</a></li>
+            <li><a href="/downloads/Maggo-macOS.dmg" download>Download .dmg</a></li>
+            <li><a href="/downloads/Maggo-macOS.zip" download>Download .zip</a></li>
+            <li><a href="/install.sh">Web Installer script</a></li>
+            <li><a href="#faq">Frequently Asked Questions</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <span class="col-title">Privacy &amp; Principles</span>
+          <div class="privacy-pledge">
+            <span class="pledge-badge">100% Local &amp; Private</span>
+            <p>
+              Maggo contains zero telemetry, zero analytics tracking, and no AI cloud dependencies. Your files never leave your Mac.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="bottom-legal">
+        <span>&copy; {currentYear} Maggo. Built natively for macOS. All rights reserved.</span>
+        <span>Mac, macOS, Finder, Sonoma, and Sequoia are trademarks of Apple Inc., registered in the U.S. and other countries.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: #F8FAFC;
+    border-top: 1px solid var(--color-border);
+    padding-top: 4.5rem;
+    padding-bottom: 3.5rem;
+    font-size: 0.875rem;
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    margin-bottom: 3.5rem;
+  }
+
+  @media (min-width: 860px) {
+    .footer-top {
+      grid-template-columns: 1.2fr 2fr;
+    }
+  }
+
+  .footer-brand-col {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .footer-brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    color: var(--color-text-main);
+    font-weight: 700;
+    font-size: 1.25rem;
+  }
+
+  .brand-pitch {
+    color: var(--color-text-muted);
+    line-height: 1.6;
+    max-width: 320px;
+  }
+
+  .specs-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    background: #FFFFFF;
+    border: 1px solid var(--color-border);
+    padding: 0.3rem 0.65rem;
+    border-radius: 6px;
+    width: fit-content;
+  }
+
+  .dot {
+    color: #CBD5E1;
+  }
+
+  .footer-links-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 2rem;
+  }
+
+  .footer-col {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+  }
+
+  .col-title {
+    font-size: 0.8125rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-main);
+  }
+
+  .col-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+  }
+
+  .col-links a {
+    color: var(--color-text-muted);
+    transition: color 0.15s ease;
+  }
+
+  .col-links a:hover {
+    color: var(--color-accent);
+  }
+
+  .privacy-pledge {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--color-text-muted);
+  }
+
+  .pledge-badge {
+    align-self: flex-start;
+    font-size: 0.6875rem;
+    font-weight: 700;
+    background: #DCFCE7;
+    color: #15803D;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+  }
+
+  .footer-bottom {
+    border-top: 1px solid var(--color-border);
+    padding-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    font-size: 0.75rem;
+    color: #94A3B8;
+  }
+
+  .bottom-legal {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+</style>

@@ -53,13 +53,14 @@ public struct FileListView: View {
             }
             .width(min: 120, ideal: 140, max: 180)
 
-            TableColumn("Size", value: \.formattedSize) { item in
-                Text(item.formattedSize)
+            TableColumn("Size") { item in
+                let sizeStr = pane.displaySize(for: item)
+                Text(sizeStr)
                     .font(.caption)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(sizeStr == "Calculating…" ? .secondary.opacity(0.7) : .secondary)
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .width(min: 70, ideal: 85, max: 110)
+            .width(min: 80, ideal: 95, max: 120)
 
             TableColumn("Kind", value: \.kindDescription) { item in
                 Text(item.kindDescription)

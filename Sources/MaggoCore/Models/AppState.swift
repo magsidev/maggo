@@ -25,12 +25,25 @@ public final class AppState {
     public var newFolderPromptLocation: URL?
     public var renameItemPromptURL: URL?
 
+    public var showSmartPictures: Bool = false
+    public var selectedVolumeForOverview: VolumeItem?
+
     public init() {
         let homeURL = FileManager.default.homeDirectoryForCurrentUser
         let initialTab = TabModel(initialURL: homeURL)
         self.tabs = [initialTab]
         self.activeTabIndex = 0
         reloadSidebarData()
+
+        NotificationCenter.default.addObserver(
+            forName: NSApplication.didBecomeActiveNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            Task { @MainActor in
+                self?.reloadSidebarData()
+            }
+        }
     }
 
     public var activeTab: TabModel {
