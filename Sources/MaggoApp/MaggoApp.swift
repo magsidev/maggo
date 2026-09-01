@@ -8,7 +8,8 @@ struct MaggoApp: App {
     var body: some Scene {
         WindowGroup("Maggo") {
             MainView(appState: appState)
-                .frame(minWidth: 800, minHeight: 500)
+                .frame(minWidth: 850, minHeight: 520)
+                .preferredColorScheme(.light)
         }
         .windowStyle(.titleBar)
         .windowToolbarStyle(.unified(showsTitle: true))

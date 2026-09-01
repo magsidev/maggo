@@ -12,6 +12,14 @@ public struct MainView: View {
             SidebarView(appState: appState)
         } detail: {
             VStack(spacing: 0) {
+                // Top App Toolbar (matching landing page demo)
+                AppToolbar(appState: appState)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 7)
+                    .background(Color(hex: "ECEEEF"))
+
+                Divider()
+
                 // Tab Strip
                 tabStripView
 
@@ -31,11 +39,6 @@ public struct MainView: View {
 
                 // Status Footer
                 StatusFooterView(appState: appState)
-            }
-        }
-        .toolbar {
-            ToolbarItem(placement: .automatic) {
-                AppToolbar(appState: appState)
             }
         }
         // Sheets & Dialogs

@@ -57,15 +57,16 @@ public struct BreadcrumbBar: View {
                     } label: {
                         Text(segment.name)
                             .font(.system(size: 12, weight: segment.isLast ? .semibold : .regular))
-                            .foregroundColor(segment.isLast ? Color.maggoBlue : Color(hex: "475569"))
+                            .foregroundColor(segment.isLast ? Color.maggoBlue : Color(hex: "334155"))
                     }
                     .buttonStyle(.plain)
                     .help(segment.url.path)
 
                     if !segment.isLast {
-                        Text("›")
-                            .font(.system(size: 12, weight: .bold))
-                            .foregroundColor(Color.secondary.opacity(0.5))
+                        Image(systemName: "chevron.right")
+                            .font(.system(size: 8, weight: .bold))
+                            .foregroundColor(Color(hex: "94A3B8"))
+                            .padding(.horizontal, 2)
                     }
                 }
             }
