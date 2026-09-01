@@ -32,25 +32,27 @@ const siteUrl = "https://maggo.app";
     <meta property="og:url" content={siteUrl} />
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={pageDescription} />
-    <meta property="og:image" content={`${siteUrl}/favicon.svg`} />
+    <meta property="og:image" content={`${siteUrl}/images/maggo-logo.png`} />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content={siteUrl} />
     <meta property="twitter:title" content={pageTitle} />
     <meta property="twitter:description" content={pageDescription} />
-    <meta property="twitter:image" content={`${siteUrl}/favicon.svg`} />
+    <meta property="twitter:image" content={`${siteUrl}/images/maggo-logo.png`} />
 
     <!-- Favicon & Icons -->
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
-    <meta name="theme-color" content="#0A84FF" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#7C3AED" />
 
     <!-- Schema.org SoftwareApplication structured metadata for Google Search -->
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
       "@type": "SoftwareApplication",
       "name": "Maggo",
+      "image": `${siteUrl}/images/maggo-logo.png`,
       "operatingSystem": "macOS 14.0 or later (Sonoma, Sequoia)",
       "applicationCategory": "UtilitiesApplication",
       "offers": {

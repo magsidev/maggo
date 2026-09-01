@@ -45,49 +45,39 @@ public struct BreadcrumbBar: View {
     public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 4) {
+                // Folder leading icon
+                Image(systemName: "folder.fill")
+                    .font(.system(size: 11))
+                    .foregroundColor(Color.maggoBlue)
+                    .padding(.leading, 6)
+
                 ForEach(segments) { segment in
                     Button {
                         pane.navigate(to: segment.url)
                     } label: {
-                        HStack(spacing: 4) {
-                            if segment.name == "Macintosh HD" {
-                                Image(systemName: "internaldrive.fill")
-                                    .font(.caption2)
-                            } else if segment.url.path == FileManager.default.homeDirectoryForCurrentUser.path {
-                                Image(systemName: "house.fill")
-                                    .font(.caption2)
-                            }
-                            Text(segment.name)
-                                .fontWeight(segment.isLast ? .semibold : .regular)
-                                .foregroundColor(segment.isLast ? .primary : .secondary)
-                        }
-                        .padding(.horizontal, 6)
-                        .padding(.vertical, 3)
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(segment.isLast ? Color.accentColor.opacity(0.12) : Color.clear)
-                        )
+                        Text(segment.name)
+                            .font(.system(size: 12, weight: segment.isLast ? .semibold : .regular))
+                            .foregroundColor(segment.isLast ? Color.maggoBlue : Color(hex: "475569"))
                     }
                     .buttonStyle(.plain)
                     .help(segment.url.path)
 
                     if !segment.isLast {
-                        Image(systemName: "chevron.right")
-                            .font(.system(size: 9, weight: .bold))
-                            .foregroundColor(.secondary.opacity(0.6))
+                        Text("›")
+                            .font(.system(size: 12, weight: .bold))
+                            .foregroundColor(Color.secondary.opacity(0.5))
                     }
                 }
             }
-            .padding(.horizontal, 4)
+            .padding(.trailing, 8)
+            .padding(.vertical, 3)
         }
-        .frame(height: 28)
-        .background(
-            RoundedRectangle(cornerRadius: 6)
-                .fill(Color(nsColor: .controlBackgroundColor))
-        )
+        .frame(height: 26)
+        .background(Color.white)
+        .cornerRadius(6)
         .overlay(
             RoundedRectangle(cornerRadius: 6)
-                .stroke(Color.secondary.opacity(0.2), lineWidth: 1)
+                .stroke(Color.maggoBorder, lineWidth: 1)
         )
     }
 }

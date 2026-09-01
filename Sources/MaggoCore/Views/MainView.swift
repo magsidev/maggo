@@ -29,8 +29,6 @@ public struct MainView: View {
                     PaneContainerView(tab: appState.activeTab, appState: appState)
                 }
 
-                Divider()
-
                 // Status Footer
                 StatusFooterView(appState: appState)
             }
@@ -75,97 +73,78 @@ public struct MainView: View {
 
     // MARK: - Tab Strip
     private var tabStripView: some View {
-        HStack(spacing: 6) {
+        HStack(spacing: 4) {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: 4) {
                     ForEach(Array(appState.tabs.enumerated()), id: \.element.id) { index, tab in
                         let isSelected = (index == appState.activeTabIndex)
-                        let count = tab.activePane.filteredItems.count
 
                         HStack(spacing: 6) {
-                            Image(systemName: tabIcon(for: tab.activePane.currentURL))
-                                .foregroundColor(isSelected ? .accentColor : .secondary)
+                            Image(systemName: "folder.fill")
                                 .font(.system(size: 11))
+                                .foregroundColor(Color.iconFolder)
 
                             Text(tab.title)
                                 .font(.system(size: 12, weight: isSelected ? .semibold : .regular))
-                                .foregroundColor(isSelected ? .primary : .secondary)
+                                .foregroundColor(isSelected ? Color(hex: "0F172A") : Color(hex: "475569"))
                                 .lineLimit(1)
-
-                            if count > 0 {
-                                Text("\(count)")
-                                    .font(.system(size: 10, weight: .bold))
-                                    .foregroundColor(isSelected ? .accentColor : .secondary)
-                                    .padding(.horizontal, 5)
-                                    .padding(.vertical, 1)
-                                    .background(
-                                        Capsule()
-                                            .fill(isSelected ? Color.accentColor.opacity(0.14) : Color.secondary.opacity(0.12))
-                                    )
-                            }
 
                             if appState.tabs.count > 1 {
                                 Button {
                                     appState.closeTab(at: index)
                                 } label: {
-                                    Image(systemName: "xmark")
-                                        .font(.system(size: 8, weight: .bold))
-                                        .foregroundColor(.secondary)
+                                    Text("✕")
+                                        .font(.system(size: 9, weight: .bold))
+                                        .foregroundColor(Color.secondary.opacity(0.6))
                                 }
                                 .buttonStyle(.plain)
-                                .padding(2)
+                                .padding(.leading, 2)
                             }
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
                         .background(
                             RoundedRectangle(cornerRadius: 6)
-                                .fill(isSelected ? Color(nsColor: .controlBackgroundColor) : Color.clear)
+                                .fill(isSelected ? Color.white : Color.maggoTabInactiveBg)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 6)
-                                .stroke(isSelected ? Color.secondary.opacity(0.2) : Color.clear, lineWidth: 1)
+                                .stroke(isSelected ? Color.maggoBorder : Color.clear, lineWidth: 1)
                         )
+                        .shadow(color: isSelected ? Color.black.opacity(0.04) : Color.clear, radius: 2, y: 1)
                         .contentShape(Rectangle())
                         .onTapGesture {
                             appState.activeTabIndex = index
                         }
                     }
                 }
-                .padding(.horizontal, 8)
+                .padding(.horizontal, 10)
             }
 
             // Plus button for new tab
             Button {
                 appState.openNewTab()
             } label: {
-                Image(systemName: "plus")
-                    .font(.system(size: 12, weight: .semibold))
-                    .foregroundColor(.secondary)
-                    .padding(6)
+                Text("+")
+                    .font(.system(size: 15, weight: .medium))
+                    .foregroundColor(Color(hex: "64748B"))
+                    .frame(width: 24, height: 24)
             }
             .buttonStyle(.plain)
             .help("New Tab (⌘T)")
+            .padding(.trailing, 8)
         }
         .padding(.vertical, 4)
-        .background(Color(nsColor: .windowBackgroundColor))
-    }
-
-    private func tabIcon(for url: URL) -> String {
-        let name = url.lastPathComponent.lowercased()
-        if name == "downloads" {
-            return "arrow.down.circle"
-        } else if name == "documents" {
-            return "doc.text"
-        } else if name == "desktop" {
-            return "desktopcomputer"
-        } else {
-            return "folder"
-        }
+        .background(Color.maggoTabStripBg)
     }
 }
 
 public struct IdentifiableURL: Identifiable {
     public var id: String { url.path }
     public let url: URL
+
+    public init(url: URL) {
+        self.url = url
+    }
 }
+

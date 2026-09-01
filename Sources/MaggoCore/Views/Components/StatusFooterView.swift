@@ -11,36 +11,35 @@ public struct StatusFooterView: View {
         appState.activePane
     }
 
-    private var selectedSummary: String {
-        let count = activePane.items.count
+    private var selectionText: String {
         let selected = activePane.selectedItems
-
         if selected.isEmpty {
-            return "\(count) item\(count == 1 ? "" : "s")"
+            return "\(activePane.filteredItems.count) items"
         }
-
         let totalBytes = selected.reduce(0) { $0 + $1.fileSize }
         let formatted = ByteCountFormatter.string(fromByteCount: totalBytes, countStyle: .file)
-        return "\(count) items · \(selected.count) selected (\(formatted))"
+        return "\(selected.count) selected (\(formatted))"
+    }
+
+    private var volumeCapacityText: String {
+        if let vol = appState.volumes.first {
+            let freeStr = ByteCountFormatter.string(fromByteCount: vol.availableCapacity, countStyle: .file)
+            return "\(vol.name): \(freeStr) free"
+        }
+        return ""
     }
 
     public var body: some View {
         HStack(spacing: 12) {
-            // Left Status
-            HStack(spacing: 6) {
-                Circle()
-                    .fill(Color.green)
-                    .frame(width: 7, height: 7)
+            // Left: Green checkmark + Status
+            HStack(spacing: 5) {
+                Image(systemName: "checkmark")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(Color.maggoGreenText)
 
-                Text(selectedSummary + " · Swift 6 Native Engine")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
-
-                if !appState.statusMessage.isEmpty && appState.statusMessage != "Ready" {
-                    Text("·  " + appState.statusMessage)
-                        .font(.caption)
-                        .foregroundColor(.accentColor)
-                }
+                Text(appState.statusMessage.isEmpty ? "Ready" : appState.statusMessage)
+                    .font(.system(size: 12))
+                    .foregroundColor(Color(hex: "475569"))
             }
 
             Spacer()
@@ -54,22 +53,38 @@ public struct StatusFooterView: View {
                         Image(systemName: "arrow.uturn.backward")
                             .font(.caption2)
                         Text("Undo (⌘Z)")
-                            .font(.caption)
+                            .font(.system(size: 11))
                     }
                 }
                 .buttonStyle(.plain)
-                .foregroundColor(.accentColor)
+                .foregroundColor(Color.maggoBlue)
             }
 
-            // Right Volume Available Capacity
-            if let mainVol = appState.volumes.first {
-                Text("\(mainVol.name): \(mainVol.formattedAvailable)")
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+            // Right: Selection summary | Volume capacity
+            HStack(spacing: 8) {
+                Text(selectionText)
+                    .font(.system(size: 12))
+                    .foregroundColor(Color(hex: "64748B"))
+
+                if !volumeCapacityText.isEmpty {
+                    Text("|")
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(hex: "CBD5E1"))
+
+                    Text(volumeCapacityText)
+                        .font(.system(size: 12))
+                        .foregroundColor(Color(hex: "64748B"))
+                }
             }
         }
-        .padding(.horizontal, 14)
-        .padding(.vertical, 5)
-        .background(Color(nsColor: .windowBackgroundColor))
+        .padding(.horizontal, 16)
+        .padding(.vertical, 6)
+        .background(Color(hex: "F8FAFC"))
+        .overlay(
+            Rectangle()
+                .frame(height: 1)
+                .foregroundColor(Color.maggoBorder),
+            alignment: .top
+        )
     }
 }

@@ -45,12 +45,16 @@ public struct FileListView: View {
             )
         ) {
             TableColumn("Name", value: \.name) { item in
+                let isSelected = pane.selectedURLs.contains(item.url)
+
                 HStack(spacing: 8) {
-                    FileTypeBadge(item: item)
+                    fileIconView(for: item)
+                        .frame(width: 16, height: 16)
 
                     Text(item.name)
+                        .font(.system(size: 13, weight: isSelected ? .medium : .regular))
                         .lineLimit(1)
-                        .foregroundColor(item.isHidden ? .secondary : .primary)
+                        .foregroundColor(isSelected ? Color.maggoBlue : (item.isHidden ? .secondary : .primary))
                 }
                 .contentShape(Rectangle())
                 .onTapGesture(count: 2) {
@@ -64,26 +68,26 @@ public struct FileListView: View {
 
             TableColumn("Date Modified", value: \.dateModified) { item in
                 Text(item.formattedDateModified)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 12))
+                    .foregroundColor(Color(hex: "64748B"))
             }
             .width(min: 120, ideal: 140, max: 180)
 
             TableColumn("Size") { item in
                 let sizeStr = pane.displaySize(for: item)
                 Text(sizeStr)
-                    .font(.caption)
-                    .foregroundColor(sizeStr == "Calculating…" ? .secondary.opacity(0.7) : .secondary)
+                    .font(.system(size: 12))
+                    .foregroundColor(Color(hex: "64748B"))
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
-            .width(min: 80, ideal: 95, max: 120)
+            .width(min: 75, ideal: 85, max: 110)
 
             TableColumn("Kind", value: \.kindDescription) { item in
                 Text(item.kindDescription)
-                    .font(.caption)
-                    .foregroundColor(.secondary)
+                    .font(.system(size: 12))
+                    .foregroundColor(Color(hex: "64748B"))
             }
-            .width(min: 100, ideal: 130, max: 200)
+            .width(min: 90, ideal: 110, max: 160)
         } rows: {
             ForEach(pane.filteredItems) { item in
                 TableRow(item)
@@ -104,6 +108,35 @@ public struct FileListView: View {
             }
             Button("Refresh (⌘R)") {
                 pane.refresh()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func fileIconView(for item: FileItem) -> some View {
+        if item.isDirectory && !item.isPackage {
+            Image(systemName: "folder.fill")
+                .foregroundColor(Color.iconFolder)
+        } else {
+            let ext = item.url.pathExtension.lowercased()
+            switch ext {
+            case "pdf":
+                Image(systemName: "doc.text.fill")
+                    .foregroundColor(Color.iconPdf)
+            case "zip", "tar", "gz", "dmg", "pkg":
+                Image(systemName: "archivebox.fill")
+                    .foregroundColor(Color.iconZip)
+            case "xls", "xlsx", "csv":
+                Image(systemName: "tablecells.fill")
+                    .foregroundColor(Color.iconSheet)
+            case "sh", "bash", "zsh", "command":
+                Image(systemName: "chevron.left.forwardslash.chevron.right")
+                    .font(.system(size: 10, weight: .bold))
+                    .foregroundColor(Color.iconScript)
+            default:
+                Image(nsImage: item.icon)
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
             }
         }
     }
@@ -175,52 +208,6 @@ public struct FileListView: View {
         Button("Move to Trash (⌘⌫)", role: .destructive) {
             pane.selectedURLs = [item.url]
             appState.deleteSelected()
-        }
-    }
-}
-
-public struct FileTypeBadge: View {
-    public let item: FileItem
-
-    public init(item: FileItem) {
-        self.item = item
-    }
-
-    public var body: some View {
-        let text = item.typeBadgeText
-        let colors = badgeColors(for: item)
-
-        Text(text)
-            .font(.system(size: 9, weight: .bold, design: .monospaced))
-            .foregroundColor(colors.fg)
-            .padding(.horizontal, 4)
-            .padding(.vertical, 1.5)
-            .background(
-                RoundedRectangle(cornerRadius: 3)
-                    .fill(colors.bg)
-            )
-    }
-
-    private func badgeColors(for item: FileItem) -> (bg: Color, fg: Color) {
-        if item.isDirectory && !item.isPackage {
-            return (Color.blue.opacity(0.14), Color.blue)
-        }
-        let ext = item.url.pathExtension.lowercased()
-        switch ext {
-        case "pdf":
-            return (Color.red.opacity(0.14), Color.red)
-        case "zip", "tar", "gz", "dmg", "pkg":
-            return (Color.orange.opacity(0.14), Color.orange)
-        case "sh", "bash", "zsh", "command":
-            return (Color.gray.opacity(0.18), Color.primary)
-        case "xls", "xlsx", "csv":
-            return (Color.green.opacity(0.14), Color.green)
-        case "doc", "docx", "txt", "md":
-            return (Color.indigo.opacity(0.14), Color.indigo)
-        case "jpg", "jpeg", "png", "heic", "gif", "webp":
-            return (Color.purple.opacity(0.14), Color.purple)
-        default:
-            return (Color.secondary.opacity(0.12), Color.secondary)
         }
     }
 }
