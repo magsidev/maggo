@@ -40,20 +40,24 @@ public struct FileGridView: View {
                     }
                     .padding(6)
                     .contentShape(Rectangle())
-                    .onTapGesture {
-                        if NSEvent.modifierFlags.contains(.command) {
-                            if isSelected {
-                                pane.selectedURLs.remove(item.url)
-                            } else {
-                                pane.selectedURLs.insert(item.url)
-                            }
-                        } else {
-                            pane.selectedURLs = [item.url]
+                    .simultaneousGesture(
+                        TapGesture(count: 2).onEnded {
+                            appState.openItem(item)
                         }
-                    }
-                    .onTapGesture(count: 2) {
-                        appState.openItem(item)
-                    }
+                    )
+                    .simultaneousGesture(
+                        TapGesture(count: 1).onEnded {
+                            if NSEvent.modifierFlags.contains(.command) {
+                                if isSelected {
+                                    pane.selectedURLs.remove(item.url)
+                                } else {
+                                    pane.selectedURLs.insert(item.url)
+                                }
+                            } else {
+                                pane.selectedURLs = [item.url]
+                            }
+                        }
+                    )
                     .contextMenu {
                         Button("Open") {
                             appState.openItem(item)

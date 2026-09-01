@@ -44,6 +44,7 @@ public struct FileListView: View {
                 }
             )
         ) {
+            // Column 1: Name & Icon
             TableColumn("Name", value: \.name) { item in
                 let isSelected = pane.selectedURLs.contains(item.url)
 
@@ -56,24 +57,46 @@ public struct FileListView: View {
                         .lineLimit(1)
                         .foregroundColor(isSelected ? .white : (item.isHidden ? .secondary : Color(hex: "0F172A")))
                 }
+                .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
-                .onTapGesture(count: 2) {
-                    appState.openItem(item)
-                }
+                .simultaneousGesture(
+                    TapGesture(count: 2).onEnded {
+                        appState.openItem(item)
+                    }
+                )
+                .simultaneousGesture(
+                    TapGesture(count: 1).onEnded {
+                        handleRowClick(for: item)
+                    }
+                )
                 .contextMenu {
                     contextMenu(for: item)
                 }
             }
             .width(min: 200, ideal: 280)
 
+            // Column 2: Date Modified
             TableColumn("Date Modified", value: \.dateModified) { item in
                 let isSelected = pane.selectedURLs.contains(item.url)
                 Text(item.formattedDateModified)
                     .font(.system(size: 12))
                     .foregroundColor(isSelected ? Color.white.opacity(0.9) : Color(hex: "64748B"))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+                    .simultaneousGesture(
+                        TapGesture(count: 2).onEnded {
+                            appState.openItem(item)
+                        }
+                    )
+                    .simultaneousGesture(
+                        TapGesture(count: 1).onEnded {
+                            handleRowClick(for: item)
+                        }
+                    )
             }
             .width(min: 120, ideal: 140, max: 180)
 
+            // Column 3: Size
             TableColumn("Size") { item in
                 let isSelected = pane.selectedURLs.contains(item.url)
                 let sizeStr = pane.displaySize(for: item)
@@ -81,20 +104,51 @@ public struct FileListView: View {
                     .font(.system(size: 12))
                     .foregroundColor(isSelected ? Color.white.opacity(0.9) : Color(hex: "64748B"))
                     .frame(maxWidth: .infinity, alignment: .trailing)
+                    .contentShape(Rectangle())
+                    .simultaneousGesture(
+                        TapGesture(count: 2).onEnded {
+                            appState.openItem(item)
+                        }
+                    )
+                    .simultaneousGesture(
+                        TapGesture(count: 1).onEnded {
+                            handleRowClick(for: item)
+                        }
+                    )
             }
             .width(min: 75, ideal: 85, max: 110)
 
+            // Column 4: Kind
             TableColumn("Kind", value: \.kindDescription) { item in
                 let isSelected = pane.selectedURLs.contains(item.url)
                 Text(item.kindDescription)
                     .font(.system(size: 12))
                     .foregroundColor(isSelected ? Color.white.opacity(0.9) : Color(hex: "64748B"))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
+                    .simultaneousGesture(
+                        TapGesture(count: 2).onEnded {
+                            appState.openItem(item)
+                        }
+                    )
+                    .simultaneousGesture(
+                        TapGesture(count: 1).onEnded {
+                            handleRowClick(for: item)
+                        }
+                    )
             }
             .width(min: 90, ideal: 110, max: 160)
         } rows: {
             ForEach(pane.filteredItems) { item in
                 TableRow(item)
             }
+        }
+        .onKeyPress(.return) {
+            if let first = pane.selectedItems.first {
+                appState.openItem(first)
+                return .handled
+            }
+            return .ignored
         }
         .contextMenu {
             Button("New Folder (⌘⇧N)") {
@@ -112,6 +166,20 @@ public struct FileListView: View {
             Button("Refresh (⌘R)") {
                 pane.refresh()
             }
+        }
+    }
+
+    private func handleRowClick(for item: FileItem) {
+        if NSEvent.modifierFlags.contains(.command) {
+            if pane.selectedURLs.contains(item.url) {
+                pane.selectedURLs.remove(item.url)
+            } else {
+                pane.selectedURLs.insert(item.url)
+            }
+        } else if NSEvent.modifierFlags.contains(.shift) {
+            pane.selectedURLs.insert(item.url)
+        } else {
+            pane.selectedURLs = [item.url]
         }
     }
 
