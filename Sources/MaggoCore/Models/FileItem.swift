@@ -63,6 +63,16 @@ public struct FileItem: Identifiable, Hashable, @unchecked Sendable {
         return NSWorkspace.shared.icon(forFile: url.path)
     }
 
+    public var typeBadgeText: String {
+        if isDirectory && !isPackage {
+            return "DIR"
+        }
+        let ext = url.pathExtension.uppercased()
+        if ext.isEmpty { return "FILE" }
+        if ext == "JPEG" { return "JPG" }
+        return String(ext.prefix(4))
+    }
+
     public var formattedSize: String {
         if isDirectory && !isPackage {
             return "--"

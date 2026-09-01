@@ -46,10 +46,7 @@ public struct FileListView: View {
         ) {
             TableColumn("Name", value: \.name) { item in
                 HStack(spacing: 8) {
-                    Image(nsImage: item.icon)
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 18, height: 18)
+                    FileTypeBadge(item: item)
 
                     Text(item.name)
                         .lineLimit(1)
@@ -63,7 +60,7 @@ public struct FileListView: View {
                     contextMenu(for: item)
                 }
             }
-            .width(min: 180, ideal: 260)
+            .width(min: 200, ideal: 280)
 
             TableColumn("Date Modified", value: \.dateModified) { item in
                 Text(item.formattedDateModified)
@@ -92,6 +89,23 @@ public struct FileListView: View {
                 TableRow(item)
             }
         }
+        .contextMenu {
+            Button("New Folder (⌘⇧N)") {
+                appState.newFolderPromptLocation = pane.currentURL
+            }
+            Divider()
+            Button("Paste (⌘V)") {
+                appState.paste()
+            }
+            .disabled(!PasteboardService.shared.hasFileURLs())
+            Divider()
+            Button("Select All (⌘A)") {
+                pane.selectAll()
+            }
+            Button("Refresh (⌘R)") {
+                pane.refresh()
+            }
+        }
     }
 
     @ViewBuilder
@@ -99,6 +113,21 @@ public struct FileListView: View {
         Button("Open") {
             appState.openItem(item)
         }
+
+        Button("Copy (⌘C)") {
+            pane.selectedURLs = [item.url]
+            appState.copySelected()
+        }
+
+        Button("Cut (⌘X)") {
+            pane.selectedURLs = [item.url]
+            appState.cutSelected()
+        }
+
+        Button("Paste (⌘V)") {
+            appState.paste()
+        }
+        .disabled(!PasteboardService.shared.hasFileURLs())
 
         Divider()
 
@@ -146,6 +175,52 @@ public struct FileListView: View {
         Button("Move to Trash (⌘⌫)", role: .destructive) {
             pane.selectedURLs = [item.url]
             appState.deleteSelected()
+        }
+    }
+}
+
+public struct FileTypeBadge: View {
+    public let item: FileItem
+
+    public init(item: FileItem) {
+        self.item = item
+    }
+
+    public var body: some View {
+        let text = item.typeBadgeText
+        let colors = badgeColors(for: item)
+
+        Text(text)
+            .font(.system(size: 9, weight: .bold, design: .monospaced))
+            .foregroundColor(colors.fg)
+            .padding(.horizontal, 4)
+            .padding(.vertical, 1.5)
+            .background(
+                RoundedRectangle(cornerRadius: 3)
+                    .fill(colors.bg)
+            )
+    }
+
+    private func badgeColors(for item: FileItem) -> (bg: Color, fg: Color) {
+        if item.isDirectory && !item.isPackage {
+            return (Color.blue.opacity(0.14), Color.blue)
+        }
+        let ext = item.url.pathExtension.lowercased()
+        switch ext {
+        case "pdf":
+            return (Color.red.opacity(0.14), Color.red)
+        case "zip", "tar", "gz", "dmg", "pkg":
+            return (Color.orange.opacity(0.14), Color.orange)
+        case "sh", "bash", "zsh", "command":
+            return (Color.gray.opacity(0.18), Color.primary)
+        case "xls", "xlsx", "csv":
+            return (Color.green.opacity(0.14), Color.green)
+        case "doc", "docx", "txt", "md":
+            return (Color.indigo.opacity(0.14), Color.indigo)
+        case "jpg", "jpeg", "png", "heic", "gif", "webp":
+            return (Color.purple.opacity(0.14), Color.purple)
+        default:
+            return (Color.secondary.opacity(0.12), Color.secondary)
         }
     }
 }

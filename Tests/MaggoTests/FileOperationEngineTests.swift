@@ -78,4 +78,23 @@ final class FileOperationEngineTests: XCTestCase {
         XCTAssertTrue(FileManager.default.fileExists(atPath: fileURL.path))
         XCTAssertFalse(FileManager.default.fileExists(atPath: subfolder.appendingPathComponent("moving.txt").path))
     }
+
+    func testPasteboardCopyAndCut() {
+        let pb = PasteboardService.shared
+        let file1 = tempDirectory.appendingPathComponent("doc1.pdf")
+        let file2 = tempDirectory.appendingPathComponent("doc2.pdf")
+
+        // Test Copy
+        pb.copy(urls: [file1, file2], isCut: false)
+        XCTAssertTrue(pb.hasFileURLs())
+        let (copyURLs, isCutFalse) = pb.getFileURLs()
+        XCTAssertEqual(copyURLs.count, 2)
+        XCTAssertFalse(isCutFalse)
+
+        // Test Cut
+        pb.copy(urls: [file1], isCut: true)
+        let (cutURLs, isCutTrue) = pb.getFileURLs()
+        XCTAssertEqual(cutURLs.count, 1)
+        XCTAssertTrue(isCutTrue)
+    }
 }

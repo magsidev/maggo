@@ -1,460 +1,451 @@
 ---
-// HeroDemo.astro
+// HeroDemo.astro - Pixel-perfect, fully interactive native macOS Maggo app simulation
 ---
 
 <div class="demo-container" id="demo">
   <!-- Interactive hint badge -->
   <div class="demo-interactive-hint">
     <span class="hint-dot"></span>
-    <span class="hint-text">Live Preview: Click <strong>Tabs</strong>, <strong>Split View (⌘⇧S)</strong>, or <strong>Move To (⌘⇧M)</strong> below</span>
+    <span class="hint-text"><strong>Interactive Live App:</strong> Click any file or sidebar folder, switch <strong>Tabs</strong>, toggle <strong>Split View (⌘⇧S)</strong>, or test <strong>Move To (⌘⇧M)</strong></span>
   </div>
 
-  <!-- macOS Window Frame -->
+  <!-- macOS Native Window Frame -->
   <div class="mac-window" id="macWindow">
-    <!-- Window Titlebar & Tabs -->
-    <div class="mac-titlebar">
-      <!-- Traffic Lights -->
-      <div class="traffic-lights">
-        <span class="light close"></span>
-        <span class="light minimize"></span>
-        <span class="light maximize"></span>
-      </div>
-
-      <!-- Tab Bar -->
-      <div class="tab-bar" role="tablist">
-        <button class="mac-tab active" id="tabDownloads" data-tab="downloads" role="tab" aria-selected="true">
-          <svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          <span class="tab-title">Downloads</span>
-          <span class="tab-badge">5</span>
-        </button>
-
-        <button class="mac-tab" id="tabProjects" data-tab="projects" role="tab" aria-selected="false">
-          <svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-          </svg>
-          <span class="tab-title">Projects</span>
-          <span class="tab-badge">4</span>
-        </button>
-
-        <button class="mac-tab" id="tabDocuments" data-tab="documents" role="tab" aria-selected="false">
-          <svg class="tab-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-          </svg>
-          <span class="tab-title">Documents</span>
-        </button>
-
-        <button class="new-tab-btn" title="New Tab (⌘T)" id="newTabBtn">+</button>
-      </div>
-
-      <div class="window-title-spacer"></div>
-    </div>
-
-    <!-- App Toolbar -->
-    <div class="mac-toolbar">
-      <div class="toolbar-group">
-        <button class="tool-btn active-tool" id="btnToggleSplit" title="Toggle Split View (⌘⇧S)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    
+    <!-- Unified Top Toolbar Bar (macOS Sequoia / Sonoma style) -->
+    <div class="mac-unified-titlebar">
+      <!-- Left side: Traffic Lights over Sidebar -->
+      <div class="titlebar-left" id="titlebarLeft">
+        <div class="traffic-lights">
+          <span class="light close" id="btnWinClose" title="Close"></span>
+          <span class="light minimize" id="btnWinMin" title="Minimize"></span>
+          <span class="light maximize" id="btnWinMax" title="Zoom"></span>
+        </div>
+        <button class="sidebar-toggle-btn" id="btnToggleSidebar" title="Toggle Sidebar (⌘S)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <rect x="3" y="3" width="18" height="18" rx="3"/>
-            <line x1="12" y1="3" x2="12" y2="21"/>
-          </svg>
-          <span>Split View</span>
-          <span class="kbd-key-sm">⌘⇧S</span>
-        </button>
-
-        <div class="toolbar-divider"></div>
-
-        <button class="tool-btn" id="btnMoveTo" title="Move To… (⌘⇧M)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-            <polyline points="14 2 14 8 20 8"/>
-            <line x1="12" y1="18" x2="12" y2="12"/>
-            <line x1="9" y1="15" x2="15" y2="15"/>
-          </svg>
-          <span>Move To…</span>
-          <span class="kbd-key-sm">⌘⇧M</span>
-        </button>
-
-        <button class="tool-btn" id="btnCopyTo" title="Copy To… (⌘⇧C)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
-            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
-          </svg>
-          <span>Copy To…</span>
-          <span class="kbd-key-sm">⌘⇧C</span>
-        </button>
-
-        <button class="tool-btn tool-icon-only" title="New Folder (⌘⇧N)">
-          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-            <line x1="12" y1="11" x2="12" y2="17"/>
-            <line x1="9" y1="14" x2="15" y2="14"/>
+            <line x1="9" y1="3" x2="9" y2="21"/>
           </svg>
         </button>
       </div>
 
-      <!-- Quick Search Bar -->
-      <div class="toolbar-search">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-          <circle cx="11" cy="11" r="8"/>
-          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
-        </svg>
-        <input type="text" id="demoSearchInput" placeholder="Search current folder…" readonly value="" />
-      </div>
-    </div>
-
-    <!-- Interactive Breadcrumb Bar -->
-    <div class="mac-breadcrumb-bar">
-      <div class="breadcrumb-container" id="breadcrumbTrail">
-        <span class="crumb-segment">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="2" y="2" width="20" height="8" rx="2"/>
-            <rect x="2" y="14" width="20" height="8" rx="2"/>
-            <line x1="6" y1="6" x2="6.01" y2="6"/>
-            <line x1="6" y1="18" x2="6.01" y2="18"/>
-          </svg>
-          Macintosh HD
-        </span>
-        <span class="crumb-separator">&rsaquo;</span>
-        <span class="crumb-segment">Users</span>
-        <span class="crumb-separator">&rsaquo;</span>
-        <span class="crumb-segment">alex</span>
-        <span class="crumb-separator">&rsaquo;</span>
-        <span class="crumb-segment active-crumb" id="activeCrumbText">Downloads</span>
-      </div>
-      <div class="view-mode-toggle">
-        <span class="view-icon active">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="8" y1="6" x2="21" y2="6"/>
-            <line x1="8" y1="12" x2="21" y2="12"/>
-            <line x1="8" y1="18" x2="21" y2="18"/>
-            <line x1="3" y1="6" x2="3.01" y2="6"/>
-            <line x1="3" y1="12" x2="3.01" y2="12"/>
-            <line x1="3" y1="18" x2="3.01" y2="18"/>
-          </svg>
-        </span>
-        <span class="view-icon">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <rect x="3" y="3" width="7" height="7"/>
-            <rect x="14" y="3" width="7" height="7"/>
-            <rect x="14" y="14" width="7" height="7"/>
-            <rect x="3" y="14" width="7" height="7"/>
-          </svg>
-        </span>
-      </div>
-    </div>
-
-    <!-- App Body: Sidebar + Panes -->
-    <div class="mac-app-body">
-      <!-- Left Sidebar -->
-      <aside class="mac-sidebar">
-        <!-- Home -->
-        <div class="sidebar-section">
-          <div class="sidebar-item">
-            <svg class="sidebar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0A84FF" stroke-width="2">
-              <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
-              <polyline points="9 22 9 12 15 12 15 22"/>
+      <!-- Right side: AppToolbar (Native Maggo AppToolbar) -->
+      <div class="titlebar-detail">
+        <div class="toolbar-actions">
+          <!-- New Tab (⌘T) -->
+          <button class="tb-btn" id="btnNewTab" title="New Tab (⌘T)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
             </svg>
-            <span>Home</span>
-          </div>
+          </button>
+
+          <!-- Split View Toggle (⌘⇧S) -->
+          <button class="tb-btn tb-btn-active" id="btnToggleSplit" title="Toggle Split View (⌘⇧S)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2"/>
+              <line x1="12" y1="3" x2="12" y2="21"/>
+            </svg>
+          </button>
+
+          <div class="tb-separator"></div>
+
+          <!-- New Folder (⌘⇧N) -->
+          <button class="tb-btn" id="btnNewFolder" title="New Folder (⌘⇧N)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              <line x1="12" y1="11" x2="12" y2="17"/>
+              <line x1="9" y1="14" x2="15" y2="14"/>
+            </svg>
+          </button>
+
+          <!-- Move To… (⌘⇧M) -->
+          <button class="tb-btn tb-highlight-btn" id="btnMoveTo" title="Move To… (⌘⇧M)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+              <polyline points="14 2 14 8 20 8"/>
+              <line x1="12" y1="18" x2="12" y2="12"/>
+              <line x1="9" y1="15" x2="15" y2="15"/>
+            </svg>
+            <span class="tb-btn-label">Move To…</span>
+          </button>
+
+          <!-- Copy To… (⌘⇧C) -->
+          <button class="tb-btn" id="btnCopyTo" title="Copy To… (⌘⇧C)">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="9" y="9" width="13" height="13" rx="2" ry="2"/>
+              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+            </svg>
+            <span class="tb-btn-label">Copy To…</span>
+          </button>
+
+          <!-- Trash (⌘⌫) -->
+          <button class="tb-btn" id="btnTrash" title="Move to Trash (⌘⌫)">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+          </button>
         </div>
 
-        <!-- Favorites -->
-        <div class="sidebar-section">
-          <div class="sidebar-header">Favorites</div>
-          <div class="sidebar-item active" id="sideDownloads">
-            <svg class="sidebar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <!-- Search Bar with Live Filter -->
+        <div class="toolbar-search-box">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="demoSearchInput" placeholder="Search folder…" />
+          <button class="clear-search-btn" id="btnClearSearch" style="display: none;">&times;</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main App Split View: NavigationSplitView -->
+    <div class="mac-app-container">
+      
+      <!-- Native macOS Sidebar -->
+      <aside class="mac-native-sidebar" id="appSidebar">
+        <!-- Section: Home -->
+        <div class="sb-section">
+          <button class="sb-row" data-folder="Home">
+            <svg class="sb-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+            </svg>
+            <span class="sb-label">Home</span>
+          </button>
+        </div>
+
+        <!-- Section: Favorites -->
+        <div class="sb-section">
+          <div class="sb-section-header">Favorites</div>
+          <button class="sb-row active" data-folder="Downloads">
+            <svg class="sb-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <circle cx="12" cy="12" r="10"/>
               <polyline points="8 12 12 16 16 12"/>
               <line x1="12" y1="8" x2="12" y2="16"/>
             </svg>
-            <span>Downloads</span>
-          </div>
-          <div class="sidebar-item" id="sideDocuments">
-            <svg class="sidebar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <span class="sb-label">Downloads</span>
+          </button>
+
+          <button class="sb-row" data-folder="Documents">
+            <svg class="sb-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
               <polyline points="14 2 14 8 20 8"/>
             </svg>
-            <span>Documents</span>
-          </div>
-          <div class="sidebar-item">
-            <svg class="sidebar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <span class="sb-label">Documents</span>
+          </button>
+
+          <button class="sb-row" data-folder="Desktop">
+            <svg class="sb-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/>
               <line x1="8" y1="21" x2="16" y2="21"/>
               <line x1="12" y1="17" x2="12" y2="21"/>
             </svg>
-            <span>Desktop</span>
-          </div>
-          <div class="sidebar-item" id="sideProjects">
-            <svg class="sidebar-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+            <span class="sb-label">Desktop</span>
+          </button>
+
+          <button class="sb-row" data-folder="Projects">
+            <svg class="sb-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2zm0 12H4V8h16v10z"/>
             </svg>
-            <span>Projects</span>
-          </div>
+            <span class="sb-label">Projects</span>
+          </button>
         </div>
 
-        <!-- This Mac / Storage -->
-        <div class="sidebar-section">
-          <div class="sidebar-header">This Mac</div>
-          <div class="sidebar-drive-item">
-            <div class="drive-icon-wrap internal">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+        <!-- Section: This Mac (Volumes) -->
+        <div class="sb-section">
+          <div class="sb-section-header">This Mac</div>
+          
+          <button class="sb-volume-item" data-folder="Macintosh HD">
+            <div class="volume-icon internal">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm14 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
               </svg>
             </div>
-            <div class="drive-info">
-              <span class="drive-name">Macintosh HD</span>
-              <span class="drive-capacity">494 GB total • 312 GB free</span>
+            <div class="volume-meta">
+              <span class="volume-name">Macintosh HD</span>
+              <span class="volume-sub">494 GB • 312 GB free</span>
             </div>
-          </div>
-          <div class="sidebar-drive-item">
-            <div class="drive-icon-wrap external">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+          </button>
+
+          <button class="sb-volume-item" data-folder="External SSD">
+            <div class="volume-icon external">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor">
                 <path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm6 14a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/>
               </svg>
             </div>
-            <div class="drive-info">
-              <span class="drive-name">External SSD</span>
-              <span class="drive-capacity">1.8 TB total • 940 GB free</span>
+            <div class="volume-meta">
+              <span class="volume-name">External SSD</span>
+              <span class="volume-sub">1.8 TB • 940 GB free</span>
             </div>
-          </div>
+          </button>
+        </div>
+
+        <!-- Section: Recent Locations -->
+        <div class="sb-section">
+          <div class="sb-section-header">Recent Locations</div>
+          <button class="sb-row" data-folder="Finance & Invoices">
+            <svg class="sb-icon" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"/>
+              <polyline points="12 6 12 12 16 14"/>
+            </svg>
+            <span class="sb-label">Finance &amp; Invoices</span>
+          </button>
         </div>
       </aside>
 
-      <!-- Main Work Panes Area -->
-      <div class="panes-wrapper split-active" id="panesWrapper">
-        <!-- Left Pane: Source (Downloads) -->
-        <div class="file-pane" id="leftPane">
-          <div class="pane-header">
-            <div class="pane-title-badge">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                <polyline points="7 10 12 15 17 10"/>
-                <line x1="12" y1="15" x2="12" y2="3"/>
+      <!-- Detail Work Area -->
+      <div class="mac-detail-area">
+        
+        <!-- Tab Strip View (Matches tabStripView in MainView.swift) -->
+        <div class="mac-tab-strip">
+          <div class="tab-items-scroll" id="tabItemsScroll">
+            <!-- Tabs rendered dynamically -->
+          </div>
+        </div>
+
+        <!-- Panes Area: HSplitView (Single or Dual Panes) -->
+        <div class="mac-panes-container split-active" id="panesWrapper">
+          
+          <!-- PANE 1: Left Pane -->
+          <div class="pane-column pane-focused" id="leftPane" data-side="left">
+            <!-- Pane Header: Navigation buttons + Breadcrumbs + View mode -->
+            <div class="pane-navbar">
+              <div class="nav-history-buttons">
+                <button class="nav-arrow-btn" id="btnLeftBack" title="Back (⌘[)">‹</button>
+                <button class="nav-arrow-btn disabled" id="btnLeftForward" title="Forward (⌘])">›</button>
+                <button class="nav-arrow-btn" id="btnLeftUp" title="Enclosing Folder (⌘↑)">↑</button>
+              </div>
+
+              <!-- Interactive BreadcrumbBar -->
+              <div class="breadcrumb-bar" id="leftBreadcrumbBar">
+                <!-- Injected dynamically -->
+              </div>
+
+              <!-- Segmented View Mode Picker -->
+              <div class="view-mode-picker">
+                <button class="vm-btn active" data-mode="list" title="Details List View">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"/>
+                    <line x1="8" y1="12" x2="21" y2="12"/>
+                    <line x1="8" y1="18" x2="21" y2="18"/>
+                    <line x1="3" y1="6" x2="3.01" y2="6"/>
+                    <line x1="3" y1="12" x2="3.01" y2="12"/>
+                    <line x1="3" y1="18" x2="3.01" y2="18"/>
+                  </svg>
+                </button>
+                <button class="vm-btn" data-mode="grid" title="Icon Grid View">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Content Area: Table / Grid -->
+            <div class="pane-content-container" id="leftContentContainer">
+              <table class="mac-file-table" id="leftFileTable">
+                <thead>
+                  <tr>
+                    <th class="col-th col-th-name">Name <span class="sort-indicator">▾</span></th>
+                    <th class="col-th col-th-date">Date Modified</th>
+                    <th class="col-th col-th-size">Size</th>
+                    <th class="col-th col-th-kind">Kind</th>
+                  </tr>
+                </thead>
+                <tbody id="leftTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+              <div class="mac-icon-grid" id="leftIconGrid" style="display: none;"></div>
+            </div>
+          </div>
+
+          <!-- Split View Resizer Handle -->
+          <div class="pane-split-divider" id="splitDivider" title="Drag to resize"></div>
+
+          <!-- PANE 2: Right Pane -->
+          <div class="pane-column" id="rightPane" data-side="right">
+            <!-- Pane Header -->
+            <div class="pane-navbar">
+              <div class="nav-history-buttons">
+                <button class="nav-arrow-btn" id="btnRightBack" title="Back (⌘[)">‹</button>
+                <button class="nav-arrow-btn disabled" id="btnRightForward" title="Forward (⌘])">›</button>
+                <button class="nav-arrow-btn" id="btnRightUp" title="Enclosing Folder (⌘↑)">↑</button>
+              </div>
+
+              <!-- BreadcrumbBar for Right Pane -->
+              <div class="breadcrumb-bar" id="rightBreadcrumbBar">
+                <!-- Injected dynamically -->
+              </div>
+
+              <!-- Segmented View Mode Picker -->
+              <div class="view-mode-picker">
+                <button class="vm-btn active" data-mode="list" title="Details List View">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="8" y1="6" x2="21" y2="6"/>
+                    <line x1="8" y1="12" x2="21" y2="12"/>
+                    <line x1="8" y1="18" x2="21" y2="18"/>
+                    <line x1="3" y1="6" x2="3.01" y2="6"/>
+                    <line x1="3" y1="12" x2="3.01" y2="12"/>
+                    <line x1="3" y1="18" x2="3.01" y2="18"/>
+                  </svg>
+                </button>
+                <button class="vm-btn" data-mode="grid" title="Icon Grid View">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <rect x="3" y="3" width="7" height="7"/>
+                    <rect x="14" y="3" width="7" height="7"/>
+                    <rect x="14" y="14" width="7" height="7"/>
+                    <rect x="3" y="14" width="7" height="7"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            <!-- Right Content Area -->
+            <div class="pane-content-container" id="rightContentContainer">
+              <table class="mac-file-table" id="rightFileTable">
+                <thead>
+                  <tr>
+                    <th class="col-th col-th-name">Name <span class="sort-indicator">▾</span></th>
+                    <th class="col-th col-th-date">Date Modified</th>
+                    <th class="col-th col-th-size">Size</th>
+                    <th class="col-th col-th-kind">Kind</th>
+                  </tr>
+                </thead>
+                <tbody id="rightTableBody">
+                  <!-- Rendered dynamically -->
+                </tbody>
+              </table>
+              <div class="mac-icon-grid" id="rightIconGrid" style="display: none;"></div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Native StatusFooterView (Matches StatusFooterView.swift) -->
+        <div class="mac-status-footer">
+          <div class="sf-left">
+            <span class="sf-status-icon">✓</span>
+            <span class="sf-status-msg" id="statusMsg">Ready</span>
+          </div>
+
+          <div class="sf-right">
+            <!-- Safe Undo indicator -->
+            <button class="sf-undo-btn" id="btnUndo" title="Undo Last Operation (⌘Z)" style="display: none;">
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M3 7v6h6"/>
+                <path d="M21 17a9 9 0 0 0-9-9 9 9 0 0 0-6 2.3L3 13"/>
               </svg>
-              <span id="leftPaneTitle">Downloads</span>
-            </div>
-            <span class="pane-meta">5 items</span>
-          </div>
+              <span>Undo (⌘Z)</span>
+            </button>
 
-          <div class="file-table">
-            <div class="table-header">
-              <span class="col-name">Name</span>
-              <span class="col-date">Date Modified</span>
-              <span class="col-size">Size</span>
-              <span class="col-kind">Kind</span>
-            </div>
+            <span class="sf-sep" id="undoSep" style="display: none;"></span>
 
-            <!-- File Item 1 -->
-            <div class="table-row file-selected" id="fileRow1">
-              <div class="col-name">
-                <div class="file-icon-badge pdf">PDF</div>
-                <span class="file-label">invoice_client_march.pdf</span>
-              </div>
-              <span class="col-date">Today, 2:15 PM</span>
-              <span class="col-size">248 KB</span>
-              <span class="col-kind">PDF Document</span>
-            </div>
+            <!-- Count & Selection summary -->
+            <span class="sf-summary" id="selectionSummary">5 items (98.2 MB)</span>
 
-            <!-- File Item 2 -->
-            <div class="table-row">
-              <div class="col-name">
-                <div class="file-icon-badge pdf">PDF</div>
-                <span class="file-label">presentation_v2.pdf</span>
-              </div>
-              <span class="col-date">Yesterday</span>
-              <span class="col-size">12.4 MB</span>
-              <span class="col-kind">PDF Document</span>
-            </div>
+            <span class="sf-sep"></span>
 
-            <!-- File Item 3 -->
-            <div class="table-row">
-              <div class="col-name">
-                <div class="file-icon-badge folder">DIR</div>
-                <span class="file-label">photos_shoot/</span>
-              </div>
-              <span class="col-date">Aug 28, 2026</span>
-              <span class="col-size">42 items</span>
-              <span class="col-kind">Folder</span>
-            </div>
-
-            <!-- File Item 4 -->
-            <div class="table-row">
-              <div class="col-name">
-                <div class="file-icon-badge zip">ZIP</div>
-                <span class="file-label">brand_assets.zip</span>
-              </div>
-              <span class="col-date">Aug 25, 2026</span>
-              <span class="col-size">84.2 MB</span>
-              <span class="col-kind">Zip Archive</span>
-            </div>
-
-            <!-- File Item 5 -->
-            <div class="table-row">
-              <div class="col-name">
-                <div class="file-icon-badge sh">SH</div>
-                <span class="file-label">install.sh</span>
-              </div>
-              <span class="col-date">Aug 20, 2026</span>
-              <span class="col-size">1.2 KB</span>
-              <span class="col-kind">Shell Script</span>
-            </div>
-          </div>
-
-          <div class="drag-hint">
-            <span class="drag-arrow">&rarr;</span> Drag and drop to right pane or use <strong>Move To (⌘⇧M)</strong>
+            <!-- Disk capacity gauge -->
+            <span class="sf-capacity">Macintosh HD: 312 GB free</span>
           </div>
         </div>
 
-        <!-- Split Pane Divider -->
-        <div class="split-divider" id="splitDivider" title="Drag to resize panes">
-          <div class="divider-handle"></div>
-        </div>
-
-        <!-- Right Pane: Destination (Projects / Finance) -->
-        <div class="file-pane" id="rightPane">
-          <div class="pane-header">
-            <div class="pane-title-badge destination">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
-              </svg>
-              <span>Projects / 2026</span>
-            </div>
-            <span class="pane-meta">4 items</span>
-          </div>
-
-          <div class="file-table">
-            <div class="table-header">
-              <span class="col-name">Name</span>
-              <span class="col-date">Date Modified</span>
-              <span class="col-size">Size</span>
-              <span class="col-kind">Kind</span>
-            </div>
-
-            <div class="table-row target-highlight">
-              <div class="col-name">
-                <div class="file-icon-badge folder target">DIR</div>
-                <span class="file-label">Finance & Invoices/</span>
-              </div>
-              <span class="col-date">Today, 11:30 AM</span>
-              <span class="col-size">18 items</span>
-              <span class="col-kind">Folder</span>
-            </div>
-
-            <div class="table-row">
-              <div class="col-name">
-                <div class="file-icon-badge folder">DIR</div>
-                <span class="file-label">Client_Contracts/</span>
-              </div>
-              <span class="col-date">Aug 30, 2026</span>
-              <span class="col-size">7 items</span>
-              <span class="col-kind">Folder</span>
-            </div>
-
-            <div class="table-row">
-              <div class="col-name">
-                <div class="file-icon-badge folder">DIR</div>
-                <span class="file-label">Assets/</span>
-              </div>
-              <span class="col-date">Aug 22, 2026</span>
-              <span class="col-size">89 items</span>
-              <span class="col-kind">Folder</span>
-            </div>
-
-            <div class="table-row">
-              <div class="col-name">
-                <div class="file-icon-badge xls">XLS</div>
-                <span class="file-label">annual_budget_2026.xlsx</span>
-              </div>
-              <span class="col-date">Aug 18, 2026</span>
-              <span class="col-size">1.8 MB</span>
-              <span class="col-kind">Excel Sheet</span>
-            </div>
-          </div>
-
-          <div class="destination-dropzone">
-            <span>Drop files here to move directly</span>
-          </div>
-        </div>
       </div>
     </div>
 
-    <!-- Simulated Move To Sheet Dialog (Toggled on button click) -->
-    <div class="move-to-modal-overlay" id="moveToModal" style="display: none;">
-      <div class="mac-sheet-modal">
-        <div class="sheet-header">
-          <div class="sheet-title-group">
-            <span class="sheet-title">Move 1 file to…</span>
-            <span class="sheet-subtitle">Select or fuzzy search a destination folder</span>
+    <!-- Native DestinationPickerSheet (Move To… / Copy To…) -->
+    <div class="mac-sheet-overlay" id="moveToSheet" style="display: none;">
+      <div class="mac-sheet-dialog">
+        <div class="sheet-title-row">
+          <div class="st-left">
+            <span class="st-title" id="sheetModalTitle">Move To…</span>
+            <span class="st-sub" id="sheetModalSub">1 item selected: <code id="sheetSelectedFileName">invoice_client_march.pdf</code></span>
           </div>
-          <button class="sheet-close-btn" id="closeMoveTo">&times;</button>
+          <button class="st-close" id="closeSheetBtn">&times;</button>
         </div>
 
-        <div class="sheet-search">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <!-- Sheet Search Bar -->
+        <div class="sheet-search-bar">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
             <circle cx="11" cy="11" r="8"/>
             <line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
-          <input type="text" value="Finance" readonly />
+          <input type="text" id="sheetSearchInput" placeholder="Search recent or favorite folders…" />
         </div>
 
-        <div class="sheet-destinations">
-          <div class="sheet-dest-item selected">
-            <div class="dest-icon">📁</div>
-            <div class="dest-info">
-              <span class="dest-name">Finance & Invoices</span>
-              <span class="dest-path">~/Projects/2026/Finance & Invoices</span>
+        <!-- Sheet List with Sections -->
+        <div class="sheet-dest-list" id="sheetDestList">
+          <div class="sheet-group-label">FAVORITES &amp; RECENT</div>
+
+          <div class="sheet-row selected" data-dest="Finance & Invoices">
+            <div class="dest-icon folder">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0A84FF"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
             </div>
-            <span class="kbd-key-sm">↵ Enter</span>
+            <div class="dest-text">
+              <span class="dest-title">Finance &amp; Invoices</span>
+              <span class="dest-url">~/Projects/Finance &amp; Invoices</span>
+            </div>
+            <span class="kbd-hint">↵ Enter</span>
           </div>
-          <div class="sheet-dest-item">
-            <div class="dest-icon">📁</div>
-            <div class="dest-info">
-              <span class="dest-name">Client_Contracts</span>
-              <span class="dest-path">~/Projects/2026/Client_Contracts</span>
+
+          <div class="sheet-row" data-dest="Client_Contracts">
+            <div class="dest-icon folder">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0A84FF"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+            </div>
+            <div class="dest-text">
+              <span class="dest-title">Client_Contracts</span>
+              <span class="dest-url">~/Projects/Client_Contracts</span>
             </div>
           </div>
-          <div class="sheet-dest-item">
-            <div class="dest-icon">💾</div>
-            <div class="dest-info">
-              <span class="dest-name">External SSD / Backup</span>
-              <span class="dest-path">/Volumes/External SSD/Backup</span>
+
+          <div class="sheet-row" data-dest="Documents">
+            <div class="dest-icon folder">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#0A84FF"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
+            </div>
+            <div class="dest-text">
+              <span class="dest-title">Documents</span>
+              <span class="dest-url">~/Documents</span>
+            </div>
+          </div>
+
+          <div class="sheet-row" data-dest="External SSD">
+            <div class="dest-icon drive">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="#EA580C"><path d="M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zm6 14a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"/></svg>
+            </div>
+            <div class="dest-text">
+              <span class="dest-title">External SSD / Backup</span>
+              <span class="dest-url">/Volumes/External SSD/Backups_2026</span>
             </div>
           </div>
         </div>
 
-        <div class="sheet-actions">
-          <button class="btn btn-secondary sheet-btn" id="cancelMoveTo">Cancel</button>
-          <button class="btn btn-primary sheet-btn" id="confirmMoveTo">Move File</button>
+        <!-- Sheet Action Buttons -->
+        <div class="sheet-actions-row">
+          <button class="sheet-btn cancel" id="cancelSheetBtn">Cancel</button>
+          <button class="sheet-btn confirm" id="confirmSheetBtn">Move</button>
         </div>
       </div>
     </div>
 
-    <!-- Window Status Footer -->
-    <div class="mac-status-bar">
-      <div class="status-left">
-        <span class="status-indicator"></span>
-        <span id="statusText">5 items • 98.2 MB selected • Swift 6 Native Engine</span>
-      </div>
-      <div class="status-right">
-        <span>Macintosh HD: 312 GB free</span>
-      </div>
-    </div>
   </div>
 </div>
 
-<style>
+<!-- Global Scoped Styles: Ensures dynamically generated DOM elements receive 100% full styling -->
+<style is:global>
   .demo-container {
     margin-top: 2.5rem;
     margin-bottom: 2rem;
     position: relative;
+    width: 100%;
+    max-width: 1080px;
   }
 
-  .demo-interactive-hint {
+  .demo-container .demo-interactive-hint {
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
@@ -463,797 +454,1775 @@
     color: var(--color-text-muted);
     background: #FFFFFF;
     border: 1px solid var(--color-border);
-    padding: 0.35rem 0.85rem;
+    padding: 0.4rem 1rem;
     border-radius: 9999px;
     box-shadow: var(--shadow-sm);
   }
 
-  .hint-dot {
+  .demo-container .hint-dot {
     width: 8px;
     height: 8px;
     background-color: var(--color-accent);
     border-radius: 50%;
-    animation: pulse 2s infinite;
+    animation: demoPulse 2s infinite;
   }
 
-  @keyframes pulse {
+  @keyframes demoPulse {
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.4; transform: scale(0.85); }
   }
 
   /* macOS Window Frame */
-  .mac-window {
+  .demo-container .mac-window {
     background: #FFFFFF;
     border-radius: 12px;
-    box-shadow: var(--shadow-mac-window);
-    border: 1px solid rgba(0, 0, 0, 0.12);
+    box-shadow: 0 24px 60px -12px rgba(15, 23, 42, 0.22), 0 0 0 1px rgba(0, 0, 0, 0.12);
     overflow: hidden;
     position: relative;
     text-align: left;
+    user-select: none;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", system-ui, sans-serif;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
   }
 
-  /* Titlebar */
-  .mac-titlebar {
-    background: #EDEFEF;
-    border-bottom: 1px solid #D5D7D7;
-    height: 38px;
+  /* Unified Top Titlebar */
+  .demo-container .mac-unified-titlebar {
+    display: flex;
+    background: #ECEEEF;
+    border-bottom: 1px solid #D1D5DB;
+    height: 48px;
+  }
+
+  .demo-container .titlebar-left {
+    width: 210px;
+    flex-shrink: 0;
     display: flex;
     align-items: center;
-    padding: 0 12px;
-    gap: 12px;
-    user-select: none;
+    justify-content: space-between;
+    padding: 0 14px;
+    border-right: 1px solid #D1D5DB;
+    background: #E8EAEA;
+    transition: width 0.18s ease;
   }
 
-  .traffic-lights {
+  .demo-container .titlebar-left.collapsed {
+    width: 70px;
+  }
+
+  .demo-container .traffic-lights {
     display: flex;
     align-items: center;
     gap: 7px;
   }
 
-  .light {
+  .demo-container .light {
     width: 12px;
     height: 12px;
     border-radius: 50%;
     display: inline-block;
+    cursor: pointer;
   }
 
-  .light.close { background: #FF5F56; border: 1px solid #E0443E; }
-  .light.minimize { background: #FFBD2E; border: 1px solid #DEA123; }
-  .light.maximize { background: #27C93F; border: 1px solid #1AAB29; }
+  .demo-container .light.close { background: #FF5F56; border: 1px solid #E0443E; }
+  .demo-container .light.minimize { background: #FFBD2E; border: 1px solid #DEA123; }
+  .demo-container .light.maximize { background: #27C93F; border: 1px solid #1AAB29; }
 
-  .tab-bar {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    flex: 1;
-    overflow-x: auto;
-  }
-
-  .mac-tab {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(0, 0, 0, 0.04);
-    border: 1px solid transparent;
-    border-radius: 6px;
-    padding: 3px 10px;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--color-text-body);
-    transition: all 0.15s ease;
-  }
-
-  .mac-tab:hover {
-    background: rgba(0, 0, 0, 0.08);
-  }
-
-  .mac-tab.active {
-    background: #FFFFFF;
-    color: var(--color-text-main);
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
-    border-color: rgba(0, 0, 0, 0.08);
-  }
-
-  .tab-badge {
-    background: rgba(0, 0, 0, 0.08);
-    font-size: 0.6875rem;
-    padding: 1px 5px;
-    border-radius: 10px;
-  }
-
-  .new-tab-btn {
-    font-size: 1rem;
-    font-weight: 400;
-    color: var(--color-text-muted);
-    padding: 2px 8px;
+  .demo-container .sidebar-toggle-btn {
+    color: #64748B;
+    padding: 4px;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    background: none;
+    border: none;
   }
 
-  .new-tab-btn:hover {
+  .demo-container .sidebar-toggle-btn:hover {
     background: rgba(0, 0, 0, 0.08);
-    color: var(--color-text-main);
+    color: #0F172A;
   }
 
-  .window-title-spacer {
-    width: 60px;
-  }
-
-  /* Toolbar */
-  .mac-toolbar {
-    background: #F6F8FA;
-    border-bottom: 1px solid #E2E8F0;
-    height: 44px;
+  /* Detail Toolbar */
+  .demo-container .titlebar-detail {
+    flex: 1;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 12px;
-    gap: 8px;
+    padding: 0 14px;
+    gap: 12px;
   }
 
-  .toolbar-group {
+  .demo-container .toolbar-actions {
     display: flex;
     align-items: center;
     gap: 6px;
   }
 
-  .tool-btn {
-    display: flex;
+  .demo-container .tb-btn {
+    display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 5px;
     background: #FFFFFF;
     border: 1px solid #CBD5E1;
     border-radius: 6px;
-    padding: 4px 9px;
+    padding: 5px 9px;
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--color-text-body);
+    color: #334155;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
-    transition: all 0.15s ease;
+    transition: all 0.12s ease;
+    cursor: pointer;
   }
 
-  .tool-btn:hover {
-    background: #F1F5F9;
+  .demo-container .tb-btn:hover {
+    background: #F8FAFC;
     border-color: #94A3B8;
   }
 
-  .tool-btn.active-tool {
+  .demo-container .tb-btn.tb-btn-active {
     background: #EBF5FF;
     border-color: #93C5FD;
     color: #0066D6;
   }
 
-  .tool-icon-only {
-    padding: 5px 8px;
+  .demo-container .tb-highlight-btn {
+    background: #F0FDF4;
+    border-color: #86EFAC;
+    color: #15803D;
   }
 
-  .toolbar-divider {
+  .demo-container .tb-highlight-btn:hover {
+    background: #DCFCE7;
+  }
+
+  .demo-container .tb-btn-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+  }
+
+  .demo-container .tb-separator {
     width: 1px;
     height: 18px;
     background: #CBD5E1;
     margin: 0 4px;
   }
 
-  .kbd-key-sm {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    background: rgba(0, 0, 0, 0.06);
-    padding: 1px 4px;
-    border-radius: 3px;
-    color: var(--color-text-muted);
-  }
-
-  .toolbar-search {
+  .demo-container .toolbar-search-box {
     display: flex;
     align-items: center;
     gap: 6px;
     background: #FFFFFF;
     border: 1px solid #CBD5E1;
     border-radius: 6px;
-    padding: 3px 8px;
+    padding: 4px 8px;
     width: 180px;
   }
 
-  .toolbar-search input {
+  .demo-container .toolbar-search-box input {
     border: none;
     outline: none;
     font-size: 0.75rem;
-    width: 100%;
-    color: var(--color-text-main);
+    color: #0F172A;
     background: transparent;
+    width: 100%;
   }
 
-  /* Breadcrumb Bar */
-  .mac-breadcrumb-bar {
-    background: #F8FAFC;
-    border-bottom: 1px solid #E2E8F0;
-    padding: 4px 12px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.8125rem;
-  }
-
-  .breadcrumb-container {
-    display: flex;
-    align-items: center;
-    gap: 6px;
-    color: var(--color-text-muted);
-  }
-
-  .crumb-segment {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-
-  .crumb-segment:hover {
-    background: rgba(0, 0, 0, 0.05);
-    color: var(--color-text-main);
-  }
-
-  .crumb-segment.active-crumb {
-    color: var(--color-accent);
-    font-weight: 600;
-    background: #EBF5FF;
-  }
-
-  .crumb-separator {
+  .demo-container .clear-search-btn {
+    font-size: 1rem;
     color: #94A3B8;
-    font-size: 0.875rem;
-  }
-
-  .view-mode-toggle {
-    display: flex;
-    align-items: center;
-    background: #E2E8F0;
-    padding: 2px;
-    border-radius: 5px;
-    gap: 2px;
-  }
-
-  .view-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 18px;
-    border-radius: 3px;
-    color: var(--color-text-muted);
+    line-height: 1;
     cursor: pointer;
+    background: none;
+    border: none;
   }
 
-  .view-icon.active {
-    background: #FFFFFF;
-    color: var(--color-text-main);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-  }
-
-  /* App Body */
-  .mac-app-body {
+  /* App Split Container */
+  .demo-container .mac-app-container {
     display: flex;
-    height: 380px;
-    background: #FFFFFF;
+    height: 430px;
   }
 
   /* Sidebar */
-  .mac-sidebar {
-    width: 200px;
-    background: #F8FAFC;
+  .demo-container .mac-native-sidebar {
+    width: 210px;
+    background: #F6F8FA;
     border-right: 1px solid #E2E8F0;
     padding: 10px 8px;
     display: flex;
     flex-direction: column;
-    gap: 14px;
-    user-select: none;
+    gap: 12px;
+    overflow-y: auto;
     flex-shrink: 0;
+    transition: width 0.18s ease, opacity 0.18s ease;
   }
 
-  .sidebar-section {
+  .demo-container .mac-native-sidebar.collapsed {
+    width: 0;
+    padding: 0;
+    overflow: hidden;
+    opacity: 0;
+    border-right: none;
+  }
+
+  .demo-container .sb-section {
     display: flex;
     flex-direction: column;
     gap: 2px;
   }
 
-  .sidebar-header {
+  .demo-container .sb-section-header {
     font-size: 0.6875rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     color: #94A3B8;
-    padding: 2px 8px;
-    margin-bottom: 2px;
+    padding: 3px 8px;
   }
 
-  .sidebar-item {
+  .demo-container .sb-row {
     display: flex;
     align-items: center;
     gap: 8px;
-    padding: 5px 8px;
+    padding: 6px 8px;
     border-radius: 6px;
     font-size: 0.8125rem;
     font-weight: 500;
-    color: var(--color-text-body);
+    color: #334155;
+    text-align: left;
+    width: 100%;
+    transition: all 0.1s ease;
     cursor: pointer;
-    transition: all 0.12s ease;
+    background: none;
+    border: none;
   }
 
-  .sidebar-item:hover {
+  .demo-container .sb-row:hover {
     background: rgba(0, 0, 0, 0.04);
   }
 
-  .sidebar-item.active {
+  .demo-container .sb-row.active {
     background: #EBF5FF;
     color: var(--color-accent);
     font-weight: 600;
   }
 
-  .sidebar-drive-item {
+  .demo-container .sb-icon {
+    flex-shrink: 0;
+  }
+
+  .demo-container .sb-row.active .sb-icon {
+    color: var(--color-accent);
+  }
+
+  .demo-container .sb-volume-item {
     display: flex;
     align-items: center;
     gap: 8px;
     padding: 4px 8px;
     border-radius: 6px;
     cursor: pointer;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
   }
 
-  .sidebar-drive-item:hover {
+  .demo-container .sb-volume-item:hover {
     background: rgba(0, 0, 0, 0.04);
   }
 
-  .drive-icon-wrap {
-    width: 22px;
-    height: 22px;
-    border-radius: 5px;
+  .demo-container .sb-volume-item.active {
+    background: #EBF5FF;
+  }
+
+  .demo-container .volume-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
   }
 
-  .drive-icon-wrap.internal { background: #EBF5FF; color: #0A84FF; }
-  .drive-icon-wrap.external { background: #FFF7ED; color: #EA580C; }
+  .demo-container .volume-icon.internal { background: #EBF5FF; color: #0A84FF; }
+  .demo-container .volume-icon.external { background: #FFF7ED; color: #EA580C; }
 
-  .drive-info {
+  .demo-container .volume-meta {
     display: flex;
     flex-direction: column;
     line-height: 1.2;
     overflow: hidden;
   }
 
-  .drive-name {
+  .demo-container .volume-name {
     font-size: 0.75rem;
     font-weight: 600;
-    color: var(--color-text-main);
+    color: #0F172A;
   }
 
-  .drive-capacity {
+  .demo-container .volume-sub {
     font-size: 0.65rem;
-    color: var(--color-text-muted);
+    color: #64748B;
   }
 
-  /* Panes Area */
-  .panes-wrapper {
+  /* Detail Area */
+  .demo-container .mac-detail-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #FFFFFF;
+    overflow: hidden;
+  }
+
+  /* Native Tab Strip */
+  .demo-container .mac-tab-strip {
+    background: #F3F4F6;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 4px 8px;
+  }
+
+  .demo-container .tab-items-scroll {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+  }
+
+  .demo-container .tab-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: rgba(0, 0, 0, 0.04);
+    border: 1px solid transparent;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #475569;
+    transition: all 0.12s ease;
+    cursor: pointer;
+  }
+
+  .demo-container .tab-chip:hover {
+    background: rgba(0, 0, 0, 0.07);
+  }
+
+  .demo-container .tab-chip.active {
+    background: #FFFFFF;
+    color: #0F172A;
+    font-weight: 600;
+    border-color: rgba(0, 0, 0, 0.12);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
+  }
+
+  .demo-container .tab-chip-icon {
+    color: var(--color-accent);
+    flex-shrink: 0;
+  }
+
+  .demo-container .tab-chip-title {
+    margin-right: 2px;
+  }
+
+  .demo-container .tab-close-icon {
+    font-size: 0.8125rem;
+    color: #94A3B8;
+    padding: 0 2px;
+    border-radius: 50%;
+  }
+
+  .demo-container .tab-close-icon:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #0F172A;
+  }
+
+  .demo-container .tab-add-btn {
+    font-size: 1rem;
+    color: #64748B;
+    padding: 2px 8px;
+    border-radius: 4px;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .demo-container .tab-add-btn:hover {
+    background: rgba(0, 0, 0, 0.08);
+    color: #0F172A;
+  }
+
+  /* Panes Container (HSplitView) */
+  .demo-container .mac-panes-container {
     flex: 1;
     display: flex;
     overflow: hidden;
   }
 
-  .panes-wrapper.single-active #rightPane,
-  .panes-wrapper.single-active #splitDivider {
-    display: none;
+  .demo-container .mac-panes-container.single-active #rightPane,
+  .demo-container .mac-panes-container.single-active #splitDivider {
+    display: none !important;
   }
 
-  .file-pane {
+  .demo-container .pane-column {
     flex: 1;
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background: #FFFFFF;
+    min-width: 0;
   }
 
-  .pane-header {
-    background: #FAFBFC;
-    border-bottom: 1px solid #E2E8F0;
-    padding: 6px 12px;
+  .demo-container .pane-column.pane-focused {
+    outline: 2px solid rgba(10, 132, 255, 0.35);
+    outline-offset: -2px;
+  }
+
+  /* Pane Navigation Bar */
+  .demo-container .pane-navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 8px;
+    background: #F9FAFB;
+    border-bottom: 1px solid #E5E7EB;
+    padding: 5px 10px;
   }
 
-  .pane-title-badge {
+  .demo-container .nav-history-buttons {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.8125rem;
+    gap: 2px;
+    flex-shrink: 0;
+  }
+
+  .demo-container .nav-arrow-btn {
+    width: 22px;
+    height: 22px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.9375rem;
+    font-weight: 700;
+    color: #475569;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .demo-container .nav-arrow-btn:hover:not(.disabled) {
+    background: rgba(0, 0, 0, 0.08);
+  }
+
+  .demo-container .nav-arrow-btn.disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  /* BreadcrumbBar */
+  .demo-container .breadcrumb-bar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 5px;
+    padding: 3px 8px;
+    font-size: 0.75rem;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
+
+  .demo-container .bc-segment {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: #64748B;
+    cursor: pointer;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  .demo-container .bc-segment:hover {
+    background: #F1F5F9;
+    color: #0F172A;
+  }
+
+  .demo-container .bc-segment.active {
+    color: var(--color-accent);
     font-weight: 600;
-    color: var(--color-text-main);
   }
 
-  .pane-title-badge.destination {
-    color: #10B981;
+  .demo-container .bc-sep {
+    color: #94A3B8;
   }
 
-  .pane-meta {
-    font-size: 0.6875rem;
-    color: var(--color-text-muted);
+  /* View Mode Segmented Picker */
+  .demo-container .view-mode-picker {
+    display: flex;
+    align-items: center;
+    background: #E5E7EB;
+    padding: 2px;
+    border-radius: 5px;
+    gap: 2px;
+    flex-shrink: 0;
   }
 
-  .file-table {
+  .demo-container .vm-btn {
+    width: 22px;
+    height: 20px;
+    border-radius: 3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748B;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .demo-container .vm-btn.active {
+    background: #FFFFFF;
+    color: #0F172A;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.08);
+  }
+
+  /* Resizer Divider */
+  .demo-container .pane-split-divider {
+    width: 4px;
+    background: #E5E7EB;
+    cursor: col-resize;
+    flex-shrink: 0;
+  }
+
+  /* Content Area */
+  .demo-container .pane-content-container {
     flex: 1;
     overflow-y: auto;
-    font-size: 0.8125rem;
+    overflow-x: hidden;
+    background: #FFFFFF;
   }
 
-  .table-header {
-    display: grid;
-    grid-template-columns: 2.2fr 1.2fr 0.9fr 1fr;
-    padding: 6px 12px;
+  /* Native File Table */
+  .demo-container .mac-file-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.75rem;
+    text-align: left;
+    table-layout: fixed;
+  }
+
+  .demo-container .mac-file-table thead tr {
+    background: #F9FAFB;
+    border-bottom: 1px solid #E5E7EB;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+  }
+
+  .demo-container .mac-file-table th.col-th {
+    padding: 5px 8px;
     font-size: 0.6875rem;
     font-weight: 600;
     color: #94A3B8;
-    border-bottom: 1px solid #F1F5F9;
     user-select: none;
   }
 
-  .table-row {
-    display: grid;
-    grid-template-columns: 2.2fr 1.2fr 0.9fr 1fr;
-    padding: 7px 12px;
-    align-items: center;
-    border-bottom: 1px solid #F8FAFC;
+  .demo-container .mac-file-table th.col-th-name { width: 44%; }
+  .demo-container .mac-file-table th.col-th-date { width: 28%; }
+  .demo-container .mac-file-table th.col-th-size { width: 14%; text-align: right; }
+  .demo-container .mac-file-table th.col-th-kind { width: 14%; padding-left: 10px; }
+
+  .demo-container .sort-indicator {
+    font-size: 0.625rem;
+    color: var(--color-accent);
+  }
+
+  .demo-container .mac-file-table td.col-td {
+    padding: 5px 8px;
+    border-bottom: 1px solid #F9FAFB;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    vertical-align: middle;
+  }
+
+  .demo-container .table-row {
     cursor: pointer;
     transition: background-color 0.1s ease;
   }
 
-  .table-row:hover {
+  .demo-container .table-row:hover {
     background-color: #F8FAFC;
   }
 
-  .table-row.file-selected {
-    background-color: #EBF5FF;
-    border-left: 3px solid var(--color-accent);
+  .demo-container .table-row.row-selected {
+    background-color: #EBF5FF !important;
   }
 
-  .table-row.target-highlight {
-    background-color: #ECFDF5;
-    border-left: 3px solid #10B981;
+  .demo-container .table-row.row-selected .file-name-text {
+    font-weight: 600;
+    color: #0066D6;
   }
 
-  .col-name {
+  /* File Name Cell: Flex row with icon and label */
+  .demo-container .col-name-cell {
     display: flex;
     align-items: center;
     gap: 8px;
+    width: 100%;
     overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-weight: 500;
-    color: var(--color-text-main);
   }
 
-  .file-icon-badge {
-    display: inline-flex;
+  .demo-container .file-icon-wrap {
+    width: 18px;
+    height: 18px;
+    display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.5625rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    width: 24px;
-    height: 20px;
-    border-radius: 4px;
     flex-shrink: 0;
   }
 
-  .file-icon-badge.pdf { background: #FEE2E2; color: #DC2626; border: 1px solid #FECACA; }
-  .file-icon-badge.folder { background: #DBEAFE; color: #1D4ED8; border: 1px solid #BFDBFE; }
-  .file-icon-badge.folder.target { background: #D1FAE5; color: #047857; border: 1px solid #A7F3D0; }
-  .file-icon-badge.zip { background: #FEF3C7; color: #B45309; border: 1px solid #FDE68A; }
-  .file-icon-badge.sh { background: #F1F5F9; color: #475569; border: 1px solid #CBD5E1; }
-  .file-icon-badge.xls { background: #DCFCE7; color: #15803D; border: 1px solid #BBF7D0; }
-
-  .col-date, .col-size, .col-kind {
-    color: var(--color-text-muted);
-    font-size: 0.75rem;
+  .demo-container .file-name-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #1E293B;
   }
 
-  .drag-hint {
-    padding: 6px 12px;
-    font-size: 0.75rem;
+  .demo-container .col-td-date,
+  .demo-container .col-td-kind {
+    color: #64748B;
+  }
+
+  .demo-container .col-td-size {
+    color: #64748B;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    text-align: right;
+  }
+
+  /* Grid View */
+  .demo-container .mac-icon-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(84px, 1fr));
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .demo-container .grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 8px 4px;
+    border-radius: 6px;
+    cursor: pointer;
+    gap: 6px;
+    transition: background 0.1s ease;
+  }
+
+  .demo-container .grid-item:hover {
     background: #F8FAFC;
-    border-top: 1px solid #E2E8F0;
-    color: var(--color-text-muted);
   }
 
-  .drag-arrow {
-    font-weight: bold;
-    color: var(--color-accent);
+  .demo-container .grid-item.selected {
+    background: #EBF5FF;
+    outline: 1px solid #93C5FD;
   }
 
-  /* Split Divider */
-  .split-divider {
-    width: 5px;
-    background: #E2E8F0;
-    cursor: col-resize;
+  .demo-container .grid-icon-wrap {
+    width: 38px;
+    height: 38px;
     display: flex;
     align-items: center;
     justify-content: center;
   }
 
-  .divider-handle {
-    width: 2px;
-    height: 24px;
-    background: #94A3B8;
-    border-radius: 2px;
+  .demo-container .grid-label {
+    font-size: 0.6875rem;
+    color: #1E293B;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 80px;
+    line-height: 1.2;
   }
 
-  .destination-dropzone {
-    padding: 6px 12px;
-    font-size: 0.75rem;
-    background: #ECFDF5;
-    border-top: 1px solid #A7F3D0;
-    color: #047857;
-    text-align: center;
-    font-weight: 500;
+  /* Status Footer */
+  .demo-container .mac-status-footer {
+    height: 26px;
+    background: #ECEEEF;
+    border-top: 1px solid #D1D5DB;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.6875rem;
+    color: #64748B;
   }
 
-  /* Simulated Move To Sheet Modal */
-  .move-to-modal-overlay {
+  .demo-container .sf-left {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .demo-container .sf-status-icon {
+    color: #10B981;
+    font-weight: 700;
+  }
+
+  .demo-container .sf-right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .demo-container .sf-undo-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--color-accent);
+    font-weight: 600;
+    font-size: 0.6875rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+  }
+
+  .demo-container .sf-undo-btn:hover {
+    text-decoration: underline;
+  }
+
+  .demo-container .sf-sep {
+    width: 1px;
+    height: 11px;
+    background: #CBD5E1;
+  }
+
+  /* Sheet Dialog */
+  .demo-container .mac-sheet-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    background: rgba(0, 0, 0, 0.35);
     backdrop-filter: blur(2px);
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     justify-content: center;
-    z-index: 40;
+    padding-top: 40px;
+    z-index: 50;
   }
 
-  .mac-sheet-modal {
+  .demo-container .mac-sheet-dialog {
     background: #FFFFFF;
-    border-radius: 10px;
-    width: 440px;
+    width: 420px;
     max-width: 90%;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 10px;
+    box-shadow: 0 20px 30px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.1);
     padding: 16px;
-    animation: dropSheet 0.2s ease-out;
+    animation: demoSlideSheet 0.18s ease-out;
   }
 
-  @keyframes dropSheet {
-    from { opacity: 0; transform: translateY(-12px); }
+  @keyframes demoSlideSheet {
+    from { opacity: 0; transform: translateY(-10px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
-  .sheet-header {
+  .demo-container .sheet-title-row {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: 10px;
   }
 
-  .sheet-title {
+  .demo-container .st-title {
     font-size: 0.9375rem;
     font-weight: 700;
-    color: var(--color-text-main);
+    color: #0F172A;
     display: block;
   }
 
-  .sheet-subtitle {
-    font-size: 0.75rem;
-    color: var(--color-text-muted);
+  .demo-container .st-sub {
+    font-size: 0.6875rem;
+    color: #64748B;
   }
 
-  .sheet-close-btn {
+  .demo-container .st-sub code {
+    background: #F1F5F9;
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
+  .demo-container .st-close {
     font-size: 1.25rem;
-    color: var(--color-text-muted);
+    color: #94A3B8;
     line-height: 1;
+    background: none;
+    border: none;
+    cursor: pointer;
   }
 
-  .sheet-search {
+  .demo-container .sheet-search-bar {
     display: flex;
     align-items: center;
     gap: 8px;
     background: #F1F5F9;
     border: 1px solid #CBD5E1;
     border-radius: 6px;
-    padding: 6px 10px;
+    padding: 6px 8px;
     margin-bottom: 10px;
   }
 
-  .sheet-search input {
+  .demo-container .sheet-search-bar input {
     border: none;
     outline: none;
     font-size: 0.8125rem;
     width: 100%;
     background: transparent;
     font-weight: 600;
-    color: var(--color-text-main);
+    color: #0F172A;
   }
 
-  .sheet-destinations {
+  .demo-container .sheet-dest-list {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-bottom: 14px;
+    gap: 3px;
+    margin-bottom: 12px;
   }
 
-  .sheet-dest-item {
+  .demo-container .sheet-group-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    color: #94A3B8;
+    padding: 2px 4px;
+  }
+
+  .demo-container .sheet-row {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 7px 10px;
+    gap: 8px;
+    padding: 6px 8px;
     border-radius: 6px;
-    font-size: 0.8125rem;
     cursor: pointer;
+    transition: all 0.1s ease;
   }
 
-  .sheet-dest-item:hover {
-    background: #F1F5F9;
+  .demo-container .sheet-row:hover {
+    background: #F8FAFC;
   }
 
-  .sheet-dest-item.selected {
+  .demo-container .sheet-row.selected {
     background: #EBF5FF;
     border: 1px solid #BFDBFE;
   }
 
-  .dest-icon {
-    font-size: 1.1rem;
+  .demo-container .dest-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
-  .dest-info {
+  .demo-container .dest-text {
     flex: 1;
     display: flex;
     flex-direction: column;
   }
 
-  .dest-name {
+  .demo-container .dest-title {
+    font-size: 0.8125rem;
     font-weight: 600;
-    color: var(--color-text-main);
+    color: #0F172A;
   }
 
-  .dest-path {
+  .demo-container .dest-url {
     font-size: 0.6875rem;
-    color: var(--color-text-muted);
+    color: #64748B;
   }
 
-  .sheet-actions {
+  .demo-container .kbd-hint {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    background: rgba(0, 0, 0, 0.06);
+    padding: 2px 6px;
+    border-radius: 4px;
+    color: #475569;
+  }
+
+  .demo-container .sheet-actions-row {
     display: flex;
     justify-content: flex-end;
     gap: 8px;
   }
 
-  .sheet-btn {
+  .demo-container .sheet-btn {
+    padding: 5px 14px;
+    border-radius: 6px;
     font-size: 0.8125rem;
-    padding: 0.45rem 1rem;
+    font-weight: 600;
+    cursor: pointer;
   }
 
-  /* Status Bar */
-  .mac-status-bar {
-    background: #F6F8FA;
-    border-top: 1px solid #E2E8F0;
-    height: 26px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 12px;
-    font-size: 0.6875rem;
-    color: var(--color-text-muted);
-    user-select: none;
+  .demo-container .sheet-btn.cancel {
+    background: #F1F5F9;
+    border: 1px solid #CBD5E1;
+    color: #334155;
   }
 
-  .status-left {
-    display: flex;
-    align-items: center;
-    gap: 6px;
+  .demo-container .sheet-btn.confirm {
+    background: var(--color-accent);
+    border: none;
+    color: #FFFFFF;
   }
 
-  .status-indicator {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background-color: #10B981;
+  /* Responsive */
+  @media (max-width: 840px) {
+    .demo-container .mac-native-sidebar {
+      display: none !important;
+    }
+    .demo-container .titlebar-left {
+      width: auto !important;
+      border-right: none;
+    }
   }
 
-  @media (max-width: 768px) {
-    .mac-sidebar {
-      display: none;
+  @media (max-width: 640px) {
+    .demo-container .col-th-date,
+    .demo-container .col-th-kind,
+    .demo-container .col-td-date,
+    .demo-container .col-td-kind {
+      display: none !important;
     }
-    .col-date, .col-kind {
-      display: none;
-    }
-    .table-header, .table-row {
-      grid-template-columns: 2fr 1fr;
-    }
-    .window-title-spacer {
-      display: none;
-    }
+    .demo-container .col-th-name { width: 70% !important; }
+    .demo-container .col-th-size { width: 30% !important; }
+    .demo-container .tb-btn-label { display: none; }
   }
 </style>
 
-<script>
-  // Interactive Live Preview logic for Hero Mockup
-  document.addEventListener('DOMContentLoaded', () => {
-    const btnToggleSplit = document.getElementById('btnToggleSplit');
-    const panesWrapper = document.getElementById('panesWrapper');
-    const tabDownloads = document.getElementById('tabDownloads');
-    const tabProjects = document.getElementById('tabProjects');
-    const tabDocuments = document.getElementById('tabDocuments');
-    const activeCrumbText = document.getElementById('activeCrumbText');
-    const leftPaneTitle = document.getElementById('leftPaneTitle');
-    const btnMoveTo = document.getElementById('btnMoveTo');
-    const moveToModal = document.getElementById('moveToModal');
-    const closeMoveTo = document.getElementById('closeMoveTo');
-    const cancelMoveTo = document.getElementById('cancelMoveTo');
-    const confirmMoveTo = document.getElementById('confirmMoveTo');
-    const sideDownloads = document.getElementById('sideDownloads');
-    const sideProjects = document.getElementById('sideProjects');
-    const sideDocuments = document.getElementById('sideDocuments');
+<!-- Inlined Client Interactive Engine -->
+<script is:inline>
+(function () {
+  function initMaggoLiveDemo() {
+    // Verified Virtual File System Data
+    var fileData = {
+      Downloads: {
+        breadcrumbs: ['Macintosh HD', 'Users', 'usman', 'Downloads'],
+        items: [
+          { id: 'd1', name: 'invoice_client_march.pdf', date: 'Today, 2:15 PM', size: '248 KB', kind: 'PDF Document', isFolder: false, icon: 'pdf' },
+          { id: 'd2', name: 'presentation_v2.pdf', date: 'Yesterday', size: '12.4 MB', kind: 'PDF Document', isFolder: false, icon: 'pdf' },
+          { id: 'd3', name: 'photos_shoot', date: 'Aug 28, 2026', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'd4', name: 'brand_assets.zip', date: 'Aug 25, 2026', size: '84.2 MB', kind: 'Zip Archive', isFolder: false, icon: 'zip' },
+          { id: 'd5', name: 'install.sh', date: 'Aug 20, 2026', size: '1.2 KB', kind: 'Shell Script', isFolder: false, icon: 'sh' }
+        ]
+      },
+      Documents: {
+        breadcrumbs: ['Macintosh HD', 'Users', 'usman', 'Documents'],
+        items: [
+          { id: 'doc1', name: 'quarterly_taxes_2026.pdf', date: 'Today, 10:12 AM', size: '1.4 MB', kind: 'PDF Document', isFolder: false, icon: 'pdf' },
+          { id: 'doc2', name: 'employee_handbook.docx', date: 'Aug 26, 2026', size: '540 KB', kind: 'Word Document', isFolder: false, icon: 'doc' },
+          { id: 'doc3', name: 'meeting_notes.md', date: 'Aug 24, 2026', size: '18 KB', kind: 'Markdown Document', isFolder: false, icon: 'doc' },
+          { id: 'doc4', name: 'NDA_template.pdf', date: 'Aug 15, 2026', size: '320 KB', kind: 'PDF Document', isFolder: false, icon: 'pdf' }
+        ]
+      },
+      Projects: {
+        breadcrumbs: ['Macintosh HD', 'Users', 'usman', 'Projects'],
+        items: [
+          { id: 'p1', name: 'Finance & Invoices', date: 'Today, 11:30 AM', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'p2', name: 'Client_Contracts', date: 'Aug 30, 2026', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'p3', name: 'Assets', date: 'Aug 22, 2026', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'p4', name: 'annual_budget_2026.xlsx', date: 'Aug 18, 2026', size: '1.8 MB', kind: 'Excel Sheet', isFolder: false, icon: 'xls' }
+        ]
+      },
+      Desktop: {
+        breadcrumbs: ['Macintosh HD', 'Users', 'usman', 'Desktop'],
+        items: [
+          { id: 'dt1', name: 'Screenshot_2026-09-01.png', date: 'Today, 3:45 PM', size: '2.1 MB', kind: 'PNG Image', isFolder: false, icon: 'img' },
+          { id: 'dt2', name: 'quick_notes.txt', date: 'Today, 1:10 PM', size: '4 KB', kind: 'Plain Text', isFolder: false, icon: 'doc' },
+          { id: 'dt3', name: 'Design_Proposal.pdf', date: 'Yesterday', size: '8.4 MB', kind: 'PDF Document', isFolder: false, icon: 'pdf' }
+        ]
+      },
+      Home: {
+        breadcrumbs: ['Macintosh HD', 'Users', 'usman'],
+        items: [
+          { id: 'h1', name: 'Desktop', date: 'Today', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'h2', name: 'Documents', date: 'Today', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'h3', name: 'Downloads', date: 'Today', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'h4', name: 'Projects', date: 'Today', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' }
+        ]
+      },
+      'Macintosh HD': {
+        breadcrumbs: ['Macintosh HD'],
+        items: [
+          { id: 'm1', name: 'Applications', date: 'Aug 10, 2026', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'm2', name: 'Library', date: 'Jul 15, 2026', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'm3', name: 'System', date: 'Jun 20, 2026', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'm4', name: 'Users', date: 'Today', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' }
+        ]
+      },
+      'External SSD': {
+        breadcrumbs: ['Volumes', 'External SSD'],
+        items: [
+          { id: 'e1', name: 'Backups_2026', date: 'Aug 31, 2026', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'e2', name: 'Raw_Video_Footage', date: 'Aug 29, 2026', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' },
+          { id: 'e3', name: 'Photo_Archive_500GB', date: 'Aug 14, 2026', size: '--', kind: 'Folder', isFolder: true, icon: 'folder' }
+        ]
+      },
+      'photos_shoot': {
+        breadcrumbs: ['Macintosh HD', 'Users', 'usman', 'Downloads', 'photos_shoot'],
+        items: [
+          { id: 'ph1', name: 'IMG_4801_RAW.cr3', date: 'Aug 28, 2026', size: '34.2 MB', kind: 'RAW Image', isFolder: false, icon: 'img' },
+          { id: 'ph2', name: 'IMG_4802_RAW.cr3', date: 'Aug 28, 2026', size: '32.8 MB', kind: 'RAW Image', isFolder: false, icon: 'img' },
+          { id: 'ph3', name: 'Color_Graded_Export.zip', date: 'Aug 28, 2026', size: '142 MB', kind: 'Zip Archive', isFolder: false, icon: 'zip' }
+        ]
+      },
+      'Finance & Invoices': {
+        breadcrumbs: ['Macintosh HD', 'Users', 'usman', 'Projects', 'Finance & Invoices'],
+        items: [
+          { id: 'fi1', name: 'Invoice_AcmeCorp_Q2.pdf', date: 'Aug 24, 2026', size: '210 KB', kind: 'PDF Document', isFolder: false, icon: 'pdf' },
+          { id: 'fi2', name: 'Contract_Master_2026.pdf', date: 'Aug 10, 2026', size: '890 KB', kind: 'PDF Document', isFolder: false, icon: 'pdf' }
+        ]
+      }
+    };
 
-    // Toggle Split View
-    if (btnToggleSplit && panesWrapper) {
-      btnToggleSplit.addEventListener('click', () => {
-        const isSplit = panesWrapper.classList.contains('split-active');
-        if (isSplit) {
-          panesWrapper.classList.remove('split-active');
-          panesWrapper.classList.add('single-active');
-          btnToggleSplit.classList.remove('active-tool');
+    // State
+    var state = {
+      activePane: 'left',
+      leftFolder: 'Downloads',
+      rightFolder: 'Projects',
+      leftHistory: ['Downloads'],
+      leftHistoryIdx: 0,
+      rightHistory: ['Projects'],
+      rightHistoryIdx: 0,
+      leftSelectedId: 'd1',
+      rightSelectedId: 'p1',
+      leftViewMode: 'list',
+      rightViewMode: 'list',
+      isSplit: true,
+      searchQuery: '',
+      undoAction: null,
+      tabs: [
+        { id: 't1', name: 'Downloads' },
+        { id: 't2', name: 'Projects' },
+        { id: 't3', name: 'Documents' }
+      ],
+      activeTabId: 't1'
+    };
+
+    // Elements
+    var panesWrapper = document.getElementById('panesWrapper');
+    var btnToggleSplit = document.getElementById('btnToggleSplit');
+    var leftPane = document.getElementById('leftPane');
+    var rightPane = document.getElementById('rightPane');
+    var leftTableBody = document.getElementById('leftTableBody');
+    var rightTableBody = document.getElementById('rightTableBody');
+    var leftIconGrid = document.getElementById('leftIconGrid');
+    var rightIconGrid = document.getElementById('rightIconGrid');
+    var leftFileTable = document.getElementById('leftFileTable');
+    var rightFileTable = document.getElementById('rightFileTable');
+    var leftBreadcrumbBar = document.getElementById('leftBreadcrumbBar');
+    var rightBreadcrumbBar = document.getElementById('rightBreadcrumbBar');
+    var tabItemsScroll = document.getElementById('tabItemsScroll');
+    var statusMsg = document.getElementById('statusMsg');
+    var selectionSummary = document.getElementById('selectionSummary');
+    var btnUndo = document.getElementById('btnUndo');
+    var undoSep = document.getElementById('undoSep');
+    var btnMoveTo = document.getElementById('btnMoveTo');
+    var btnCopyTo = document.getElementById('btnCopyTo');
+    var btnNewFolder = document.getElementById('btnNewFolder');
+    var btnTrash = document.getElementById('btnTrash');
+    var btnNewTab = document.getElementById('btnNewTab');
+    var btnToggleSidebar = document.getElementById('btnToggleSidebar');
+    var appSidebar = document.getElementById('appSidebar');
+    var moveToSheet = document.getElementById('moveToSheet');
+    var closeSheetBtn = document.getElementById('closeSheetBtn');
+    var cancelSheetBtn = document.getElementById('cancelSheetBtn');
+    var confirmSheetBtn = document.getElementById('confirmSheetBtn');
+    var sheetSearchInput = document.getElementById('sheetSearchInput');
+    var sheetSelectedFileName = document.getElementById('sheetSelectedFileName');
+    var sheetModalTitle = document.getElementById('sheetModalTitle');
+    var demoSearchInput = document.getElementById('demoSearchInput');
+    var btnClearSearch = document.getElementById('btnClearSearch');
+
+    // Authentic SVG File Icons (Scaled properly for table and grid)
+    function getFileSvg(type, size) {
+      var s = size || 16;
+      if (type === 'pdf') {
+        return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="#DC2626"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
+      } else if (type === 'folder') {
+        return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="#0A84FF"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>';
+      } else if (type === 'zip') {
+        return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="#D97706"><path d="M20 6h-8l-2-2H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2zm-6 10h-4v-2h4v2zm0-4h-4v-2h4v2z"/></svg>';
+      } else if (type === 'sh') {
+        return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="#475569"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"/></svg>';
+      } else if (type === 'xls') {
+        return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="#16A34A"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14H8v-2h4v2zm0-4H8v-2h4v2zm0-4H8V7h4v2zm5 8h-4v-2h4v2zm0-4h-4v-2h4v2zm0-4h-4V7h4v2z"/></svg>';
+      } else if (type === 'img') {
+        return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="#8B5CF6"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>';
+      }
+      return '<svg width="' + s + '" height="' + s + '" viewBox="0 0 24 24" fill="#2563EB"><path d="M14 2H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>';
+    }
+
+    // Render Breadcrumbs
+    function renderBreadcrumbs(container, folderName) {
+      if (!container) return;
+      var data = fileData[folderName] || { breadcrumbs: [folderName] };
+      var html = '';
+      data.breadcrumbs.forEach(function (segment, index) {
+        var isLast = index === data.breadcrumbs.length - 1;
+        if (index === 0 && segment === 'Macintosh HD') {
+          html += '<span class="bc-segment' + (isLast ? ' active' : '') + '" data-nav="' + segment + '"><svg width="12" height="12" viewBox="0 0 24 24" fill="#0A84FF"><path d="M4 6h16a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2zm14 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/></svg>' + segment + '</span>';
         } else {
-          panesWrapper.classList.remove('single-active');
-          panesWrapper.classList.add('split-active');
-          btnToggleSplit.classList.add('active-tool');
+          html += '<span class="bc-segment' + (isLast ? ' active' : '') + '" data-nav="' + segment + '">' + segment + '</span>';
+        }
+        if (!isLast) {
+          html += '<span class="bc-sep">›</span>';
+        }
+      });
+      container.innerHTML = html;
+
+      // Clickable breadcrumbs
+      var segments = container.querySelectorAll('.bc-segment');
+      segments.forEach(function (el) {
+        el.addEventListener('click', function () {
+          var target = el.getAttribute('data-nav');
+          if (target && fileData[target]) {
+            navigateTo(target);
+          }
+        });
+      });
+    }
+
+    // Render Table and Grid
+    function renderPane(side) {
+      var folderName = side === 'left' ? state.leftFolder : state.rightFolder;
+      var tableBody = side === 'left' ? leftTableBody : rightTableBody;
+      var iconGrid = side === 'left' ? leftIconGrid : rightIconGrid;
+      var fileTable = side === 'left' ? leftFileTable : rightFileTable;
+      var breadcrumbs = side === 'left' ? leftBreadcrumbBar : rightBreadcrumbBar;
+      var viewMode = side === 'left' ? state.leftViewMode : state.rightViewMode;
+      var selectedId = side === 'left' ? state.leftSelectedId : state.rightSelectedId;
+
+      renderBreadcrumbs(breadcrumbs, folderName);
+
+      var data = fileData[folderName] || { items: [] };
+      var items = data.items;
+
+      if (state.searchQuery && side === state.activePane) {
+        var query = state.searchQuery.toLowerCase();
+        items = items.filter(function (item) {
+          return item.name.toLowerCase().indexOf(query) !== -1;
+        });
+      }
+
+      // Render Table Rows
+      if (tableBody) {
+        if (items.length === 0) {
+          tableBody.innerHTML = '<tr><td colspan="4" style="text-align:center; padding: 24px; color: #94A3B8;">Folder is empty or no matches</td></tr>';
+        } else {
+          var html = '';
+          items.forEach(function (item) {
+            var isSelected = item.id === selectedId;
+            html += '<tr class="table-row' + (isSelected ? ' row-selected' : '') + '" data-item-id="' + item.id + '" data-is-folder="' + item.isFolder + '" data-name="' + item.name + '">';
+            html += '<td class="col-td col-td-name"><div class="col-name-cell"><div class="file-icon-wrap">' + getFileSvg(item.icon, 16) + '</div><span class="file-name-text">' + item.name + (item.isFolder ? '/' : '') + '</span></div></td>';
+            html += '<td class="col-td col-td-date">' + item.date + '</td>';
+            html += '<td class="col-td col-td-size">' + item.size + '</td>';
+            html += '<td class="col-td col-td-kind">' + item.kind + '</td>';
+            html += '</tr>';
+          });
+          tableBody.innerHTML = html;
+
+          var rows = tableBody.querySelectorAll('.table-row');
+          rows.forEach(function (row) {
+            row.addEventListener('click', function () {
+              var itemId = row.getAttribute('data-item-id');
+              if (side === 'left') state.leftSelectedId = itemId;
+              else state.rightSelectedId = itemId;
+              state.activePane = side;
+              updatePaneFocus();
+              renderPane(side);
+              updateFooter();
+            });
+
+            row.addEventListener('dblclick', function () {
+              var isFolder = row.getAttribute('data-is-folder') === 'true';
+              var name = row.getAttribute('data-name');
+              if (isFolder && name && fileData[name]) {
+                navigateTo(name);
+              }
+            });
+          });
+        }
+      }
+
+      // Render Grid Items
+      if (iconGrid) {
+        if (items.length === 0) {
+          iconGrid.innerHTML = '<div style="grid-column: 1/-1; text-align:center; padding: 20px; color: #94A3B8;">Empty</div>';
+        } else {
+          var gHtml = '';
+          items.forEach(function (item) {
+            var isSelected = item.id === selectedId;
+            gHtml += '<div class="grid-item' + (isSelected ? ' selected' : '') + '" data-item-id="' + item.id + '" data-name="' + item.name + '" data-is-folder="' + item.isFolder + '">';
+            gHtml += '<div class="grid-icon-wrap">' + getFileSvg(item.icon, 32) + '</div>';
+            gHtml += '<span class="grid-label">' + item.name + '</span>';
+            gHtml += '</div>';
+          });
+          iconGrid.innerHTML = gHtml;
+
+          var gItems = iconGrid.querySelectorAll('.grid-item');
+          gItems.forEach(function (gItem) {
+            gItem.addEventListener('click', function () {
+              var itemId = gItem.getAttribute('data-item-id');
+              if (side === 'left') state.leftSelectedId = itemId;
+              else state.rightSelectedId = itemId;
+              state.activePane = side;
+              updatePaneFocus();
+              renderPane(side);
+              updateFooter();
+            });
+
+            gItem.addEventListener('dblclick', function () {
+              var isFolder = gItem.getAttribute('data-is-folder') === 'true';
+              var name = gItem.getAttribute('data-name');
+              if (isFolder && name && fileData[name]) {
+                navigateTo(name);
+              }
+            });
+          });
+        }
+      }
+
+      // Toggle List / Grid display
+      if (viewMode === 'grid') {
+        if (fileTable) fileTable.style.display = 'none';
+        if (iconGrid) iconGrid.style.display = 'grid';
+      } else {
+        if (fileTable) fileTable.style.display = 'table';
+        if (iconGrid) iconGrid.style.display = 'none';
+      }
+
+      // Sync segmented view picker active state
+      var paneEl = side === 'left' ? leftPane : rightPane;
+      if (paneEl) {
+        var vmBtns = paneEl.querySelectorAll('.vm-btn');
+        vmBtns.forEach(function (b) {
+          b.classList.toggle('active', b.getAttribute('data-mode') === viewMode);
+        });
+      }
+
+      updateHistoryButtons(side);
+    }
+
+    // Navigate to folder
+    function navigateTo(folderName) {
+      if (!fileData[folderName]) return;
+      var side = state.activePane;
+      if (side === 'left') {
+        state.leftFolder = folderName;
+        state.leftHistory = state.leftHistory.slice(0, state.leftHistoryIdx + 1);
+        state.leftHistory.push(folderName);
+        state.leftHistoryIdx = state.leftHistory.length - 1;
+        state.leftSelectedId = fileData[folderName].items[0] ? fileData[folderName].items[0].id : null;
+      } else {
+        state.rightFolder = folderName;
+        state.rightHistory = state.rightHistory.slice(0, state.rightHistoryIdx + 1);
+        state.rightHistory.push(folderName);
+        state.rightHistoryIdx = state.rightHistory.length - 1;
+        state.rightSelectedId = fileData[folderName].items[0] ? fileData[folderName].items[0].id : null;
+      }
+
+      updateSidebarActive(folderName);
+      renderPane(side);
+      updateFooter();
+    }
+
+    // Update History arrows
+    function updateHistoryButtons(side) {
+      var history = side === 'left' ? state.leftHistory : state.rightHistory;
+      var idx = side === 'left' ? state.leftHistoryIdx : state.rightHistoryIdx;
+      var backBtn = document.getElementById(side === 'left' ? 'btnLeftBack' : 'btnRightBack');
+      var fwdBtn = document.getElementById(side === 'left' ? 'btnLeftForward' : 'btnRightForward');
+
+      if (backBtn) {
+        if (idx > 0) backBtn.classList.remove('disabled');
+        else backBtn.classList.add('disabled');
+      }
+      if (fwdBtn) {
+        if (idx < history.length - 1) fwdBtn.classList.remove('disabled');
+        else fwdBtn.classList.add('disabled');
+      }
+    }
+
+    // Update Sidebar highlight
+    function updateSidebarActive(folderName) {
+      if (!appSidebar) return;
+      var rows = appSidebar.querySelectorAll('.sb-row, .sb-volume-item');
+      rows.forEach(function (r) {
+        r.classList.remove('active');
+        if (r.getAttribute('data-folder') === folderName) {
+          r.classList.add('active');
         }
       });
     }
 
-    // Tab switching
-    const setTab = (activeTab: HTMLElement, name: string) => {
-      [tabDownloads, tabProjects, tabDocuments].forEach(t => {
-        t?.classList.remove('active');
-        t?.setAttribute('aria-selected', 'false');
+    // Update Pane focus
+    function updatePaneFocus() {
+      if (leftPane && rightPane) {
+        leftPane.classList.toggle('pane-focused', state.activePane === 'left');
+        rightPane.classList.toggle('pane-focused', state.activePane === 'right');
+      }
+    }
+
+    // Update Status Footer
+    function updateFooter() {
+      var folderName = state.activePane === 'left' ? state.leftFolder : state.rightFolder;
+      var selectedId = state.activePane === 'left' ? state.leftSelectedId : state.rightSelectedId;
+      var data = fileData[folderName] || { items: [] };
+      var selectedItem = data.items.find(function (i) { return i.id === selectedId; });
+
+      if (selectionSummary) {
+        if (selectedItem) {
+          selectionSummary.textContent = '1 selected (' + selectedItem.size + ')';
+        } else {
+          selectionSummary.textContent = data.items.length + ' items';
+        }
+      }
+
+      if (sheetSelectedFileName && selectedItem) {
+        sheetSelectedFileName.textContent = selectedItem.name;
+      }
+    }
+
+    // Render Tabs
+    function renderTabs() {
+      if (!tabItemsScroll) return;
+      var html = '';
+      state.tabs.forEach(function (tab) {
+        var isActive = tab.id === state.activeTabId;
+        html += '<button class="tab-chip' + (isActive ? ' active' : '') + '" data-tab-id="' + tab.id + '" data-folder="' + tab.name + '">';
+        html += '<svg class="tab-chip-icon" width="13" height="13" viewBox="0 0 24 24" fill="#0A84FF"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>';
+        html += '<span class="tab-chip-title">' + tab.name + '</span>';
+        if (state.tabs.length > 1) {
+          html += '<span class="tab-close-icon" data-close-id="' + tab.id + '" title="Close tab">&times;</span>';
+        }
+        html += '</button>';
       });
-      activeTab.classList.add('active');
-      activeTab.setAttribute('aria-selected', 'true');
-      
-      if (activeCrumbText) activeCrumbText.textContent = name;
-      if (leftPaneTitle) leftPaneTitle.textContent = name;
+      html += '<button class="tab-add-btn" id="btnAddTab" title="New Tab (⌘T)">+</button>';
+      tabItemsScroll.innerHTML = html;
 
-      // Update sidebar highlight
-      [sideDownloads, sideProjects, sideDocuments].forEach(s => s?.classList.remove('active'));
-      if (name === 'Downloads' && sideDownloads) sideDownloads.classList.add('active');
-      if (name === 'Projects' && sideProjects) sideProjects.classList.add('active');
-      if (name === 'Documents' && sideDocuments) sideDocuments.classList.add('active');
-    };
+      var chips = tabItemsScroll.querySelectorAll('.tab-chip');
+      chips.forEach(function (chip) {
+        chip.addEventListener('click', function (e) {
+          var closeBtn = e.target.closest('.tab-close-icon');
+          if (closeBtn) {
+            var closeId = closeBtn.getAttribute('data-close-id');
+            closeTab(closeId);
+            return;
+          }
+          var tabId = chip.getAttribute('data-tab-id');
+          var folder = chip.getAttribute('data-folder');
+          if (tabId && folder) {
+            state.activeTabId = tabId;
+            navigateTo(folder);
+            renderTabs();
+          }
+        });
+      });
 
-    tabDownloads?.addEventListener('click', () => setTab(tabDownloads, 'Downloads'));
-    tabProjects?.addEventListener('click', () => setTab(tabProjects, 'Projects'));
-    tabDocuments?.addEventListener('click', () => setTab(tabDocuments, 'Documents'));
+      var addBtn = document.getElementById('btnAddTab');
+      if (addBtn) addBtn.addEventListener('click', createNewTab);
+    }
 
-    sideDownloads?.addEventListener('click', () => tabDownloads && setTab(tabDownloads, 'Downloads'));
-    sideProjects?.addEventListener('click', () => tabProjects && setTab(tabProjects, 'Projects'));
-    sideDocuments?.addEventListener('click', () => tabDocuments && setTab(tabDocuments, 'Documents'));
+    function createNewTab() {
+      var names = ['Documents', 'Desktop', 'Projects', 'Downloads'];
+      var nextName = names[state.tabs.length % names.length];
+      var newTabId = 't_' + Date.now();
+      state.tabs.push({ id: newTabId, name: nextName });
+      state.activeTabId = newTabId;
+      navigateTo(nextName);
+      renderTabs();
+      if (statusMsg) statusMsg.textContent = 'Opened tab: ' + nextName;
+    }
 
-    // Move To Modal demonstration
-    const openModal = () => {
-      if (moveToModal) moveToModal.style.display = 'flex';
-    };
-    const closeModal = () => {
-      if (moveToModal) moveToModal.style.display = 'none';
-    };
+    function closeTab(tabId) {
+      if (state.tabs.length <= 1) return;
+      state.tabs = state.tabs.filter(function (t) { return t.id !== tabId; });
+      var lastTab = state.tabs[state.tabs.length - 1];
+      state.activeTabId = lastTab.id;
+      navigateTo(lastTab.name);
+      renderTabs();
+    }
 
-    btnMoveTo?.addEventListener('click', openModal);
-    closeMoveTo?.addEventListener('click', closeModal);
-    cancelMoveTo?.addEventListener('click', closeModal);
-    confirmMoveTo?.addEventListener('click', () => {
-      closeModal();
-      const statusText = document.getElementById('statusText');
-      if (statusText) {
-        statusText.textContent = '✓ invoice_client_march.pdf moved to ~/Projects/2026/Finance & Invoices';
-        setTimeout(() => {
-          statusText.textContent = '5 items • 98.2 MB selected • Swift 6 Native Engine';
-        }, 3500);
+    // Toggle Split View
+    if (btnToggleSplit && panesWrapper) {
+      btnToggleSplit.addEventListener('click', function () {
+        state.isSplit = !state.isSplit;
+        if (state.isSplit) {
+          panesWrapper.classList.remove('single-active');
+          panesWrapper.classList.add('split-active');
+          btnToggleSplit.classList.add('tb-btn-active');
+          renderPane('right');
+          if (statusMsg) statusMsg.textContent = 'Dual split view enabled (⌘⇧S)';
+        } else {
+          panesWrapper.classList.remove('split-active');
+          panesWrapper.classList.add('single-active');
+          btnToggleSplit.classList.remove('tb-btn-active');
+          state.activePane = 'left';
+          updatePaneFocus();
+          if (statusMsg) statusMsg.textContent = 'Single pane view';
+        }
+      });
+    }
+
+    // Sidebar navigation
+    if (appSidebar) {
+      var sbButtons = appSidebar.querySelectorAll('.sb-row, .sb-volume-item');
+      sbButtons.forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var folder = btn.getAttribute('data-folder');
+          if (folder && fileData[folder]) {
+            navigateTo(folder);
+          }
+        });
+      });
+    }
+
+    // Toggle Sidebar
+    if (btnToggleSidebar && appSidebar) {
+      btnToggleSidebar.addEventListener('click', function () {
+        var isCollapsed = appSidebar.classList.contains('collapsed');
+        appSidebar.classList.toggle('collapsed');
+        var tlLeft = document.getElementById('titlebarLeft');
+        if (tlLeft) tlLeft.classList.toggle('collapsed');
+        if (statusMsg) statusMsg.textContent = isCollapsed ? 'Sidebar expanded' : 'Sidebar collapsed';
+      });
+    }
+
+    // Navigation buttons (Back, Forward, Up)
+    ['left', 'right'].forEach(function (side) {
+      var backBtn = document.getElementById(side === 'left' ? 'btnLeftBack' : 'btnRightBack');
+      var fwdBtn = document.getElementById(side === 'left' ? 'btnLeftForward' : 'btnRightForward');
+      var upBtn = document.getElementById(side === 'left' ? 'btnLeftUp' : 'btnRightUp');
+
+      if (backBtn) {
+        backBtn.addEventListener('click', function () {
+          var idx = side === 'left' ? state.leftHistoryIdx : state.rightHistoryIdx;
+          var history = side === 'left' ? state.leftHistory : state.rightHistory;
+          if (idx > 0) {
+            if (side === 'left') {
+              state.leftHistoryIdx--;
+              state.leftFolder = history[state.leftHistoryIdx];
+            } else {
+              state.rightHistoryIdx--;
+              state.rightFolder = history[state.rightHistoryIdx];
+            }
+            renderPane(side);
+            updateFooter();
+          }
+        });
+      }
+
+      if (fwdBtn) {
+        fwdBtn.addEventListener('click', function () {
+          var idx = side === 'left' ? state.leftHistoryIdx : state.rightHistoryIdx;
+          var history = side === 'left' ? state.leftHistory : state.rightHistory;
+          if (idx < history.length - 1) {
+            if (side === 'left') {
+              state.leftHistoryIdx++;
+              state.leftFolder = history[state.leftHistoryIdx];
+            } else {
+              state.rightHistoryIdx++;
+              state.rightFolder = history[state.rightHistoryIdx];
+            }
+            renderPane(side);
+            updateFooter();
+          }
+        });
+      }
+
+      if (upBtn) {
+        upBtn.addEventListener('click', function () {
+          var folder = side === 'left' ? state.leftFolder : state.rightFolder;
+          var data = fileData[folder];
+          if (data && data.breadcrumbs.length > 1) {
+            var parent = data.breadcrumbs[data.breadcrumbs.length - 2];
+            if (fileData[parent]) {
+              navigateTo(parent);
+            }
+          }
+        });
       }
     });
-  });
+
+    // View Mode Pickers (List / Grid)
+    document.querySelectorAll('.view-mode-picker').forEach(function (picker) {
+      var paneCol = picker.closest('.pane-column');
+      var side = paneCol ? paneCol.getAttribute('data-side') : 'left';
+      var btns = picker.querySelectorAll('.vm-btn');
+
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          btns.forEach(function (x) { x.classList.remove('active'); });
+          b.classList.add('active');
+          var mode = b.getAttribute('data-mode') || 'list';
+          if (side === 'left') state.leftViewMode = mode;
+          else state.rightViewMode = mode;
+          renderPane(side);
+        });
+      });
+    });
+
+    // Focus pane on click
+    if (leftPane) leftPane.addEventListener('click', function () { state.activePane = 'left'; updatePaneFocus(); });
+    if (rightPane) rightPane.addEventListener('click', function () { state.activePane = 'right'; updatePaneFocus(); });
+
+    // Live search
+    if (demoSearchInput) {
+      demoSearchInput.addEventListener('input', function () {
+        state.searchQuery = demoSearchInput.value.trim();
+        if (btnClearSearch) {
+          btnClearSearch.style.display = state.searchQuery ? 'inline' : 'none';
+        }
+        renderPane(state.activePane);
+      });
+    }
+
+    if (btnClearSearch && demoSearchInput) {
+      btnClearSearch.addEventListener('click', function () {
+        demoSearchInput.value = '';
+        state.searchQuery = '';
+        btnClearSearch.style.display = 'none';
+        renderPane(state.activePane);
+      });
+    }
+
+    // Move To… / Copy To… Sheet
+    var selectedDest = 'Finance & Invoices';
+    if (btnMoveTo && moveToSheet) {
+      btnMoveTo.addEventListener('click', function () {
+        var folderName = state.activePane === 'left' ? state.leftFolder : state.rightFolder;
+        var selectedId = state.activePane === 'left' ? state.leftSelectedId : state.rightSelectedId;
+        var data = fileData[folderName] || { items: [] };
+        var item = data.items.find(function (i) { return i.id === selectedId; });
+
+        if (sheetModalTitle) sheetModalTitle.textContent = 'Move To…';
+        if (sheetSelectedFileName) sheetSelectedFileName.textContent = item ? item.name : 'Selected item';
+        if (confirmSheetBtn) confirmSheetBtn.textContent = 'Move';
+
+        moveToSheet.style.display = 'flex';
+        if (sheetSearchInput) {
+          sheetSearchInput.value = '';
+          sheetSearchInput.focus();
+        }
+      });
+    }
+
+    if (btnCopyTo && moveToSheet) {
+      btnCopyTo.addEventListener('click', function () {
+        var folderName = state.activePane === 'left' ? state.leftFolder : state.rightFolder;
+        var selectedId = state.activePane === 'left' ? state.leftSelectedId : state.rightSelectedId;
+        var data = fileData[folderName] || { items: [] };
+        var item = data.items.find(function (i) { return i.id === selectedId; });
+
+        if (sheetModalTitle) sheetModalTitle.textContent = 'Copy To…';
+        if (sheetSelectedFileName) sheetSelectedFileName.textContent = item ? item.name : 'Selected item';
+        if (confirmSheetBtn) confirmSheetBtn.textContent = 'Copy';
+
+        moveToSheet.style.display = 'flex';
+      });
+    }
+
+    // Sheet row selection
+    var destRows = document.querySelectorAll('.sheet-row');
+    destRows.forEach(function (r) {
+      r.addEventListener('click', function () {
+        destRows.forEach(function (x) { x.classList.remove('selected'); });
+        r.classList.add('selected');
+        selectedDest = r.getAttribute('data-dest') || 'Finance & Invoices';
+      });
+    });
+
+    function closeSheet() {
+      if (moveToSheet) moveToSheet.style.display = 'none';
+    }
+    if (closeSheetBtn) closeSheetBtn.addEventListener('click', closeSheet);
+    if (cancelSheetBtn) cancelSheetBtn.addEventListener('click', closeSheet);
+
+    if (confirmSheetBtn) {
+      confirmSheetBtn.addEventListener('click', function () {
+        closeSheet();
+        var folderName = state.activePane === 'left' ? state.leftFolder : state.rightFolder;
+        var selectedId = state.activePane === 'left' ? state.leftSelectedId : state.rightSelectedId;
+        var data = fileData[folderName] || { items: [] };
+        var itemIdx = data.items.findIndex(function (i) { return i.id === selectedId; });
+
+        if (itemIdx !== -1) {
+          var item = data.items[itemIdx];
+          var isCopy = confirmSheetBtn.textContent === 'Copy';
+
+          if (!isCopy) {
+            data.items.splice(itemIdx, 1);
+            if (fileData[selectedDest]) {
+              fileData[selectedDest].items.unshift(item);
+            }
+            state.undoAction = {
+              type: 'move',
+              item: item,
+              from: folderName,
+              to: selectedDest
+            };
+            if (statusMsg) statusMsg.textContent = '✓ Moved ' + item.name + ' to ' + selectedDest;
+          } else {
+            var copyItem = Object.assign({}, item, {
+              id: 'copy_' + Date.now(),
+              name: 'Copy of ' + item.name
+            });
+            if (fileData[selectedDest]) {
+              fileData[selectedDest].items.unshift(copyItem);
+            }
+            if (statusMsg) statusMsg.textContent = '✓ Copied ' + item.name + ' to ' + selectedDest;
+          }
+
+          if (btnUndo && undoSep) {
+            btnUndo.style.display = 'inline-flex';
+            undoSep.style.display = 'inline-block';
+          }
+
+          renderPane('left');
+          renderPane('right');
+          updateFooter();
+        }
+      });
+    }
+
+    // Safe Undo
+    if (btnUndo) {
+      btnUndo.addEventListener('click', function () {
+        if (!state.undoAction) return;
+        var act = state.undoAction;
+        if (act.type === 'move') {
+          if (fileData[act.to]) {
+            fileData[act.to].items = fileData[act.to].items.filter(function (i) { return i.id !== act.item.id; });
+          }
+          if (fileData[act.from]) {
+            fileData[act.from].items.unshift(act.item);
+          }
+          if (statusMsg) statusMsg.textContent = '↩ Undid move: ' + act.item.name + ' restored to ' + act.from;
+        } else if (act.type === 'trash') {
+          if (fileData[act.from]) {
+            fileData[act.from].items.splice(act.index, 0, act.item);
+          }
+          if (statusMsg) statusMsg.textContent = '↩ Restored ' + act.item.name + ' from Trash';
+        }
+        state.undoAction = null;
+        btnUndo.style.display = 'none';
+        if (undoSep) undoSep.style.display = 'none';
+        renderPane('left');
+        renderPane('right');
+        updateFooter();
+      });
+    }
+
+    // New Folder Button
+    if (btnNewFolder) {
+      btnNewFolder.addEventListener('click', function () {
+        var folderName = state.activePane === 'left' ? state.leftFolder : state.rightFolder;
+        var data = fileData[folderName];
+        if (data) {
+          var newFolder = {
+            id: 'folder_' + Date.now(),
+            name: 'New Folder',
+            date: 'Just now',
+            size: '--',
+            kind: 'Folder',
+            isFolder: true,
+            icon: 'folder'
+          };
+          data.items.unshift(newFolder);
+          if (state.activePane === 'left') state.leftSelectedId = newFolder.id;
+          else state.rightSelectedId = newFolder.id;
+          renderPane(state.activePane);
+          updateFooter();
+          if (statusMsg) statusMsg.textContent = 'Created "New Folder" in ' + folderName;
+        }
+      });
+    }
+
+    // Trash Button
+    if (btnTrash) {
+      btnTrash.addEventListener('click', function () {
+        var folderName = state.activePane === 'left' ? state.leftFolder : state.rightFolder;
+        var selectedId = state.activePane === 'left' ? state.leftSelectedId : state.rightSelectedId;
+        var data = fileData[folderName];
+        if (data) {
+          var idx = data.items.findIndex(function (i) { return i.id === selectedId; });
+          if (idx !== -1) {
+            var item = data.items.splice(idx, 1)[0];
+            state.undoAction = { type: 'trash', item: item, from: folderName, index: idx };
+            if (btnUndo && undoSep) {
+              btnUndo.style.display = 'inline-flex';
+              undoSep.style.display = 'inline-block';
+            }
+            renderPane(state.activePane);
+            updateFooter();
+            if (statusMsg) statusMsg.textContent = '🗑 Moved "' + item.name + '" to Trash (Click Undo to restore)';
+          }
+        }
+      });
+    }
+
+    if (btnNewTab) btnNewTab.addEventListener('click', createNewTab);
+
+    // Traffic Lights
+    var btnWinClose = document.getElementById('btnWinClose');
+    var btnWinMin = document.getElementById('btnWinMin');
+    var btnWinMax = document.getElementById('btnWinMax');
+    var macWindow = document.getElementById('macWindow');
+
+    if (btnWinClose && macWindow) {
+      btnWinClose.addEventListener('click', function () {
+        macWindow.style.opacity = '0.4';
+        macWindow.style.transform = 'scale(0.98)';
+        setTimeout(function () {
+          macWindow.style.opacity = '1';
+          macWindow.style.transform = 'none';
+        }, 1200);
+      });
+    }
+
+    if (btnWinMin && macWindow) {
+      btnWinMin.addEventListener('click', function () {
+        macWindow.style.transform = 'scale(0.95) translateY(12px)';
+        setTimeout(function () {
+          macWindow.style.transform = 'none';
+        }, 800);
+      });
+    }
+
+    if (btnWinMax && macWindow) {
+      btnWinMax.addEventListener('click', function () {
+        var isMax = macWindow.classList.toggle('maximized');
+        if (isMax) macWindow.style.maxWidth = '100%';
+        else macWindow.style.maxWidth = '';
+      });
+    }
+
+    // Initial render
+    renderTabs();
+    renderPane('left');
+    renderPane('right');
+    updateFooter();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initMaggoLiveDemo);
+  } else {
+    initMaggoLiveDemo();
+  }
+})();
 </script>

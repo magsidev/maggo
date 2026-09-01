@@ -17,6 +17,9 @@ echo "==> 2. Assembling ${APP_NAME}.app bundle..."
 rm -rf "${BUILD_DIR}"
 mkdir -p "${APP_BUNDLE}/Contents/MacOS"
 mkdir -p "${APP_BUNDLE}/Contents/Resources"
+if [ -f "${PROJECT_DIR}/AppIcon.icns" ]; then
+    cp "${PROJECT_DIR}/AppIcon.icns" "${APP_BUNDLE}/Contents/Resources/AppIcon.icns"
+fi
 
 cp "${RELEASE_BIN}" "${APP_BUNDLE}/Contents/MacOS/${APP_NAME}"
 chmod +x "${APP_BUNDLE}/Contents/MacOS/${APP_NAME}"
@@ -32,6 +35,8 @@ cat <<EOF > "${APP_BUNDLE}/Contents/Info.plist"
     <string>en</string>
     <key>CFBundleExecutable</key>
     <string>${APP_NAME}</string>
+    <key>CFBundleIconFile</key>
+    <string>AppIcon</string>
     <key>CFBundleIdentifier</key>
     <string>${BUNDLE_ID}</string>
     <key>CFBundleInfoDictionaryVersion</key>

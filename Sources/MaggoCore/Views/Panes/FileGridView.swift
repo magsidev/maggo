@@ -58,6 +58,18 @@ public struct FileGridView: View {
                         Button("Open") {
                             appState.openItem(item)
                         }
+                        Button("Copy (⌘C)") {
+                            pane.selectedURLs = [item.url]
+                            appState.copySelected()
+                        }
+                        Button("Cut (⌘X)") {
+                            pane.selectedURLs = [item.url]
+                            appState.cutSelected()
+                        }
+                        Button("Paste (⌘V)") {
+                            appState.paste()
+                        }
+                        .disabled(!PasteboardService.shared.hasFileURLs())
                         Divider()
                         Button("Move To… (⌘⇧M)") {
                             pane.selectedURLs = [item.url]

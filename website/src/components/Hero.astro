@@ -47,19 +47,14 @@ import HeroDemo from './HeroDemo.astro';
 
       <!-- Price & Value Proposition Callout -->
       <div class="hero-pricing-badge">
-        <span class="price-amount">$19.99 once.</span>
-        <span class="price-details">Lifetime support included.</span>
+        <span class="price-amount">3-Day Free Trial ($0 Today).</span>
+        <span class="price-details">Then $19.99 once for lifetime access.</span>
       </div>
 
-      <!-- Primary Action CTAs -->
+      <!-- Primary Action CTAs: 3-Day Trial Flow -->
       <div class="hero-actions">
-        <a href="/downloads/Maggo-macOS.dmg" download class="btn btn-primary btn-lg hero-cta-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-            <polyline points="7 10 12 15 17 10"/>
-            <line x1="12" y1="15" x2="12" y2="3"/>
-          </svg>
-          <span>Download Maggo</span>
+        <a href="#pricing" class="btn btn-primary btn-lg hero-cta-btn">
+          <span>Start 3-Day Free Trial</span>
         </a>
 
         <a href="#demo" class="btn btn-secondary btn-lg">
@@ -69,10 +64,16 @@ import HeroDemo from './HeroDemo.astro';
           </svg>
           <span>See how it works</span>
         </a>
+      </div>
 
-        <a href="#pricing" class="btn btn-subtle-buy">
-          <span>Or buy license directly ($19.99) &rarr;</span>
-        </a>
+      <p class="hero-payment-note">Add card at checkout • $0 charged today • Auto-renews to $19.99 once on Day 3 • Cancel anytime</p>
+
+      <!-- 3-Day Trial Explainer -->
+      <div class="hero-trial-block">
+        <span class="trial-pill">3-Day Full Trial</span>
+        <span>
+          Experience full unhindered Maggo for 3 days. On day 3, your $19.99 one-time lifetime license activates automatically unless cancelled.
+        </span>
       </div>
 
       <!-- Native macOS compatibility badge -->
@@ -213,17 +214,48 @@ import HeroDemo from './HeroDemo.astro';
     margin-bottom: 1.5rem;
   }
 
-  .btn-subtle-buy {
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--color-accent);
-    padding: 0.75rem 1rem;
-    transition: color 0.15s ease;
+  .hero-payment-note {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    margin-top: -0.75rem;
+    margin-bottom: 1.5rem;
   }
 
-  .btn-subtle-buy:hover {
-    color: var(--color-accent-hover);
+  .hero-trial-block {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: #F8FAFC;
+    border: 1px solid var(--color-border);
+    padding: 0.5rem 1rem;
+    border-radius: 9999px;
+    font-size: 0.8125rem;
+    color: var(--color-text-body);
+    margin-bottom: 1.5rem;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .trial-pill {
+    background: #DCFCE7;
+    color: #15803D;
+    font-weight: 700;
+    font-size: 0.6875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.15rem 0.5rem;
+    border-radius: 9999px;
+  }
+
+  .trial-link {
+    color: var(--color-accent);
+    font-weight: 600;
     text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .trial-link:hover {
+    color: var(--color-accent-hover);
   }
 
   .hero-system-reqs {
@@ -232,7 +264,6 @@ import HeroDemo from './HeroDemo.astro';
     gap: 0.5rem;
     font-size: 0.8125rem;
     color: var(--color-text-muted);
-    margin-top: 0.5rem;
   }
 
   .hero-system-reqs svg {

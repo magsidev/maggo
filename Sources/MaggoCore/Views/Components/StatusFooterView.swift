@@ -12,23 +12,35 @@ public struct StatusFooterView: View {
     }
 
     private var selectedSummary: String {
+        let count = activePane.items.count
         let selected = activePane.selectedItems
+
         if selected.isEmpty {
-            return "\(activePane.items.count) item\(activePane.items.count == 1 ? "" : "s")"
+            return "\(count) item\(count == 1 ? "" : "s")"
         }
+
         let totalBytes = selected.reduce(0) { $0 + $1.fileSize }
         let formatted = ByteCountFormatter.string(fromByteCount: totalBytes, countStyle: .file)
-        return "\(selected.count) selected (\(formatted))"
+        return "\(count) items · \(selected.count) selected (\(formatted))"
     }
 
     public var body: some View {
-        HStack(spacing: 16) {
-            // Status message
-            if !appState.statusMessage.isEmpty {
-                Text(appState.statusMessage)
+        HStack(spacing: 12) {
+            // Left Status
+            HStack(spacing: 6) {
+                Circle()
+                    .fill(Color.green)
+                    .frame(width: 7, height: 7)
+
+                Text(selectedSummary + " · Swift 6 Native Engine")
                     .font(.caption)
                     .foregroundColor(.secondary)
-                    .lineLimit(1)
+
+                if !appState.statusMessage.isEmpty && appState.statusMessage != "Ready" {
+                    Text("·  " + appState.statusMessage)
+                        .font(.caption)
+                        .foregroundColor(.accentColor)
+                }
             }
 
             Spacer()
@@ -49,13 +61,12 @@ public struct StatusFooterView: View {
                 .foregroundColor(.accentColor)
             }
 
-            Divider()
-                .frame(height: 12)
-
-            // Items count & selection summary
-            Text(selectedSummary)
-                .font(.caption)
-                .foregroundColor(.secondary)
+            // Right Volume Available Capacity
+            if let mainVol = appState.volumes.first {
+                Text("\(mainVol.name): \(mainVol.formattedAvailable)")
+                    .font(.caption)
+                    .foregroundColor(.secondary)
+            }
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 5)

@@ -40,6 +40,33 @@ struct MaggoApp: App {
                 .disabled(!FileOperationEngine.shared.canUndo)
             }
 
+            CommandGroup(replacing: .pasteboard) {
+                Button("Cut") {
+                    appState.cutSelected()
+                }
+                .keyboardShortcut("x", modifiers: .command)
+                .disabled(appState.activePane.selectedURLs.isEmpty)
+
+                Button("Copy") {
+                    appState.copySelected()
+                }
+                .keyboardShortcut("c", modifiers: .command)
+                .disabled(appState.activePane.selectedURLs.isEmpty)
+
+                Button("Paste") {
+                    appState.paste()
+                }
+                .keyboardShortcut("v", modifiers: .command)
+                .disabled(!PasteboardService.shared.hasFileURLs())
+
+                Divider()
+
+                Button("Select All") {
+                    appState.activePane.selectAll()
+                }
+                .keyboardShortcut("a", modifiers: .command)
+            }
+
             // Custom File Operations Commands
             CommandMenu("Actions") {
                 Button("Move To…") {

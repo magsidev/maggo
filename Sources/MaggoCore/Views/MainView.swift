@@ -62,24 +62,47 @@ public struct MainView: View {
                 appState.quickLookURL = nil
             }
         }
+        // Window-level keyboard fallback shortcuts
+        .background(
+            HStack {
+                Button("") { appState.copySelected() }.keyboardShortcut("c", modifiers: .command)
+                Button("") { appState.cutSelected() }.keyboardShortcut("x", modifiers: .command)
+                Button("") { appState.paste() }.keyboardShortcut("v", modifiers: .command)
+            }
+            .opacity(0.001)
+        )
     }
 
     // MARK: - Tab Strip
     private var tabStripView: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 6) {
             ScrollView(.horizontal, showsIndicators: false) {
-                HStack(spacing: 2) {
+                HStack(spacing: 4) {
                     ForEach(Array(appState.tabs.enumerated()), id: \.element.id) { index, tab in
                         let isSelected = (index == appState.activeTabIndex)
+                        let count = tab.activePane.filteredItems.count
 
                         HStack(spacing: 6) {
-                            Image(systemName: "folder.fill")
+                            Image(systemName: tabIcon(for: tab.activePane.currentURL))
                                 .foregroundColor(isSelected ? .accentColor : .secondary)
-                                .font(.caption)
+                                .font(.system(size: 11))
 
                             Text(tab.title)
                                 .font(.system(size: 12, weight: isSelected ? .semibold : .regular))
+                                .foregroundColor(isSelected ? .primary : .secondary)
                                 .lineLimit(1)
+
+                            if count > 0 {
+                                Text("\(count)")
+                                    .font(.system(size: 10, weight: .bold))
+                                    .foregroundColor(isSelected ? .accentColor : .secondary)
+                                    .padding(.horizontal, 5)
+                                    .padding(.vertical, 1)
+                                    .background(
+                                        Capsule()
+                                            .fill(isSelected ? Color.accentColor.opacity(0.14) : Color.secondary.opacity(0.12))
+                                    )
+                            }
 
                             if appState.tabs.count > 1 {
                                 Button {
@@ -94,7 +117,7 @@ public struct MainView: View {
                             }
                         }
                         .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
+                        .padding(.vertical, 5)
                         .background(
                             RoundedRectangle(cornerRadius: 6)
                                 .fill(isSelected ? Color(nsColor: .controlBackgroundColor) : Color.clear)
@@ -117,14 +140,28 @@ public struct MainView: View {
                 appState.openNewTab()
             } label: {
                 Image(systemName: "plus")
-                    .font(.caption)
+                    .font(.system(size: 12, weight: .semibold))
+                    .foregroundColor(.secondary)
                     .padding(6)
             }
             .buttonStyle(.plain)
             .help("New Tab (⌘T)")
         }
-        .padding(.vertical, 3)
+        .padding(.vertical, 4)
         .background(Color(nsColor: .windowBackgroundColor))
+    }
+
+    private func tabIcon(for url: URL) -> String {
+        let name = url.lastPathComponent.lowercased()
+        if name == "downloads" {
+            return "arrow.down.circle"
+        } else if name == "documents" {
+            return "doc.text"
+        } else if name == "desktop" {
+            return "desktopcomputer"
+        } else {
+            return "folder"
+        }
     }
 }
 

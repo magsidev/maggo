@@ -121,6 +121,46 @@ public final class AppState {
         statusMessage = "Copied path: \(url.lastPathComponent)"
     }
 
+    public func copySelected() {
+        let selected = Array(activePane.selectedURLs)
+        guard !selected.isEmpty else { return }
+        PasteboardService.shared.copy(urls: selected, isCut: false)
+        statusMessage = "Copied \(selected.count) item(s)"
+    }
+
+    public func cutSelected() {
+        let selected = Array(activePane.selectedURLs)
+        guard !selected.isEmpty else { return }
+        PasteboardService.shared.copy(urls: selected, isCut: true)
+        statusMessage = "Cut \(selected.count) item(s)"
+    }
+
+    public func paste() {
+        let (urls, isCut) = PasteboardService.shared.getFileURLs()
+        guard !urls.isEmpty else {
+            statusMessage = "Clipboard is empty"
+            return
+        }
+
+        let target = activePane.currentURL
+        do {
+            if isCut {
+                _ = try FileOperationEngine.shared.moveItems(urls: urls, to: target)
+                PasteboardService.shared.clearCutFlag()
+                statusMessage = "Moved \(urls.count) item(s) to \(target.lastPathComponent)"
+            } else {
+                _ = try FileOperationEngine.shared.copyItems(urls: urls, to: target)
+                statusMessage = "Pasted \(urls.count) item(s) into \(target.lastPathComponent)"
+            }
+            activePane.refresh()
+            if activeTab.isSplitView {
+                activeTab.inactivePane.refresh()
+            }
+        } catch {
+            statusMessage = "Paste error: \(error.localizedDescription)"
+        }
+    }
+
     public func triggerMoveTo() {
         let selected = activePane.selectedURLs
         guard !selected.isEmpty else { return }
