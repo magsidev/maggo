@@ -48,13 +48,13 @@ public struct FileListView: View {
                 let isSelected = pane.selectedURLs.contains(item.url)
 
                 HStack(spacing: 8) {
-                    fileIconView(for: item)
+                    fileIconView(for: item, isSelected: isSelected)
                         .frame(width: 16, height: 16)
 
                     Text(item.name)
                         .font(.system(size: 13, weight: isSelected ? .medium : .regular))
                         .lineLimit(1)
-                        .foregroundColor(isSelected ? Color.maggoBlue : (item.isHidden ? .secondary : .primary))
+                        .foregroundColor(isSelected ? .white : (item.isHidden ? .secondary : Color(hex: "0F172A")))
                 }
                 .contentShape(Rectangle())
                 .onTapGesture(count: 2) {
@@ -67,25 +67,28 @@ public struct FileListView: View {
             .width(min: 200, ideal: 280)
 
             TableColumn("Date Modified", value: \.dateModified) { item in
+                let isSelected = pane.selectedURLs.contains(item.url)
                 Text(item.formattedDateModified)
                     .font(.system(size: 12))
-                    .foregroundColor(Color(hex: "64748B"))
+                    .foregroundColor(isSelected ? Color.white.opacity(0.9) : Color(hex: "64748B"))
             }
             .width(min: 120, ideal: 140, max: 180)
 
             TableColumn("Size") { item in
+                let isSelected = pane.selectedURLs.contains(item.url)
                 let sizeStr = pane.displaySize(for: item)
                 Text(sizeStr)
                     .font(.system(size: 12))
-                    .foregroundColor(Color(hex: "64748B"))
+                    .foregroundColor(isSelected ? Color.white.opacity(0.9) : Color(hex: "64748B"))
                     .frame(maxWidth: .infinity, alignment: .trailing)
             }
             .width(min: 75, ideal: 85, max: 110)
 
             TableColumn("Kind", value: \.kindDescription) { item in
+                let isSelected = pane.selectedURLs.contains(item.url)
                 Text(item.kindDescription)
                     .font(.system(size: 12))
-                    .foregroundColor(Color(hex: "64748B"))
+                    .foregroundColor(isSelected ? Color.white.opacity(0.9) : Color(hex: "64748B"))
             }
             .width(min: 90, ideal: 110, max: 160)
         } rows: {
@@ -113,26 +116,26 @@ public struct FileListView: View {
     }
 
     @ViewBuilder
-    private func fileIconView(for item: FileItem) -> some View {
+    private func fileIconView(for item: FileItem, isSelected: Bool) -> some View {
         if item.isDirectory && !item.isPackage {
             Image(systemName: "folder.fill")
-                .foregroundColor(Color.iconFolder)
+                .foregroundColor(isSelected ? .white : Color.iconFolder)
         } else {
             let ext = item.url.pathExtension.lowercased()
             switch ext {
             case "pdf":
                 Image(systemName: "doc.text.fill")
-                    .foregroundColor(Color.iconPdf)
+                    .foregroundColor(isSelected ? .white : Color.iconPdf)
             case "zip", "tar", "gz", "dmg", "pkg":
                 Image(systemName: "archivebox.fill")
-                    .foregroundColor(Color.iconZip)
+                    .foregroundColor(isSelected ? .white : Color.iconZip)
             case "xls", "xlsx", "csv":
                 Image(systemName: "tablecells.fill")
-                    .foregroundColor(Color.iconSheet)
+                    .foregroundColor(isSelected ? .white : Color.iconSheet)
             case "sh", "bash", "zsh", "command":
                 Image(systemName: "chevron.left.forwardslash.chevron.right")
                     .font(.system(size: 10, weight: .bold))
-                    .foregroundColor(Color.iconScript)
+                    .foregroundColor(isSelected ? .white : Color.iconScript)
             default:
                 Image(nsImage: item.icon)
                     .resizable()
