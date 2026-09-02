@@ -78,8 +78,8 @@ public struct AppToolbar: View {
                 .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.maggoGreenBorder, lineWidth: 1))
             }
             .buttonStyle(.plain)
-            .disabled(appState.activePane.selectedURLs.isEmpty)
-            .opacity(appState.activePane.selectedURLs.isEmpty ? 0.45 : 1.0)
+            .disabled(!appState.hasSelection)
+            .opacity(appState.hasSelection ? 1.0 : 0.45)
             .help("Move To… (⌘⇧M)")
 
             // Copy To… [📄📄 Copy To…] (White button with border)
@@ -101,8 +101,8 @@ public struct AppToolbar: View {
                 .shadow(color: Color.black.opacity(0.03), radius: 1, y: 1)
             }
             .buttonStyle(.plain)
-            .disabled(appState.activePane.selectedURLs.isEmpty)
-            .opacity(appState.activePane.selectedURLs.isEmpty ? 0.45 : 1.0)
+            .disabled(!appState.hasSelection)
+            .opacity(appState.hasSelection ? 1.0 : 0.45)
             .help("Copy To… (⌘⇧C)")
 
             // Trash button [🗑]
@@ -119,8 +119,8 @@ public struct AppToolbar: View {
                     .shadow(color: Color.black.opacity(0.03), radius: 1, y: 1)
             }
             .buttonStyle(.plain)
-            .disabled(appState.activePane.selectedURLs.isEmpty)
-            .opacity(appState.activePane.selectedURLs.isEmpty ? 0.45 : 1.0)
+            .disabled(!appState.hasSelection)
+            .opacity(appState.hasSelection ? 1.0 : 0.45)
             .help("Move to Trash (⌘⌫)")
 
             Spacer()

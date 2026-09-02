@@ -30,6 +30,20 @@ public final class AppState {
     public var selectedPictureURL: URL?
     public var smartPicturesRefreshTrigger: Int = 0
 
+    public var hasSelection: Bool {
+        if showSmartPictures {
+            return selectedPictureURL != nil
+        }
+        return !activePane.selectedURLs.isEmpty
+    }
+
+    public var selectedCount: Int {
+        if showSmartPictures {
+            return selectedPictureURL != nil ? 1 : 0
+        }
+        return activePane.selectedURLs.count
+    }
+
     public func refreshAllViews() {
         activePane.refresh()
         if activeTab.isSplitView {
