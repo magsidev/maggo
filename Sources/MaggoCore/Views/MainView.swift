@@ -15,15 +15,16 @@ public struct MainView: View {
                 // Top App Toolbar (matching landing page demo)
                 AppToolbar(appState: appState)
                     .padding(.horizontal, 12)
-                    .padding(.vertical, 7)
+                    .padding(.vertical, 5)
                     .background(Color(hex: "ECEEEF"))
 
                 Divider()
 
-                // Tab Strip
-                tabStripView
-
-                Divider()
+                // Tab Strip (Only displayed when 2+ tabs are open, like Finder & Safari)
+                if appState.tabs.count > 1 {
+                    tabStripView
+                    Divider()
+                }
 
                 // Active Content: Smart Pictures, Storage Overview, or File Panes
                 if appState.showSmartPictures {

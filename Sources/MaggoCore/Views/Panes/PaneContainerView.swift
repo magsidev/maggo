@@ -79,7 +79,7 @@ public struct PaneContainerView: View {
                 .frame(width: 62)
             }
             .padding(.horizontal, 10)
-            .padding(.vertical, 6)
+            .padding(.vertical, 4)
             .background(Color(hex: "F8FAFC"))
 
             Divider()
