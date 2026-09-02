@@ -17,7 +17,7 @@ public struct AppToolbar: View {
                     .font(.system(size: 11, weight: .bold))
                     .foregroundColor(.primary)
                     .frame(width: 28, height: 26)
-                    .background(Color.white)
+                    .background(Color.maggoButtonBg)
                     .cornerRadius(6)
                     .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.maggoBorder, lineWidth: 1))
                     .shadow(color: Color.black.opacity(0.03), radius: 1, y: 1)
@@ -33,7 +33,7 @@ public struct AppToolbar: View {
                     .font(.system(size: 12, weight: .semibold))
                     .foregroundColor(appState.activeTab.isSplitView ? .maggoBlue : .primary)
                     .frame(width: 32, height: 26)
-                    .background(appState.activeTab.isSplitView ? Color.maggoSidebarActive : Color.white)
+                    .background(appState.activeTab.isSplitView ? Color.maggoSidebarActive : Color.maggoButtonBg)
                     .cornerRadius(6)
                     .overlay(
                         RoundedRectangle(cornerRadius: 6)
@@ -52,7 +52,7 @@ public struct AppToolbar: View {
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(.primary)
                     .frame(width: 30, height: 26)
-                    .background(Color.white)
+                    .background(Color.maggoButtonBg)
                     .cornerRadius(6)
                     .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.maggoBorder, lineWidth: 1))
                     .shadow(color: Color.black.opacity(0.03), radius: 1, y: 1)
@@ -82,7 +82,7 @@ public struct AppToolbar: View {
             .opacity(appState.hasSelection ? 1.0 : 0.45)
             .help("Move To… (⌘⇧M)")
 
-            // Copy To… [📄📄 Copy To…] (White button with border)
+            // Copy To… [📄📄 Copy To…] (Adaptive button with border)
             Button {
                 appState.triggerCopyTo()
             } label: {
@@ -95,7 +95,7 @@ public struct AppToolbar: View {
                 .foregroundColor(.primary)
                 .padding(.horizontal, 10)
                 .frame(height: 26)
-                .background(Color.white)
+                .background(Color.maggoButtonBg)
                 .cornerRadius(6)
                 .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.maggoBorder, lineWidth: 1))
                 .shadow(color: Color.black.opacity(0.03), radius: 1, y: 1)
@@ -113,7 +113,7 @@ public struct AppToolbar: View {
                     .font(.system(size: 12))
                     .foregroundColor(.secondary)
                     .frame(width: 28, height: 26)
-                    .background(Color.white)
+                    .background(Color.maggoButtonBg)
                     .cornerRadius(6)
                     .overlay(RoundedRectangle(cornerRadius: 6).stroke(Color.maggoBorder, lineWidth: 1))
                     .shadow(color: Color.black.opacity(0.03), radius: 1, y: 1)
@@ -151,7 +151,7 @@ public struct AppToolbar: View {
             }
             .padding(.horizontal, 9)
             .padding(.vertical, 4)
-            .background(Color.white)
+            .background(Color.maggoButtonBg)
             .cornerRadius(6)
             .overlay(
                 RoundedRectangle(cornerRadius: 6)

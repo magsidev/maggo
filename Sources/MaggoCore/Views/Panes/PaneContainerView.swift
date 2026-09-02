@@ -80,7 +80,7 @@ public struct PaneContainerView: View {
             }
             .padding(.horizontal, 10)
             .padding(.vertical, 4)
-            .background(Color(hex: "F8FAFC"))
+            .background(Color.maggoSubBarBg)
 
             Divider()
 
@@ -108,7 +108,7 @@ public struct PaneContainerView: View {
                 }
             }
         }
-        .background(Color.white)
+        .background(Color.maggoPaneBg)
         .overlay(
             RoundedRectangle(cornerRadius: 0)
                 .stroke(

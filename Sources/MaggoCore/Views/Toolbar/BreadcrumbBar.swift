@@ -57,7 +57,7 @@ public struct BreadcrumbBar: View {
                     } label: {
                         Text(segment.name)
                             .font(.system(size: 12, weight: segment.isLast ? .semibold : .regular))
-                            .foregroundColor(segment.isLast ? Color.maggoBlue : Color(hex: "334155"))
+                            .foregroundColor(segment.isLast ? Color.maggoBlue : Color.primary)
                     }
                     .buttonStyle(.plain)
                     .help(segment.url.path)
@@ -65,7 +65,7 @@ public struct BreadcrumbBar: View {
                     if !segment.isLast {
                         Image(systemName: "chevron.right")
                             .font(.system(size: 8, weight: .bold))
-                            .foregroundColor(Color(hex: "94A3B8"))
+                            .foregroundColor(Color.secondary.opacity(0.7))
                             .padding(.horizontal, 2)
                     }
                 }
@@ -74,7 +74,7 @@ public struct BreadcrumbBar: View {
             .padding(.vertical, 3)
         }
         .frame(height: 26)
-        .background(Color.white)
+        .background(Color.maggoPillBg)
         .cornerRadius(6)
         .overlay(
             RoundedRectangle(cornerRadius: 6)

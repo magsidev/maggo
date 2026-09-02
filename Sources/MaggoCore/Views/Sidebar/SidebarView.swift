@@ -37,7 +37,7 @@ public struct SidebarView: View {
                             .font(.system(size: 13, weight: .medium))
                         Spacer()
                     }
-                    .foregroundColor(isHomeActive ? .maggoBlue : Color(hex: "334155"))
+                    .foregroundColor(isHomeActive ? .maggoBlue : Color.maggoSidebarText)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -70,10 +70,10 @@ public struct SidebarView: View {
                             HStack(spacing: 8) {
                                 Image(systemName: loc.icon)
                                     .font(.system(size: 13))
-                                    .foregroundColor(isActive ? .maggoBlue : Color(hex: "334155"))
+                                    .foregroundColor(isActive ? .maggoBlue : Color.maggoSidebarText)
                                 Text(loc.name)
                                     .font(.system(size: 13, weight: isActive ? .semibold : .regular))
-                                    .foregroundColor(isActive ? .maggoBlue : Color(hex: "334155"))
+                                    .foregroundColor(isActive ? .maggoBlue : Color.maggoSidebarText)
                                 Spacer()
                             }
                             .padding(.horizontal, 10)
@@ -99,10 +99,10 @@ public struct SidebarView: View {
                         HStack(spacing: 8) {
                             Image(systemName: "photo.stack.fill")
                                 .font(.system(size: 13))
-                                .foregroundColor(isPicturesActive ? .maggoBlue : Color(hex: "334155"))
+                                .foregroundColor(isPicturesActive ? .maggoBlue : Color.maggoSidebarText)
                             Text("Pictures")
                                 .font(.system(size: 13, weight: isPicturesActive ? .semibold : .regular))
-                                .foregroundColor(isPicturesActive ? .maggoBlue : Color(hex: "334155"))
+                                .foregroundColor(isPicturesActive ? .maggoBlue : Color.maggoSidebarText)
                             Spacer()
                             Text("Smart")
                                 .font(.system(size: 9, weight: .bold))
@@ -146,11 +146,11 @@ public struct SidebarView: View {
                                 VStack(alignment: .leading, spacing: 1) {
                                     Text(volume.name)
                                         .font(.system(size: 12, weight: .semibold))
-                                        .foregroundColor(isSelected ? .maggoBlue : Color(hex: "1E293B"))
+                                        .foregroundColor(isSelected ? .maggoBlue : Color.primary)
 
                                     Text(volumeSubtitle(for: volume))
                                         .font(.system(size: 10))
-                                        .foregroundColor(Color(hex: "64748B"))
+                                        .foregroundColor(Color.secondary)
                                 }
                                 Spacer()
                             }

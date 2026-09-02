@@ -5,168 +5,174 @@
 <section class="section-wrapper features-section" id="features">
   <div class="container">
     <div class="section-header-center">
-      <div class="section-eyebrow">Engineered for Daily Speed</div>
+      <div class="section-eyebrow">Real macOS Workflows</div>
       <h2 class="section-title">
-        Tools designed for how you <br class="br-desktop" />actually organize files.
+        Every detail designed to fix <br class="br-desktop" />what Finder made frustrating.
       </h2>
       <p class="section-subtitle">
-        Predictable, tactile file management with zero artificial complexity. Everything you need to find, move, and organize files in seconds.
+        See how Maggo replaces messy window sprawl, slow folder traversal, and hidden disk metrics with clean, predictable tools.
       </p>
     </div>
 
-    <div class="bento-grid">
-      <!-- Bento Item 1: Split View (Wide Spotlight) -->
-      <div class="bento-card bento-wide">
-        <div class="bento-content">
-          <div class="bento-badge">Dual-Pane Focus</div>
-          <h3 class="bento-title">Two folders. One disciplined window.</h3>
-          <p class="bento-desc">
-            Open two directories side by side with a single shortcut (<span class="kbd-key">⌘⇧S</span>). Drag files directly from source to destination without opening new windows or losing your place on the desktop.
-          </p>
-          <ul class="bento-points">
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Instant drag-and-drop between panes</span>
-            </li>
-            <li>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
-              <span>Independent folder navigation per pane</span>
-            </li>
-          </ul>
+    <!-- 4 Detailed Showcase Modules with Real Screenshots -->
+    <div class="showcases-container">
+      
+      <!-- Showcase 1: Dual Pane Split View -->
+      <div class="showcase-card">
+        <div class="showcase-info">
+          <span class="showcase-pill">Feature 01 • Split View</span>
+          <h3 class="showcase-title">Two folders side by side. One single window.</h3>
+          
+          <!-- Finder vs Maggo Comparison Box -->
+          <div class="contrast-box">
+            <div class="contrast-row missing">
+              <span class="contrast-tag finder-tag">Missing in Finder</span>
+              <p class="contrast-desc">
+                Forced to open 2 separate Finder windows, manually align them across your screen, and risk misdropping files onto your desktop.
+              </p>
+            </div>
+            <div class="contrast-row solved">
+              <span class="contrast-tag maggo-tag">The Maggo Way</span>
+              <p class="contrast-desc">
+                Press <span class="kbd-key">⌘⇧S</span> for an instant dual split pane. Both sides have independent breadcrumbs and folder navigation for 100% drag precision.
+              </p>
+            </div>
+          </div>
         </div>
-        <div class="bento-visual split-visual-card">
-          <div class="visual-pane left">
-            <div class="visual-pane-head">
-              <span class="pane-dot"></span>
-              <span>Downloads</span>
+        <div class="showcase-media">
+          <div class="mac-window-frame">
+            <div class="frame-traffic-lights">
+              <span class="t-light close"></span>
+              <span class="t-light min"></span>
+              <span class="t-light zoom"></span>
             </div>
-            <div class="visual-item active">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-              <span>Q3_Financial_Summary.pdf</span>
-            </div>
-            <div class="visual-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
-              <span>Keynote_Cover_v2.png</span>
-            </div>
-          </div>
-          <div class="visual-transfer-indicator">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </div>
-          <div class="visual-pane right">
-            <div class="visual-pane-head">
-              <span class="pane-dot dot-alt"></span>
-              <span>Work &rsaquo; 2026 Archive</span>
-            </div>
-            <div class="visual-item target-drop">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="#8854D0"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
-              <span>Financial Reports/</span>
-            </div>
-            <div class="visual-item">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="#8854D0"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
-              <span>Brand Assets/</span>
-            </div>
+            <img 
+              src="/images/screenshots/maggo-dual-pane.png" 
+              alt="Maggo Dual Pane Split View Screenshot" 
+              class="screenshot-img" 
+              loading="lazy"
+            />
           </div>
         </div>
       </div>
 
-      <!-- Bento Item 2: Tabs -->
-      <div class="bento-card">
-        <div class="bento-badge">Clean Workspace</div>
-        <h3 class="bento-title">Tabs that keep you organized.</h3>
-        <p class="bento-desc">
-          Work across multiple directories without opening dozens of Finder windows. Open a tab with <span class="kbd-key">⌘T</span>, switch with <span class="kbd-key">⌘1–9</span>.
-        </p>
-        <div class="tab-preview-box">
-          <div class="mock-tab active">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#8854D0"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
-            <span>Downloads</span>
-          </div>
-          <div class="mock-tab">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#94A3B8"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
-            <span>Projects</span>
-          </div>
-          <div class="mock-tab">
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="#94A3B8"><path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z"/></svg>
-            <span>Documents</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bento Item 3: Move To & Copy To -->
-      <div class="bento-card">
-        <div class="bento-badge">Zero Dragging</div>
-        <h3 class="bento-title">Move To… <span class="kbd-key">⌘⇧M</span></h3>
-        <p class="bento-desc">
-          Moving a file shouldn't be a scavenger hunt. Select any item, hit <span class="kbd-key">⌘⇧M</span>, pick your destination with fast fuzzy search, and move instantly.
-        </p>
-        <div class="move-dialog-preview">
-          <div class="move-search-input">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-            <span>Archive 2026/</span>
-          </div>
-          <div class="move-confirm-action">
-            <span>Move 3 items &rarr;</span>
-          </div>
-        </div>
-      </div>
-
-      <!-- Bento Item 4: Interactive Breadcrumbs -->
-      <div class="bento-card">
-        <div class="bento-badge">Path Clarity</div>
-        <h3 class="bento-title">Clickable Breadcrumbs</h3>
-        <p class="bento-desc">
-          Always know exactly where you are in your file tree. Click any parent segment to instantly jump up without navigating backward one folder at a time.
-        </p>
-        <div class="breadcrumb-interactive-preview">
-          <span class="bc-pill">Macintosh HD</span>
-          <span class="bc-sep">&rsaquo;</span>
-          <span class="bc-pill">Users</span>
-          <span class="bc-sep">&rsaquo;</span>
-          <span class="bc-pill active">Documents</span>
-        </div>
-      </div>
-
-      <!-- Bento Item 5: Keyboard Ergonomics -->
-      <div class="bento-card">
-        <div class="bento-badge">Power Ergonomics</div>
-        <h3 class="bento-title">Built for the Keyboard</h3>
-        <p class="bento-desc">
-          Designed with full keyboard navigation. Move, duplicate, quick look, split view, and undo actions without ever touching your mouse.
-        </p>
-        <div class="shortcuts-grid-preview">
-          <div class="sc-cell"><span>Split View</span><span class="kbd-key">⌘⇧S</span></div>
-          <div class="sc-cell"><span>Move To</span><span class="kbd-key">⌘⇧M</span></div>
-          <div class="sc-cell"><span>Copy Path</span><span class="kbd-key">⌘⌥C</span></div>
-          <div class="sc-cell"><span>Safe Undo</span><span class="kbd-key">⌘Z</span></div>
-        </div>
-      </div>
-
-      <!-- Bento Item 6: Native Swift & Privacy (Wide) -->
-      <div class="bento-card bento-wide bento-native">
-        <div class="bento-content">
-          <div class="bento-badge">Native Performance</div>
-          <h3 class="bento-title">Crafted purely in Swift 6 &amp; SwiftUI.</h3>
-          <p class="bento-desc">
-            No Electron bloat. No web wrappers. Maggo is a pure macOS binary with sub-millisecond responsiveness, low memory usage, and 100% offline privacy.
-          </p>
-          <div class="native-stats-row">
-            <div class="stat-item">
-              <span class="stat-val">&lt; 15ms</span>
-              <span class="stat-label">Launch Time</span>
+      <!-- Showcase 2: Move To & Copy To Dialog -->
+      <div class="showcase-card reversed">
+        <div class="showcase-info">
+          <span class="showcase-pill">Feature 02 • Direct Move</span>
+          <h3 class="showcase-title">Move To… without the folder scavenger hunt.</h3>
+          
+          <!-- Finder vs Maggo Comparison Box -->
+          <div class="contrast-box">
+            <div class="contrast-row missing">
+              <span class="contrast-tag finder-tag">Missing in Finder</span>
+              <p class="contrast-desc">
+                Requires dragging across nested folders, waiting for auto-expanding spring folders, or tedious copy-paste sequences.
+              </p>
             </div>
-            <div class="stat-item">
-              <span class="stat-val">~18 MB</span>
-              <span class="stat-label">RAM Footprint</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-val">0%</span>
-              <span class="stat-label">Telemetry / Cloud</span>
+            <div class="contrast-row solved">
+              <span class="contrast-tag maggo-tag">The Maggo Way</span>
+              <p class="contrast-desc">
+                Select any item, press <span class="kbd-key">⌘⇧M</span>, search your destination with instant fuzzy matching, and press Return. Relocate files in 2 seconds flat.
+              </p>
             </div>
           </div>
         </div>
+        <div class="showcase-media">
+          <div class="mac-window-frame">
+            <div class="frame-traffic-lights">
+              <span class="t-light close"></span>
+              <span class="t-light min"></span>
+              <span class="t-light zoom"></span>
+            </div>
+            <img 
+              src="/images/screenshots/maggo-move-to-window.png" 
+              alt="Maggo Move To Dialog Screenshot" 
+              class="screenshot-img" 
+              loading="lazy"
+            />
+          </div>
+        </div>
       </div>
+
+      <!-- Showcase 3: Drive Storage Capacity -->
+      <div class="showcase-card">
+        <div class="showcase-info">
+          <span class="showcase-pill">Feature 03 • Storage Health</span>
+          <h3 class="showcase-title">Instant drive metrics &amp; capacity at a glance.</h3>
+          
+          <!-- Finder vs Maggo Comparison Box -->
+          <div class="contrast-box">
+            <div class="contrast-row missing">
+              <span class="contrast-tag finder-tag">Missing in Finder</span>
+              <p class="contrast-desc">
+                No visual storage progress gauge in the main view. Requires right-clicking to open "Get Info" dialogs or navigating System Settings.
+              </p>
+            </div>
+            <div class="contrast-row solved">
+              <span class="contrast-tag maggo-tag">The Maggo Way</span>
+              <p class="contrast-desc">
+                Click Macintosh HD or any external SSD in the sidebar to immediately see exact gigabytes used, free space, and 1-click file browsing.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-media">
+          <div class="mac-window-frame">
+            <div class="frame-traffic-lights">
+              <span class="t-light close"></span>
+              <span class="t-light min"></span>
+              <span class="t-light zoom"></span>
+            </div>
+            <img 
+              src="/images/screenshots/maggo-storage.png" 
+              alt="Maggo Storage Usage and Capacity Overview" 
+              class="screenshot-img" 
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Showcase 4: Smart Media & File Gallery -->
+      <div class="showcase-card reversed">
+        <div class="showcase-info">
+          <span class="showcase-pill">Feature 04 • Smart Media</span>
+          <h3 class="showcase-title">Visual filtering that actually makes sense.</h3>
+          
+          <!-- Finder vs Maggo Comparison Box -->
+          <div class="contrast-box">
+            <div class="contrast-row missing">
+              <span class="contrast-tag finder-tag">Missing in Finder</span>
+              <p class="contrast-desc">
+                Building custom smart search queries requires 5+ clicks in Spotlight filters that reset every time you close the window.
+              </p>
+            </div>
+            <div class="contrast-row solved">
+              <span class="contrast-tag maggo-tag">The Maggo Way</span>
+              <p class="contrast-desc">
+                Instant 1-click filter pills (Recently Modified, Large &gt;5MB, Format picker) with high-density visual thumbnails and source directory badges.
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="showcase-media">
+          <div class="mac-window-frame">
+            <div class="frame-traffic-lights">
+              <span class="t-light close"></span>
+              <span class="t-light min"></span>
+              <span class="t-light zoom"></span>
+            </div>
+            <img 
+              src="/images/screenshots/maggo-smart-pictures.png" 
+              alt="Maggo Smart Pictures Gallery with Quick Filters" 
+              class="screenshot-img" 
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -180,7 +186,7 @@
   .section-header-center {
     text-align: center;
     max-width: 760px;
-    margin: 0 auto 4.5rem auto;
+    margin: 0 auto 5rem auto;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -196,54 +202,62 @@
     }
   }
 
-  /* Bento Grid */
-  .bento-grid {
+  .showcases-container {
+    display: flex;
+    flex-direction: column;
+    gap: 5rem;
+  }
+
+  .showcase-card {
     display: grid;
     grid-template-columns: 1fr;
-    gap: 1.75rem;
-  }
-
-  @media (min-width: 860px) {
-    .bento-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-    .bento-wide {
-      grid-column: span 2;
-    }
-  }
-
-  .bento-card {
+    gap: 3.5rem;
+    align-items: center;
     background: var(--color-bg-subtle);
     border: 1px solid var(--color-border-light);
     border-radius: var(--radius-xl);
-    padding: 3rem 2.5rem;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.2s var(--ease-apple), box-shadow 0.2s var(--ease-apple), border-color 0.2s var(--ease-apple);
+    padding: 3.5rem;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow 0.2s var(--ease-apple), transform 0.2s var(--ease-apple);
   }
 
-  .bento-card:hover {
-    transform: translateY(-2px);
+  .showcase-card:hover {
     box-shadow: var(--shadow-md);
-    border-color: rgba(136, 84, 208, 0.2);
+    transform: translateY(-2px);
   }
 
-  .bento-wide {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    align-items: center;
-  }
+  @media (min-width: 990px) {
+    .showcase-card {
+      grid-template-columns: 1fr 1.15fr;
+      padding: 4rem;
+    }
 
-  @media (min-width: 860px) {
-    .bento-wide {
-      grid-template-columns: 1.1fr 1fr;
+    .showcase-card.reversed {
+      grid-template-columns: 1.15fr 1fr;
+    }
+
+    .showcase-card.reversed .showcase-info {
+      order: 2;
+    }
+
+    .showcase-card.reversed .showcase-media {
+      order: 1;
     }
   }
 
-  .bento-badge {
+  @media (max-width: 640px) {
+    .showcase-card {
+      padding: 2rem 1.5rem;
+      gap: 2rem;
+    }
+  }
+
+  .showcase-info {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .showcase-pill {
     align-self: flex-start;
     font-size: 0.72rem;
     font-weight: 700;
@@ -257,262 +271,115 @@
     margin-bottom: 1.25rem;
   }
 
-  .bento-title {
-    font-size: 1.65rem;
-    font-weight: 700;
-    line-height: 1.25;
+  .showcase-title {
+    font-size: 1.85rem;
+    font-weight: 800;
+    line-height: 1.2;
     letter-spacing: -0.03em;
     color: var(--color-text-main);
-    margin-bottom: 0.85rem;
+    margin-bottom: 2rem;
   }
 
-  .bento-desc {
-    font-size: 0.965rem;
-    line-height: 1.6;
-    color: var(--color-text-muted);
-    margin-bottom: 1.75rem;
+  @media (max-width: 640px) {
+    .showcase-title {
+      font-size: 1.5rem;
+    }
   }
 
-  .bento-points {
-    list-style: none;
+  /* Contrast Box: Missing in Finder vs Maggo Solution */
+  .contrast-box {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-  }
-
-  .bento-points li {
-    display: flex;
-    align-items: center;
-    gap: 0.65rem;
-    font-size: 0.9rem;
-    font-weight: 500;
-    color: var(--color-text-body);
-  }
-
-  .bento-points li svg {
-    color: var(--color-accent);
-  }
-
-  /* Visual Preview Components */
-  .split-visual-card {
+    gap: 1.25rem;
     background: #FFFFFF;
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: 1.25rem;
+    padding: 1.75rem;
     box-shadow: var(--shadow-sm);
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
   }
 
-  .visual-pane {
-    flex: 1;
-    background: #F8FAFC;
-    border: 1px solid #E2E8F0;
-    border-radius: var(--radius-sm);
-    padding: 0.75rem;
+  .contrast-row {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
   }
 
-  .visual-pane-head {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.75rem;
+  .contrast-row.missing {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-border-light);
+  }
+
+  .contrast-tag {
+    align-self: flex-start;
+    font-size: 0.6875rem;
     font-weight: 700;
-    color: #475569;
-    padding-bottom: 0.4rem;
-    border-bottom: 1px solid #E2E8F0;
-  }
-
-  .pane-dot {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #0A84FF;
-  }
-
-  .pane-dot.dot-alt {
-    background: var(--color-accent);
-  }
-
-  .visual-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.75rem;
-    color: #334155;
-    padding: 0.35rem 0.5rem;
-    border-radius: 4px;
-    background: #FFFFFF;
-    border: 1px solid #E2E8F0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .visual-item.active {
-    border-color: var(--color-accent);
-    background: var(--color-accent-subtle);
-    color: var(--color-accent);
-    font-weight: 600;
-  }
-
-  .visual-item.target-drop {
-    border-style: dashed;
-    border-color: var(--color-accent);
-    background: rgba(136, 84, 208, 0.04);
-  }
-
-  .visual-transfer-indicator {
-    color: var(--color-accent);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Tab Preview Box */
-  .tab-preview-box {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    background: #FFFFFF;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.6rem;
-    margin-top: auto;
-  }
-
-  .mock-tab {
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.8125rem;
-    padding: 0.35rem 0.75rem;
-    border-radius: 6px;
-    color: #64748B;
-    background: #F8FAFC;
-  }
-
-  .mock-tab.active {
-    background: var(--color-accent-subtle);
-    color: var(--color-accent);
-    font-weight: 600;
-    border: 1px solid var(--color-accent-border);
-  }
-
-  /* Move Dialog Preview */
-  .move-dialog-preview {
-    background: #FFFFFF;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.85rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: auto;
-  }
-
-  .move-search-input {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.8125rem;
-    color: #334155;
-    font-weight: 500;
-  }
-
-  .move-confirm-action {
-    background: var(--color-accent);
-    color: #FFFFFF;
-    font-size: 0.75rem;
-    font-weight: 600;
-    padding: 0.35rem 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 0.2rem 0.6rem;
     border-radius: var(--radius-pill);
   }
 
-  /* Breadcrumb Preview */
-  .breadcrumb-interactive-preview {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    background: #FFFFFF;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.75rem 1rem;
-    font-size: 0.8125rem;
-    margin-top: auto;
-    flex-wrap: wrap;
+  .finder-tag {
+    background: #FEF2F2;
+    color: #991B1B;
+    border: 1px solid #FECACA;
   }
 
-  .bc-pill {
-    color: #64748B;
-    padding: 0.2rem 0.5rem;
-    border-radius: 4px;
-  }
-
-  .bc-pill.active {
+  .maggo-tag {
     background: var(--color-accent-subtle);
     color: var(--color-accent);
-    font-weight: 600;
+    border: 1px solid var(--color-accent-border);
   }
 
-  .bc-sep {
-    color: #CBD5E1;
-  }
-
-  /* Shortcuts Grid Preview */
-  .shortcuts-grid-preview {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.6rem;
-    background: #FFFFFF;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
-    padding: 0.85rem;
-    margin-top: auto;
-  }
-
-  .sc-cell {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 0.8125rem;
+  .contrast-desc {
+    font-size: 0.92rem;
+    line-height: 1.55;
     color: var(--color-text-body);
-    padding: 0.35rem 0.5rem;
-    background: #F8FAFC;
-    border-radius: 6px;
   }
 
-  /* Native Stats Row */
-  .native-stats-row {
+  .contrast-row.solved .contrast-desc {
+    color: var(--color-text-main);
+    font-weight: 500;
+  }
+
+  /* Screenshot Frame */
+  .showcase-media {
     display: flex;
+    justify-content: center;
     align-items: center;
-    gap: 2.5rem;
-    margin-top: 1.5rem;
-    flex-wrap: wrap;
   }
 
-  .stat-item {
+  .mac-window-frame {
+    background: #FFFFFF;
+    border-radius: 12px;
+    box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    width: 100%;
+    position: relative;
+  }
+
+  .frame-traffic-lights {
     display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    gap: 6px;
+    padding: 10px 14px;
+    background: #F1F5F9;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   }
 
-  .stat-val {
-    font-size: 1.75rem;
-    font-weight: 800;
-    letter-spacing: -0.03em;
-    color: var(--color-accent);
+  .t-light {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
   }
 
-  .stat-label {
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    color: #64748B;
+  .t-light.close { background: #FF5F56; }
+  .t-light.min { background: #FFBD2E; }
+  .t-light.zoom { background: #27C93F; }
+
+  .screenshot-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: cover;
   }
 </style>

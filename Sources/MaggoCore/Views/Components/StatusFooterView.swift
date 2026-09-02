@@ -39,7 +39,7 @@ public struct StatusFooterView: View {
 
                 Text(appState.statusMessage.isEmpty ? "Ready" : appState.statusMessage)
                     .font(.system(size: 12))
-                    .foregroundColor(Color(hex: "475569"))
+                    .foregroundColor(Color.secondary)
             }
 
             Spacer()
@@ -64,22 +64,22 @@ public struct StatusFooterView: View {
             HStack(spacing: 8) {
                 Text(selectionText)
                     .font(.system(size: 12))
-                    .foregroundColor(Color(hex: "64748B"))
+                    .foregroundColor(Color.secondary)
 
                 if !volumeCapacityText.isEmpty {
                     Text("|")
                         .font(.system(size: 12))
-                        .foregroundColor(Color(hex: "CBD5E1"))
+                        .foregroundColor(Color.secondary.opacity(0.4))
 
                     Text(volumeCapacityText)
                         .font(.system(size: 12))
-                        .foregroundColor(Color(hex: "64748B"))
+                        .foregroundColor(Color.secondary)
                 }
             }
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 6)
-        .background(Color(hex: "F8FAFC"))
+        .background(Color.maggoFooterBg)
         .overlay(
             Rectangle()
                 .frame(height: 1)

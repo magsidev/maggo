@@ -45,7 +45,7 @@ public struct DestinationPickerSheet: View {
                 VStack(alignment: .leading, spacing: 2) {
                     Text("\(config.operation.rawValue) To…")
                         .font(.headline)
-                        .foregroundColor(Color(hex: "0F172A"))
+                        .foregroundColor(.primary)
                     Text("\(config.sourceURLs.count) item(s) selected")
                         .font(.caption)
                         .foregroundColor(.secondary)
@@ -127,7 +127,7 @@ public struct DestinationPickerSheet: View {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("PLACES")
                         .font(.system(size: 10, weight: .bold))
-                        .foregroundColor(Color(hex: "94A3B8"))
+                        .foregroundColor(Color.maggoSidebarHeader)
                         .padding(.horizontal, 8)
                         .padding(.top, 8)
 
@@ -142,7 +142,7 @@ public struct DestinationPickerSheet: View {
                                     .foregroundColor(isSelected ? .white : .maggoBlue)
                                 Text(loc.name)
                                     .font(.system(size: 12, weight: isSelected ? .semibold : .regular))
-                                    .foregroundColor(isSelected ? .white : Color(hex: "334155"))
+                                    .foregroundColor(isSelected ? .white : Color.primary)
                                 Spacer()
                             }
                             .padding(.horizontal, 8)
@@ -156,7 +156,7 @@ public struct DestinationPickerSheet: View {
                     if !appState.volumes.isEmpty {
                         Text("VOLUMES")
                             .font(.system(size: 10, weight: .bold))
-                            .foregroundColor(Color(hex: "94A3B8"))
+                            .foregroundColor(Color.maggoSidebarHeader)
                             .padding(.horizontal, 8)
                             .padding(.top, 6)
 
@@ -168,10 +168,10 @@ public struct DestinationPickerSheet: View {
                                 HStack(spacing: 6) {
                                     Image(systemName: "internaldrive.fill")
                                         .font(.system(size: 12))
-                                        .foregroundColor(isSelected ? .white : Color(hex: "64748B"))
+                                        .foregroundColor(isSelected ? .white : Color.secondary)
                                     Text(vol.name)
                                         .font(.system(size: 12))
-                                        .foregroundColor(isSelected ? .white : Color(hex: "334155"))
+                                        .foregroundColor(isSelected ? .white : Color.primary)
                                         .lineLimit(1)
                                     Spacer()
                                 }
@@ -188,7 +188,7 @@ public struct DestinationPickerSheet: View {
                 }
                 .frame(width: 140)
                 .padding(6)
-                .background(Color(hex: "F8FAFC"))
+                .background(Color.maggoModalSubBg)
 
                 Divider()
 
@@ -209,6 +209,7 @@ public struct DestinationPickerSheet: View {
                                         VStack(alignment: .leading, spacing: 1) {
                                             Text(url.lastPathComponent)
                                                 .font(.system(size: 12, weight: .medium))
+                                                .foregroundColor(.primary)
                                             Text(url.path)
                                                 .font(.system(size: 9))
                                                 .foregroundColor(.secondary)
@@ -239,14 +240,14 @@ public struct DestinationPickerSheet: View {
 
                             Text(currentBrowseURL.path.replacingOccurrences(of: homeURL.path, with: "~"))
                                 .font(.system(size: 11, weight: .medium))
-                                .foregroundColor(Color(hex: "475569"))
+                                .foregroundColor(Color.secondary)
                                 .lineLimit(1)
 
                             Spacer()
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 6)
-                        .background(Color(hex: "F1F5F9"))
+                        .background(Color.maggoSubBarBg)
 
                         Divider()
 
@@ -258,6 +259,7 @@ public struct DestinationPickerSheet: View {
                                     .foregroundColor(.green)
                                 Text("This folder (\(currentBrowseURL.lastPathComponent))")
                                     .font(.system(size: 12, weight: .semibold))
+                                    .foregroundColor(.primary)
                                 Spacer()
                             }
                             .tag(currentBrowseURL)
@@ -274,10 +276,11 @@ public struct DestinationPickerSheet: View {
                                             .foregroundColor(.maggoBlue)
                                         Text(folder.lastPathComponent)
                                             .font(.system(size: 12))
+                                            .foregroundColor(.primary)
                                         Spacer()
                                         Image(systemName: "chevron.right")
                                             .font(.system(size: 10))
-                                            .foregroundColor(Color(hex: "94A3B8"))
+                                            .foregroundColor(Color.secondary.opacity(0.6))
                                     }
                                     .contentShape(Rectangle())
                                     .tag(folder)
@@ -305,7 +308,7 @@ public struct DestinationPickerSheet: View {
                         .foregroundColor(.secondary)
                     Text((selectedDestination ?? currentBrowseURL).path.replacingOccurrences(of: homeURL.path, with: "~"))
                         .font(.system(size: 11, weight: .semibold))
-                        .foregroundColor(Color(hex: "0F172A"))
+                        .foregroundColor(.primary)
                         .lineLimit(1)
                 }
 
@@ -338,7 +341,7 @@ public struct DestinationPickerSheet: View {
             }
             .padding(.horizontal, 16)
             .padding(.vertical, 10)
-            .background(Color(hex: "F8FAFC"))
+            .background(Color.maggoModalSubBg)
         }
         .frame(width: 540, height: 390)
         .onAppear {

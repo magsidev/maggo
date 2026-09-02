@@ -16,7 +16,7 @@ public struct MainView: View {
                 AppToolbar(appState: appState)
                     .padding(.horizontal, 12)
                     .padding(.vertical, 5)
-                    .background(Color(hex: "ECEEEF"))
+                    .background(Color.maggoToolbarBg)
 
                 Divider()
 
@@ -96,7 +96,7 @@ public struct MainView: View {
 
                             Text(tab.title)
                                 .font(.system(size: 12, weight: isSelected ? .semibold : .regular))
-                                .foregroundColor(isSelected ? Color(hex: "0F172A") : Color(hex: "475569"))
+                                .foregroundColor(isSelected ? .primary : .secondary)
                                 .lineLimit(1)
 
                             if appState.tabs.count > 1 {
@@ -115,7 +115,7 @@ public struct MainView: View {
                         .padding(.vertical, 5)
                         .background(
                             RoundedRectangle(cornerRadius: 6)
-                                .fill(isSelected ? Color.white : Color.maggoTabInactiveBg)
+                                .fill(isSelected ? Color.maggoTabActiveBg : Color.maggoTabInactiveBg)
                         )
                         .overlay(
                             RoundedRectangle(cornerRadius: 6)
