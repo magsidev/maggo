@@ -40,6 +40,14 @@ public struct FileGridView: View {
                     }
                     .padding(6)
                     .contentShape(Rectangle())
+                    .draggable(item.url)
+                    .dropDestination(for: URL.self) { droppedURLs, _ in
+                        if item.isDirectory && !item.isPackage {
+                            handleDropIntoFolder(urls: droppedURLs, destinationFolder: item.url)
+                            return true
+                        }
+                        return false
+                    }
                     .simultaneousGesture(
                         TapGesture(count: 2).onEnded {
                             appState.openItem(item)
@@ -106,6 +114,37 @@ public struct FileGridView: View {
                 }
             }
             .padding(16)
+        }
+        .dropDestination(for: URL.self) { droppedURLs, _ in
+            handleDropIntoCurrentDirectory(urls: droppedURLs)
+            return true
+        }
+    }
+
+    private func handleDropIntoCurrentDirectory(urls: [URL]) {
+        guard !urls.isEmpty else { return }
+        let destination = pane.currentURL
+        Task { @MainActor in
+            do {
+                _ = try FileOperationEngine.shared.copyItems(urls: urls, to: destination)
+                pane.refresh()
+                appState.statusMessage = "Added \(urls.count) item(s) to \(destination.lastPathComponent)"
+            } catch {
+                appState.statusMessage = "Drop error: \(error.localizedDescription)"
+            }
+        }
+    }
+
+    private func handleDropIntoFolder(urls: [URL], destinationFolder: URL) {
+        guard !urls.isEmpty else { return }
+        Task { @MainActor in
+            do {
+                _ = try FileOperationEngine.shared.moveItems(urls: urls, to: destinationFolder)
+                pane.refresh()
+                appState.statusMessage = "Moved \(urls.count) item(s) into \(destinationFolder.lastPathComponent)"
+            } catch {
+                appState.statusMessage = "Drop error: \(error.localizedDescription)"
+            }
         }
     }
 }

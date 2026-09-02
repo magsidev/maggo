@@ -57,6 +57,14 @@ cat <<EOF > "${APP_BUNDLE}/Contents/Info.plist"
     <true/>
     <key>NSPrincipalClass</key>
     <string>NSApplication</string>
+    <key>NSDesktopFolderUsageDescription</key>
+    <string>Maggo requires access to Desktop to browse and manage your files.</string>
+    <key>NSDocumentsFolderUsageDescription</key>
+    <string>Maggo requires access to Documents to browse and manage your files.</string>
+    <key>NSDownloadsFolderUsageDescription</key>
+    <string>Maggo requires access to Downloads to browse and manage your files.</string>
+    <key>NSRemovableVolumesUsageDescription</key>
+    <string>Maggo requires access to external drives to manage your files.</string>
 </dict>
 </plist>
 EOF

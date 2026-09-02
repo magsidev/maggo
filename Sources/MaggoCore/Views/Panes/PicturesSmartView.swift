@@ -209,12 +209,17 @@ public struct PicturesSmartView: View {
                                     )
                             }
                             .contentShape(Rectangle())
-                            .onTapGesture {
-                                selectedURL = pic.url
-                            }
-                            .onTapGesture(count: 2) {
-                                NSWorkspace.shared.open(pic.url)
-                            }
+                            .draggable(pic.url)
+                            .simultaneousGesture(
+                                TapGesture(count: 2).onEnded {
+                                    NSWorkspace.shared.open(pic.url)
+                                }
+                            )
+                            .simultaneousGesture(
+                                TapGesture(count: 1).onEnded {
+                                    selectedURL = pic.url
+                                }
+                            )
                             .contextMenu {
                                 pictureContextMenu(for: pic)
                             }

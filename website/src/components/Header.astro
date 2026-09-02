@@ -3,14 +3,6 @@
 ---
 
 <header class="site-header">
-  <div class="top-announcement">
-    <div class="container announcement-inner">
-      <span class="announcement-badge">3-Day Free Trial</span>
-      <span class="announcement-text">$0 charged today. Full lifetime access for $19.99 on day 3.</span>
-      <a href="#pricing" class="announcement-link">Get Started &rarr;</a>
-    </div>
-  </div>
-
   <nav class="nav-container container">
     <a href="/" class="brand" aria-label="Maggo Home">
       <div class="brand-icon">
@@ -46,49 +38,6 @@
     -webkit-backdrop-filter: saturate(180%) blur(20px);
     border-bottom: 1px solid rgba(0, 0, 0, 0.07);
     transition: background 0.3s ease;
-  }
-
-  .top-announcement {
-    background-color: #0B0F19;
-    color: #F8FAFC;
-    font-size: 0.75rem;
-    padding: 0.4rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  }
-
-  .announcement-inner {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    flex-wrap: wrap;
-  }
-
-  .announcement-badge {
-    background: #8854D0;
-    color: #FFFFFF;
-    padding: 0.1rem 0.55rem;
-    border-radius: var(--radius-pill);
-    font-weight: 600;
-    font-size: 0.6875rem;
-    letter-spacing: 0.02em;
-  }
-
-  .announcement-text {
-    color: #94A3B8;
-    font-weight: 400;
-  }
-
-  .announcement-link {
-    color: #DDD6FE;
-    font-weight: 600;
-    text-decoration: underline;
-    text-underline-offset: 2px;
-    transition: color 0.15s ease;
-  }
-
-  .announcement-link:hover {
-    color: #FFFFFF;
   }
 
   .nav-container {
@@ -160,12 +109,6 @@
 
   @media (max-width: 900px) {
     .nav-links {
-      display: none;
-    }
-  }
-
-  @media (max-width: 640px) {
-    .announcement-text {
       display: none;
     }
   }

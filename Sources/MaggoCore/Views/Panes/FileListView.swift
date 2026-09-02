@@ -44,7 +44,7 @@ public struct FileListView: View {
                 }
             )
         ) {
-            // Column 1: Name & Icon
+            // Column 1: Name & Icon with Native Draggable & Drop Destination
             TableColumn("Name", value: \.name) { item in
                 let isSelected = pane.selectedURLs.contains(item.url)
 
@@ -59,6 +59,14 @@ public struct FileListView: View {
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .contentShape(Rectangle())
+                .draggable(item.url)
+                .dropDestination(for: URL.self) { droppedURLs, _ in
+                    if item.isDirectory && !item.isPackage {
+                        handleDropIntoFolder(urls: droppedURLs, destinationFolder: item.url)
+                        return true
+                    }
+                    return false
+                }
                 .simultaneousGesture(
                     TapGesture(count: 2).onEnded {
                         appState.openItem(item)
@@ -83,6 +91,7 @@ public struct FileListView: View {
                     .foregroundColor(isSelected ? Color.white.opacity(0.9) : Color(hex: "64748B"))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
+                    .draggable(item.url)
                     .simultaneousGesture(
                         TapGesture(count: 2).onEnded {
                             appState.openItem(item)
@@ -105,6 +114,7 @@ public struct FileListView: View {
                     .foregroundColor(isSelected ? Color.white.opacity(0.9) : Color(hex: "64748B"))
                     .frame(maxWidth: .infinity, alignment: .trailing)
                     .contentShape(Rectangle())
+                    .draggable(item.url)
                     .simultaneousGesture(
                         TapGesture(count: 2).onEnded {
                             appState.openItem(item)
@@ -126,6 +136,7 @@ public struct FileListView: View {
                     .foregroundColor(isSelected ? Color.white.opacity(0.9) : Color(hex: "64748B"))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
+                    .draggable(item.url)
                     .simultaneousGesture(
                         TapGesture(count: 2).onEnded {
                             appState.openItem(item)
@@ -142,6 +153,10 @@ public struct FileListView: View {
             ForEach(pane.filteredItems) { item in
                 TableRow(item)
             }
+        }
+        .dropDestination(for: URL.self) { droppedURLs, _ in
+            handleDropIntoCurrentDirectory(urls: droppedURLs)
+            return true
         }
         .onKeyPress(.return) {
             if let first = pane.selectedItems.first {
@@ -165,6 +180,33 @@ public struct FileListView: View {
             }
             Button("Refresh (⌘R)") {
                 pane.refresh()
+            }
+        }
+    }
+
+    private func handleDropIntoCurrentDirectory(urls: [URL]) {
+        guard !urls.isEmpty else { return }
+        let destination = pane.currentURL
+        Task { @MainActor in
+            do {
+                _ = try FileOperationEngine.shared.copyItems(urls: urls, to: destination)
+                pane.refresh()
+                appState.statusMessage = "Added \(urls.count) item(s) to \(destination.lastPathComponent)"
+            } catch {
+                appState.statusMessage = "Drop error: \(error.localizedDescription)"
+            }
+        }
+    }
+
+    private func handleDropIntoFolder(urls: [URL], destinationFolder: URL) {
+        guard !urls.isEmpty else { return }
+        Task { @MainActor in
+            do {
+                _ = try FileOperationEngine.shared.moveItems(urls: urls, to: destinationFolder)
+                pane.refresh()
+                appState.statusMessage = "Moved \(urls.count) item(s) into \(destinationFolder.lastPathComponent)"
+            } catch {
+                appState.statusMessage = "Drop error: \(error.localizedDescription)"
             }
         }
     }
