@@ -41,6 +41,10 @@ public struct SidebarView: View {
                     .cornerRadius(6)
                 }
                 .buttonStyle(.plain)
+                .dropDestination(for: URL.self) { droppedURLs, _ in
+                    handleDropIntoLocation(urls: droppedURLs, destination: homeURL, name: "Home")
+                    return true
+                }
 
                 // Section: FAVORITES
                 VStack(alignment: .leading, spacing: 2) {
@@ -73,6 +77,10 @@ public struct SidebarView: View {
                             .cornerRadius(6)
                         }
                         .buttonStyle(.plain)
+                        .dropDestination(for: URL.self) { droppedURLs, _ in
+                            handleDropIntoLocation(urls: droppedURLs, destination: loc.url, name: loc.name)
+                            return true
+                        }
                     }
 
                     // Pictures Smart Location
@@ -143,6 +151,10 @@ public struct SidebarView: View {
                             .cornerRadius(6)
                         }
                         .buttonStyle(.plain)
+                        .dropDestination(for: URL.self) { droppedURLs, _ in
+                            handleDropIntoLocation(urls: droppedURLs, destination: volume.url, name: volume.name)
+                            return true
+                        }
                         .contextMenu {
                             Button("Storage Overview") {
                                 appState.showSmartPictures = false
@@ -209,5 +221,18 @@ public struct SidebarView: View {
         let total = ByteCountFormatter.string(fromByteCount: volume.totalCapacity, countStyle: .file)
         let free = ByteCountFormatter.string(fromByteCount: volume.availableCapacity, countStyle: .file)
         return "\(total) • \(free) free"
+    }
+
+    private func handleDropIntoLocation(urls: [URL], destination: URL, name: String) {
+        guard !urls.isEmpty else { return }
+        Task { @MainActor in
+            do {
+                _ = try FileOperationEngine.shared.moveItems(urls: urls, to: destination)
+                appState.refreshAllViews()
+                appState.statusMessage = "Moved \(urls.count) item(s) to \(name)"
+            } catch {
+                appState.statusMessage = "Drop error: \(error.localizedDescription)"
+            }
+        }
     }
 }

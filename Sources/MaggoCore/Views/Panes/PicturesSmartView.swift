@@ -218,6 +218,7 @@ public struct PicturesSmartView: View {
                             .simultaneousGesture(
                                 TapGesture(count: 1).onEnded {
                                     selectedURL = pic.url
+                                    appState.selectedPictureURL = pic.url
                                 }
                             )
                             .contextMenu {
@@ -231,6 +232,11 @@ public struct PicturesSmartView: View {
         }
         .task {
             await loadPictures()
+        }
+        .onChange(of: appState.smartPicturesRefreshTrigger) { _, _ in
+            Task {
+                await loadPictures()
+            }
         }
     }
 
@@ -272,7 +278,7 @@ public struct PicturesSmartView: View {
 
         Button("Move to Trash (⌘⌫)", role: .destructive) {
             _ = try? FileOperationEngine.shared.moveToTrash(urls: [pic.url])
-            pictures.removeAll { $0.url == pic.url }
+            appState.refreshAllViews()
         }
     }
 

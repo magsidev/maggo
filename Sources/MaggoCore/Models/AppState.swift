@@ -27,6 +27,16 @@ public final class AppState {
 
     public var showSmartPictures: Bool = false
     public var selectedVolumeForOverview: VolumeItem?
+    public var selectedPictureURL: URL?
+    public var smartPicturesRefreshTrigger: Int = 0
+
+    public func refreshAllViews() {
+        activePane.refresh()
+        if activeTab.isSplitView {
+            activeTab.inactivePane.refresh()
+        }
+        smartPicturesRefreshTrigger += 1
+    }
 
     public init() {
         let homeURL = FileManager.default.homeDirectoryForCurrentUser
@@ -162,34 +172,46 @@ public final class AppState {
     }
 
     public func triggerMoveTo() {
-        let selected = activePane.selectedURLs
+        let selected: [URL]
+        if showSmartPictures, let pic = selectedPictureURL {
+            selected = [pic]
+        } else {
+            selected = Array(activePane.selectedURLs)
+        }
         guard !selected.isEmpty else { return }
         destinationPickerConfig = DestinationPickerConfig(
             operation: .move,
-            sourceURLs: Array(selected)
+            sourceURLs: selected
         )
     }
 
     public func triggerCopyTo() {
-        let selected = activePane.selectedURLs
+        let selected: [URL]
+        if showSmartPictures, let pic = selectedPictureURL {
+            selected = [pic]
+        } else {
+            selected = Array(activePane.selectedURLs)
+        }
         guard !selected.isEmpty else { return }
         destinationPickerConfig = DestinationPickerConfig(
             operation: .copy,
-            sourceURLs: Array(selected)
+            sourceURLs: selected
         )
     }
 
     public func deleteSelected() {
-        let selected = Array(activePane.selectedURLs)
+        let selected: [URL]
+        if showSmartPictures, let pic = selectedPictureURL {
+            selected = [pic]
+        } else {
+            selected = Array(activePane.selectedURLs)
+        }
         guard !selected.isEmpty else { return }
 
         do {
             _ = try FileOperationEngine.shared.moveToTrash(urls: selected)
             statusMessage = "Moved \(selected.count) item(s) to Trash"
-            activePane.refresh()
-            if activeTab.isSplitView {
-                activeTab.inactivePane.refresh()
-            }
+            refreshAllViews()
         } catch {
             statusMessage = "Trash error: \(error.localizedDescription)"
         }

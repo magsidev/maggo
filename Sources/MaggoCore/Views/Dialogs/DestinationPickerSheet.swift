@@ -157,10 +157,7 @@ public struct DestinationPickerSheet: View {
             }
 
             RecentLocationsManager.shared.recordDestination(dest)
-            appState.activePane.refresh()
-            if appState.activeTab.isSplitView {
-                appState.activeTab.inactivePane.refresh()
-            }
+            appState.refreshAllViews()
             dismiss()
         } catch {
             appState.statusMessage = "Operation failed: \(error.localizedDescription)"
