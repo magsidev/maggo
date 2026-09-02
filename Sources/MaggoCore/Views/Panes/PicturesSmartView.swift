@@ -268,12 +268,17 @@ public struct PicturesSmartView: View {
 
         Divider()
 
-        Button("Move To… (⌘⇧M)") {
-            appState.destinationPickerConfig = DestinationPickerConfig(operation: .move, sourceURLs: [pic.url])
+        Button("Copy (⌘C)") {
+            PasteboardService.shared.copy(urls: [pic.url], isCut: false)
+            appState.statusMessage = "Copied picture to clipboard"
         }
 
         Button("Copy To… (⌘⇧C)") {
             appState.destinationPickerConfig = DestinationPickerConfig(operation: .copy, sourceURLs: [pic.url])
+        }
+
+        Button("Move Original… (⌘⇧M)") {
+            appState.destinationPickerConfig = DestinationPickerConfig(operation: .move, sourceURLs: [pic.url])
         }
 
         Button("Move to Trash (⌘⌫)", role: .destructive) {

@@ -33,6 +33,11 @@ public actor PictureIndexService {
         "jpg", "jpeg", "png", "heic", "heif", "gif", "tiff", "tif", "bmp", "webp"
     ]
 
+    public static let excludedDirectoryNames: Set<String> = [
+        ".git", "node_modules", "build", "dist", ".next", "DerivedData",
+        "vendor", "Pods", ".venv", "venv", ".cargo", "target", ".cache"
+    ]
+
     private var cachedPictures: [PictureItem] = []
     private var isIndexing = false
     private var lastIndexedDate: Date?
@@ -93,6 +98,12 @@ public actor PictureIndexService {
                 scannedInDir += 1
                 if scannedInDir % 150 == 0 {
                     await Task.yield()
+                }
+
+                // Skip developer, package, and build directories (e.g. node_modules, .git, build, dist)
+                let pathComponents = Set(fileURL.pathComponents)
+                if !pathComponents.isDisjoint(with: Self.excludedDirectoryNames) {
+                    continue
                 }
 
                 let ext = fileURL.pathExtension.lowercased()

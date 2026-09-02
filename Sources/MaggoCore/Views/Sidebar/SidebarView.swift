@@ -237,11 +237,19 @@ public struct SidebarView: View {
 
     private func handleDropIntoLocation(urls: [URL], destination: URL, name: String) {
         guard !urls.isEmpty else { return }
+        let isFromPictures = appState.showSmartPictures
         Task { @MainActor in
             do {
-                _ = try FileOperationEngine.shared.moveItems(urls: urls, to: destination)
-                appState.refreshAllViews()
-                appState.statusMessage = "Moved \(urls.count) item(s) to \(name)"
+                if isFromPictures {
+                    // Safe non-destructive copy: original file remains 100% in place
+                    _ = try FileOperationEngine.shared.copyItems(urls: urls, to: destination)
+                    appState.refreshAllViews()
+                    appState.statusMessage = "Copied \(urls.count) picture(s) to \(name)"
+                } else {
+                    _ = try FileOperationEngine.shared.moveItems(urls: urls, to: destination)
+                    appState.refreshAllViews()
+                    appState.statusMessage = "Moved \(urls.count) item(s) to \(name)"
+                }
             } catch {
                 appState.statusMessage = "Drop error: \(error.localizedDescription)"
             }
