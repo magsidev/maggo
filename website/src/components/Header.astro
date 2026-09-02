@@ -6,32 +6,31 @@
   <div class="top-announcement">
     <div class="container announcement-inner">
       <span class="announcement-badge">3-Day Free Trial</span>
-      <span class="announcement-text">$0 today, then $19.99 once on day 3 for lifetime access • Cancel anytime</span>
-      <a href="#pricing" class="announcement-link">Start Free Trial &rarr;</a>
+      <span class="announcement-text">$0 charged today. Full lifetime access for $19.99 on day 3.</span>
+      <a href="#pricing" class="announcement-link">Get Started &rarr;</a>
     </div>
   </div>
 
   <nav class="nav-container container">
     <a href="/" class="brand" aria-label="Maggo Home">
       <div class="brand-icon">
-        <img src="/images/maggo-logo.png" alt="Maggo App Icon" class="brand-logo-img" width="34" height="34" />
+        <img src="/images/maggo-logo.png" alt="Maggo App Icon" class="brand-logo-img" width="32" height="32" />
       </div>
       <span class="brand-name">Maggo</span>
     </a>
 
     <div class="nav-links">
-      <a href="#features" class="nav-link">Features</a>
-      <a href="#demo" class="nav-link">Demo</a>
-      <a href="#familiar" class="nav-link">Familiar Design</a>
+      <a href="#features" class="nav-link">Overview</a>
+      <a href="#demo" class="nav-link">Interactive Demo</a>
+      <a href="#familiar" class="nav-link">Native Design</a>
       <a href="#comparison" class="nav-link">Why Maggo</a>
-      <a href="#use-cases" class="nav-link">Use Cases</a>
       <a href="#pricing" class="nav-link">Pricing</a>
       <a href="#faq" class="nav-link">FAQ</a>
     </div>
 
     <div class="nav-actions">
       <a href="#pricing" class="btn btn-primary nav-buy-btn">
-        <span>Start 3-Day Trial — $19.99</span>
+        <span>Try Free for 3 Days</span>
       </a>
     </div>
   </nav>
@@ -41,19 +40,20 @@
   .site-header {
     position: sticky;
     top: 0;
-    z-index: 50;
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border-bottom: 1px solid var(--color-border);
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: saturate(180%) blur(20px);
+    -webkit-backdrop-filter: saturate(180%) blur(20px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+    transition: background 0.3s ease;
   }
 
   .top-announcement {
-    background-color: #0F172A;
+    background-color: #0B0F19;
     color: #F8FAFC;
     font-size: 0.75rem;
-    padding: 0.45rem 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.4rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
 
   .announcement-inner {
@@ -67,34 +67,35 @@
   .announcement-badge {
     background: #8854D0;
     color: #FFFFFF;
-    padding: 0.1rem 0.5rem;
-    border-radius: 9999px;
+    padding: 0.1rem 0.55rem;
+    border-radius: var(--radius-pill);
     font-weight: 600;
-    font-size: 0.7rem;
+    font-size: 0.6875rem;
     letter-spacing: 0.02em;
   }
 
   .announcement-text {
-    color: #CBD5E1;
+    color: #94A3B8;
     font-weight: 400;
   }
 
   .announcement-link {
-    color: #C4B5FD;
+    color: #DDD6FE;
     font-weight: 600;
     text-decoration: underline;
     text-underline-offset: 2px;
+    transition: color 0.15s ease;
   }
 
   .announcement-link:hover {
-    color: #DDD6FE;
+    color: #FFFFFF;
   }
 
   .nav-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 4.25rem;
+    height: 4rem;
   }
 
   .brand {
@@ -102,9 +103,9 @@
     align-items: center;
     gap: 0.65rem;
     font-weight: 700;
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     color: var(--color-text-main);
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
   }
 
   .brand-icon {
@@ -118,23 +119,25 @@
   .brand-logo-img {
     display: block;
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
 
   .brand-name {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
+    letter-spacing: -0.02em;
   }
 
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 1.75rem;
+    gap: 2rem;
   }
 
   .nav-link {
-    font-size: 0.9rem;
+    font-size: 0.875rem;
     font-weight: 500;
     color: var(--color-text-muted);
+    letter-spacing: -0.01em;
     transition: color 0.15s ease;
   }
 
@@ -148,26 +151,14 @@
     gap: 0.75rem;
   }
 
-  .nav-trial-link {
-    font-size: 0.8125rem;
-    font-weight: 600;
-    color: var(--color-text-muted);
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-    transition: all 0.15s ease;
-  }
-
-  .nav-trial-link:hover {
-    color: var(--color-text-main);
-    background: var(--color-bg-muted);
-  }
-
   .nav-buy-btn {
-    font-size: 0.85rem;
-    padding: 0.55rem 1.15rem;
+    font-size: 0.84rem;
+    font-weight: 600;
+    padding: 0.5rem 1.15rem;
+    border-radius: var(--radius-pill);
   }
 
-  @media (max-width: 960px) {
+  @media (max-width: 900px) {
     .nav-links {
       display: none;
     }
@@ -175,9 +166,6 @@
 
   @media (max-width: 640px) {
     .announcement-text {
-      display: none;
-    }
-    .nav-trial-link {
       display: none;
     }
   }

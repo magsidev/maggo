@@ -2,15 +2,15 @@
 // ComparisonSection.astro
 ---
 
-<section class="section-wrapper comparison-section" id="comparison">
+<section class="section-wrapper comparison-section" id="comparison-details">
   <div class="container">
     <div class="section-header-center">
-      <div class="section-eyebrow">Finder vs Maggo</div>
+      <div class="section-eyebrow">Finder &amp; Maggo</div>
       <h2 class="section-title">
-        A better alternative to Finder.
+        A calmer, more focused <br class="br-desktop" />alternative to Finder.
       </h2>
       <p class="section-subtitle">
-        Finder is fine. But you might want something more focused on getting things done quickly.
+        Finder is fine for general Mac browsing. Maggo is built specifically for people who want faster, more predictable everyday file management.
       </p>
     </div>
 
@@ -38,65 +38,65 @@
         <tbody>
           <tr>
             <td class="feature-label">
-              <strong>Core Philosophy</strong>
-              <span>General-purpose Mac system browser</span>
+              <strong>Design Intent</strong>
+              <span>Everyday focus</span>
             </td>
-            <td class="finder-val">Familiar Mac file browsing</td>
-            <td class="maggo-val highlight">Familiar file browsing with a productivity focus</td>
+            <td class="finder-val">General system browser</td>
+            <td class="maggo-val highlight">Dedicated, streamlined file management</td>
           </tr>
 
           <tr>
             <td class="feature-label">
-              <strong>Window Management</strong>
-              <span>Working across folders</span>
+              <strong>Window Discipline</strong>
+              <span>Organizing multiple folders</span>
             </td>
-            <td class="finder-val">Multiple scattered windows</td>
-            <td class="maggo-val highlight">Clean tabs in one single window (⌘T)</td>
+            <td class="finder-val">Scattered, overlapping windows</td>
+            <td class="maggo-val highlight">Clean folder tabs in a single window (<span class="kbd-key">⌘T</span>)</td>
           </tr>
 
           <tr>
             <td class="feature-label">
-              <strong>Path Navigation</strong>
+              <strong>Directory Navigation</strong>
               <span>Understanding folder depth</span>
             </td>
             <td class="finder-val">Standard path bar</td>
-            <td class="maggo-val highlight">Clear clickable breadcrumbs + navigation</td>
+            <td class="maggo-val highlight">Clickable interactive breadcrumbs with 1-click jumps</td>
           </tr>
 
           <tr>
             <td class="feature-label">
-              <strong>File Organization</strong>
-              <span>Moving files to their destination</span>
+              <strong>File Movement</strong>
+              <span>Relocating files safely</span>
             </td>
-            <td class="finder-val">Basic drag &amp; drop operations</td>
-            <td class="maggo-val highlight">Faster Move To (⌘⇧M) &amp; Copy To workflows</td>
+            <td class="finder-val">Manual drag-and-drop across screens</td>
+            <td class="maggo-val highlight">Direct Move To (<span class="kbd-key">⌘⇧M</span>) &amp; Copy To dialogs</td>
           </tr>
 
           <tr>
             <td class="feature-label">
-              <strong>Side-by-side Work</strong>
+              <strong>Dual-Pane Working</strong>
               <span>Transferring between 2 directories</span>
             </td>
-            <td class="finder-val">Standard single-pane browsing</td>
-            <td class="maggo-val highlight">Dual split-pane workflows (⌘⇧S)</td>
+            <td class="finder-val">Single pane only</td>
+            <td class="maggo-val highlight">Built-in side-by-side split view (<span class="kbd-key">⌘⇧S</span>)</td>
           </tr>
 
           <tr>
             <td class="feature-label">
-              <strong>Native Mac Experience</strong>
-              <span>Integration with macOS</span>
+              <strong>Native Mac Heritage</strong>
+              <span>System integration</span>
             </td>
-            <td class="finder-val">Native Mac experience</td>
-            <td class="maggo-val highlight">Native Mac experience (Swift 6 &amp; SwiftUI)</td>
+            <td class="finder-val">Native macOS component</td>
+            <td class="maggo-val highlight">Pure Swift 6 &amp; SwiftUI (Zero Electron bloat)</td>
           </tr>
 
           <tr>
             <td class="feature-label">
-              <strong>Pricing &amp; Model</strong>
-              <span>Cost to own</span>
+              <strong>Ownership Model</strong>
+              <span>Pricing &amp; support</span>
             </td>
-            <td class="finder-val">Free with macOS</td>
-            <td class="maggo-val highlight price-tag">$19.99 once (Lifetime support, no subscription)</td>
+            <td class="finder-val">Included with macOS</td>
+            <td class="maggo-val highlight price-tag">$19.99 lifetime license (No subscriptions)</td>
           </tr>
         </tbody>
       </table>
@@ -105,11 +105,8 @@
     <!-- Respectful concluding stance -->
     <div class="stance-block">
       <div class="stance-badge">The Bottom Line</div>
-      <p class="stance-text">
-        The point isn't: <em>Finder is bad.</em>
-      </p>
       <p class="stance-quote">
-        It's: <strong>Maggo is for people who want more efficient everyday file management.</strong>
+        Maggo doesn't try to reinvent your computer — it simply gives you the disciplined tools to get in, organize your files, and get back to your work.
       </p>
     </div>
   </div>
@@ -117,13 +114,26 @@
 
 <style>
   .comparison-section {
-    background-color: var(--color-bg);
+    background-color: #FFFFFF;
   }
 
   .section-header-center {
     text-align: center;
-    max-width: 700px;
-    margin: 0 auto 3rem auto;
+    max-width: 760px;
+    margin: 0 auto 4rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .br-desktop {
+    display: none;
+  }
+
+  @media (min-width: 768px) {
+    .br-desktop {
+      display: inline;
+    }
   }
 
   .table-card {
@@ -132,18 +142,18 @@
     border-radius: var(--radius-xl);
     overflow-x: auto;
     box-shadow: var(--shadow-sm);
-    margin-bottom: 2.5rem;
+    margin-bottom: 3.5rem;
   }
 
   .comparison-table {
     width: 100%;
     border-collapse: collapse;
     text-align: left;
-    min-width: 640px;
+    min-width: 680px;
   }
 
   .comparison-table th {
-    padding: 1.25rem 1.5rem;
+    padding: 1.35rem 1.75rem;
     font-size: 0.875rem;
     font-weight: 700;
     border-bottom: 1px solid var(--color-border);
@@ -151,17 +161,17 @@
   }
 
   .col-feature {
-    width: 32%;
+    width: 30%;
     color: var(--color-text-muted);
   }
 
   .col-finder {
-    width: 34%;
+    width: 35%;
   }
 
   .col-maggo {
-    width: 34%;
-    background: #F0F7FF !important;
+    width: 35%;
+    background: rgba(136, 84, 208, 0.04) !important;
   }
 
   .app-header-finder, .app-header-maggo {
@@ -176,20 +186,20 @@
     border-radius: 50%;
   }
 
-  .finder-dot { background-color: #64748B; }
-  .maggo-dot { background-color: var(--color-accent); }
+  .finder-dot { background-color: #94A3B8; }
 
   .recommend-badge {
     font-size: 0.6875rem;
     font-weight: 600;
     background: #8854D0;
     color: #FFFFFF;
-    padding: 0.15rem 0.5rem;
-    border-radius: 9999px;
+    padding: 0.15rem 0.55rem;
+    border-radius: var(--radius-pill);
+    letter-spacing: 0.02em;
   }
 
   .comparison-table td {
-    padding: 1.25rem 1.5rem;
+    padding: 1.35rem 1.75rem;
     border-bottom: 1px solid var(--color-border-subtle);
     font-size: 0.9375rem;
     line-height: 1.5;
@@ -203,10 +213,11 @@
 
   .feature-label strong {
     color: var(--color-text-main);
+    font-size: 0.95rem;
   }
 
   .feature-label span {
-    font-size: 0.75rem;
+    font-size: 0.78rem;
     color: var(--color-text-muted);
   }
 
@@ -216,12 +227,13 @@
 
   .maggo-val {
     color: var(--color-text-main);
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .maggo-val.highlight {
-    background: #F8FAFC;
-    color: #0F172A;
+    background: rgba(136, 84, 208, 0.02);
+    color: var(--color-text-main);
+    font-weight: 600;
   }
 
   .price-tag {
@@ -230,36 +242,32 @@
   }
 
   .stance-block {
-    max-width: 600px;
+    max-width: 680px;
     margin: 0 auto;
     text-align: center;
-    background: #F8FAFC;
-    border: 1px solid var(--color-border);
+    background: var(--color-bg-subtle);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-lg);
-    padding: 1.75rem 2rem;
+    padding: 2.25rem 2.5rem;
   }
 
   .stance-badge {
     display: inline-block;
-    font-size: 0.6875rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
+    letter-spacing: 0.08em;
     background: #E2E8F0;
     color: #475569;
-    padding: 0.2rem 0.6rem;
-    border-radius: 9999px;
-    margin-bottom: 0.75rem;
-  }
-
-  .stance-text {
-    font-size: 1rem;
-    color: var(--color-text-muted);
-    margin-bottom: 0.25rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: var(--radius-pill);
+    margin-bottom: 0.85rem;
   }
 
   .stance-quote {
-    font-size: 1.125rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
     color: var(--color-text-main);
+    font-weight: 500;
   }
 </style>

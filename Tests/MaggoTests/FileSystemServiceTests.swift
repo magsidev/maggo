@@ -82,4 +82,19 @@ final class FileSystemServiceTests: XCTestCase {
         XCTAssertEqual(sorted.first?.name, "latest_download.zip")
         XCTAssertEqual(sorted.map(\.name), ["latest_download.zip", "older.pdf", "old_folder"])
     }
+
+    func testDirectoryWatcherDetectsFileCreation() async throws {
+        let exp = expectation(description: "DirectoryWatcher should trigger onChange when file is created")
+
+        let watcher = DirectoryWatcher(url: tempDirectory) {
+            exp.fulfill()
+        }
+
+        // Create a new file in tempDirectory to trigger the watcher
+        let testFile = tempDirectory.appendingPathComponent("live_file.txt")
+        try "Live monitoring content".write(to: testFile, atomically: true, encoding: .utf8)
+
+        await fulfillment(of: [exp], timeout: 2.0)
+        watcher.stop()
+    }
 }

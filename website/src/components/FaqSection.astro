@@ -4,43 +4,35 @@
 const faqs = [
   {
     q: "What is Maggo?",
-    a: "Maggo is a file manager for Mac designed to make navigating, finding, moving, copying, and organizing files easier."
+    a: "Maggo is a dedicated file manager for Mac designed to make navigating, finding, moving, copying, and organizing files simpler and faster."
   },
   {
-    q: "Is Maggo a replacement for Finder?",
-    a: "Maggo can be used as an alternative to Finder for everyday file management. You can also use Maggo alongside Finder."
+    q: "How does the 3-day trial and lifetime license work?",
+    a: "You get unrestricted access to Maggo for 3 full days. You enter card details securely at checkout, and $0 is charged today. On day 3, your card is automatically charged the one-time $19.99 fee for permanent lifetime ownership. You can cancel anytime before day 3 with zero charge."
   },
   {
-    q: "How much does Maggo cost?",
-    a: "Maggo costs $19.99 as a one-time purchase for a permanent lifetime license. You can start with a 3-day free trial with $0 charged today. On day 3, your card is automatically charged the $19.99 one-time fee unless cancelled."
+    q: "Is Maggo a subscription or a one-time purchase?",
+    a: "Maggo is 100% one-time purchase. There are no monthly or yearly subscriptions. Once purchased, you own it permanently with all macOS compatibility updates included."
   },
   {
-    q: "How does the 3-day free trial work?",
-    a: "You get full, unrestricted access to Maggo immediately. You enter your card details at checkout, and $0 is charged today. On the third day, your card is automatically charged $19.99 for permanent lifetime ownership and support. You can cancel anytime before day 3 with zero charge."
+    q: "Does Maggo replace Finder or can I use both?",
+    a: "Maggo works independently alongside macOS. Finder remains intact on your system, and you can switch between them or use Maggo as your default daily file organizer."
   },
   {
-    q: "Does Maggo require an account?",
-    a: "No. The core application does not require an account."
+    q: "Does Maggo use AI or upload my files to the cloud?",
+    a: "No. Maggo is intentionally built with zero AI features, zero telemetry, and zero cloud uploads. Your files never leave your local Mac storage."
   },
   {
-    q: "Does Maggo use AI?",
-    a: "No. Maggo is intentionally designed without AI. Its focus is fast, predictable file management."
+    q: "Does Maggo work with external SSDs, USB drives, and network volumes?",
+    a: "Yes. All internal drives, external SSDs, SD cards, and mounted network storage appear directly in the sidebar with live storage gauges."
   },
   {
-    q: "Does Maggo work with external drives?",
-    a: "Yes. Maggo is designed to work with files and folders stored on your Mac and supported external storage."
+    q: "Can I use Maggo on all of my Macs?",
+    a: "Yes. Your lifetime license key covers your personal Macs."
   },
   {
-    q: "Can I use keyboard shortcuts?",
-    a: "Yes. Maggo is designed with keyboard-friendly file management in mind."
-  },
-  {
-    q: "Does Maggo replace Finder?",
-    a: "Maggo is an alternative file manager. Finder remains available on your Mac, and you can use both applications."
-  },
-  {
-    q: "Is Maggo a file organizer?",
-    a: "Maggo helps you navigate and manage your files, including moving, copying, renaming, and organizing them into folders."
+    q: "What are the system requirements?",
+    a: "Maggo runs natively on Apple Silicon (M1/M2/M3/M4) and Intel Macs running macOS 13.0 Ventura, macOS 14.0 Sonoma, macOS 15.0 Sequoia, or later."
   }
 ];
 ---
@@ -80,7 +72,7 @@ const faqs = [
   </div>
 </section>
 
-<!-- JSON-LD FAQ Schema for Google Rich Search Results -->
+<!-- JSON-LD FAQ Schema for Search Engines -->
 <script type="application/ld+json" set:html={JSON.stringify({
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -97,14 +89,17 @@ const faqs = [
 <style>
   .faq-section {
     background-color: var(--color-bg-subtle);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border-light);
+    border-bottom: 1px solid var(--color-border-light);
   }
 
   .section-header-center {
     text-align: center;
-    max-width: 700px;
-    margin: 0 auto 3rem auto;
+    max-width: 760px;
+    margin: 0 auto 4rem auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .faq-list {
@@ -117,21 +112,21 @@ const faqs = [
 
   .faq-item {
     background: #FFFFFF;
-    border: 1px solid var(--color-border);
-    border-radius: var(--radius-md);
+    border: 1px solid var(--color-border-light);
+    border-radius: var(--radius-lg);
     overflow: hidden;
-    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    transition: border-color 0.2s var(--ease-apple), box-shadow 0.2s var(--ease-apple);
   }
 
   .faq-item[open] {
-    border-color: #CBD5E1;
+    border-color: rgba(136, 84, 208, 0.3);
     box-shadow: var(--shadow-sm);
   }
 
   .faq-question {
     list-style: none;
-    padding: 1.25rem 1.5rem;
-    font-size: 1.0625rem;
+    padding: 1.35rem 1.75rem;
+    font-size: 1.05rem;
     font-weight: 600;
     color: var(--color-text-main);
     display: flex;
@@ -140,6 +135,7 @@ const faqs = [
     gap: 1rem;
     cursor: pointer;
     user-select: none;
+    letter-spacing: -0.015em;
   }
 
   .faq-question::-webkit-details-marker {
@@ -147,8 +143,8 @@ const faqs = [
   }
 
   .faq-chevron {
-    color: var(--color-text-muted);
-    transition: transform 0.2s ease;
+    color: #94A3B8;
+    transition: transform 0.2s var(--ease-apple), color 0.2s var(--ease-apple);
     flex-shrink: 0;
   }
 
@@ -158,10 +154,12 @@ const faqs = [
   }
 
   .faq-answer {
-    padding: 0 1.5rem 1.25rem 1.5rem;
+    padding: 0 1.75rem 1.35rem 1.75rem;
     font-size: 0.9375rem;
-    line-height: 1.6;
-    color: var(--color-text-body);
+    line-height: 1.65;
+    color: var(--color-text-muted);
+    border-top: 1px solid rgba(0, 0, 0, 0.04);
+    padding-top: 0.85rem;
   }
 
   .faq-footer-help {
@@ -177,6 +175,7 @@ const faqs = [
   .faq-contact-link {
     color: var(--color-accent);
     font-weight: 600;
+    transition: opacity 0.15s ease;
   }
 
   .faq-contact-link:hover {

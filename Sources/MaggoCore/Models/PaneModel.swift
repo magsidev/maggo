@@ -24,6 +24,7 @@ public final class PaneModel: Identifiable {
     public var showHiddenFiles: Bool = false
     public var folderSizes: [URL: String] = [:]
     public var rawFolderSizes: [URL: Int64] = [:]
+    private var directoryWatcher: DirectoryWatcher?
 
     public init(url: URL) {
         self.currentURL = url
@@ -31,6 +32,7 @@ public final class PaneModel: Identifiable {
         self.historyIndex = 0
         self.sortOption = Self.defaultSortOption(for: url)
         loadItems()
+        startWatching()
     }
 
     public nonisolated static func defaultSortOption(for url: URL) -> FileSortOption {
@@ -84,6 +86,7 @@ public final class PaneModel: Identifiable {
         currentURL = url
         selectedURLs.removeAll()
         searchQuery = ""
+        startWatching()
 
         RecentLocationsManager.shared.recordLocation(url)
     }
@@ -95,6 +98,7 @@ public final class PaneModel: Identifiable {
         sortOption = Self.defaultSortOption(for: url)
         currentURL = url
         selectedURLs.removeAll()
+        startWatching()
     }
 
     public func goForward() {
@@ -104,12 +108,45 @@ public final class PaneModel: Identifiable {
         sortOption = Self.defaultSortOption(for: url)
         currentURL = url
         selectedURLs.removeAll()
+        startWatching()
     }
 
     public func goUp() {
         guard canGoUp else { return }
         let parent = currentURL.deletingLastPathComponent()
         navigate(to: parent)
+    }
+
+    // MARK: - Directory Monitoring
+
+    private func startWatching() {
+        directoryWatcher?.stop()
+        let targetURL = currentURL
+        directoryWatcher = DirectoryWatcher(url: targetURL) { [weak self] in
+            guard let self = self, self.currentURL == targetURL else { return }
+            self.reloadSilently()
+        }
+    }
+
+    public func reloadSilently() {
+        let targetURL = currentURL
+        let showHidden = showHiddenFiles
+
+        Task {
+            do {
+                let fetched = try await FileSystemService.shared.fetchDirectoryContents(
+                    at: targetURL,
+                    showHidden: showHidden
+                )
+                guard self.currentURL == targetURL else { return }
+                self.items = fetched
+                let existingURLs = Set(fetched.map(\.url))
+                self.selectedURLs = self.selectedURLs.intersection(existingURLs)
+                self.calculateFolderSizes(for: fetched)
+            } catch {
+                // Ignore silent background refresh errors
+            }
+        }
     }
 
     // MARK: - Loading

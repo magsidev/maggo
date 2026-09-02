@@ -6,58 +6,69 @@
   <div class="container">
     <div class="familiar-card">
       <div class="familiar-content">
-        <div class="section-eyebrow">Usability Without Relearning</div>
+        <div class="section-eyebrow">Zero Learning Curve</div>
         <h2 class="section-title">Familiar by design.</h2>
 
         <p class="familiar-lead">
-          Some of the best ideas in file management have been around for years.
+          The best file management principles shouldn't require learning an entirely new workflow.
         </p>
 
         <div class="ideas-tag-cloud">
-          <span class="idea-tag">Clear navigation</span>
-          <span class="idea-tag">Clickable breadcrumbs</span>
-          <span class="idea-tag">Tabs in one window</span>
-          <span class="idea-tag">Split views</span>
-          <span class="idea-tag">Drives &amp; capacity monitors</span>
-          <span class="idea-tag">Obvious folder hierarchy</span>
+          <span class="idea-tag">Predictable Navigation</span>
+          <span class="idea-tag">Clickable Breadcrumbs</span>
+          <span class="idea-tag">Tabbed Directory Switching</span>
+          <span class="idea-tag">Side-by-Side Split Panes</span>
+          <span class="idea-tag">Instant Drive Metrics</span>
+          <span class="idea-tag">Hierarchical Tree Clarity</span>
         </div>
 
         <p class="familiar-body">
-          Maggo brings those familiar ideas to macOS and combines them with a clean, native Mac experience.
+          Maggo takes the most reliable, time-tested productivity patterns and marries them with a refined, 100% native macOS experience.
         </p>
 
         <div class="familiar-quote-highlight">
-          <span>You shouldn't have to learn a new way to manage files.</span>
+          <span>You shouldn't have to relearn how to manage files on your own Mac.</span>
         </div>
       </div>
 
       <div class="familiar-visual">
         <div class="os-harmony-card">
-          <div class="harmony-badge">The Best of Both Worlds</div>
+          <div class="harmony-badge">Native macOS Integration</div>
           
-          <div class="harmony-row">
+          <div class="harmony-points-list">
             <div class="harmony-point">
-              <span class="point-icon">🧭</span>
+              <div class="point-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+              </div>
               <div class="point-text">
-                <strong>Proven Navigation</strong>
-                <span>Breadcrumbs, drive capacity meters, instant Move To/Copy To, and side-by-side split panels.</span>
+                <strong>Pure Swift 6 &amp; SwiftUI</strong>
+                <span>Direct native compilation. Instant launch, buttery 120Hz ProMotion animations, and native macOS dark mode support.</span>
               </div>
             </div>
 
-            <div class="harmony-plus">+</div>
+            <div class="harmony-divider"></div>
 
             <div class="harmony-point">
-              <span class="point-icon">🍏</span>
+              <div class="point-icon-box">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+                  <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+                </svg>
+              </div>
               <div class="point-text">
-                <strong>100% Native macOS</strong>
-                <span>Written in Swift 6 &amp; SwiftUI. 120Hz ProMotion fluidity, native Quick Look (Space), and &lt;30MB RAM footprint.</span>
+                <strong>100% Private &amp; Offline</strong>
+                <span>Zero telemetry, zero cloud synchronizers, zero background daemons. Your files remain entirely on your local Mac.</span>
               </div>
             </div>
           </div>
 
           <div class="harmony-footer">
-            <span class="check-icon">✓</span>
-            <span>Zero learning curve. Open Maggo and instantly feel at home.</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <polyline points="20 6 9 17 4 12"/>
+            </svg>
+            <span>Open Maggo and feel immediately at home on day one.</span>
           </div>
         </div>
       </div>
@@ -68,18 +79,18 @@
 <style>
   .familiar-section {
     background-color: var(--color-bg-subtle);
-    border-top: 1px solid var(--color-border);
-    border-bottom: 1px solid var(--color-border);
+    border-top: 1px solid var(--color-border-light);
+    border-bottom: 1px solid var(--color-border-light);
   }
 
   .familiar-card {
     background: #FFFFFF;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--color-border-light);
     border-radius: var(--radius-xl);
-    padding: 3rem;
+    padding: 3.5rem;
     display: grid;
     grid-template-columns: 1fr;
-    gap: 3rem;
+    gap: 3.5rem;
     align-items: center;
     box-shadow: var(--shadow-sm);
   }
@@ -91,50 +102,52 @@
   }
 
   .familiar-lead {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
     font-weight: 600;
     line-height: 1.5;
     color: var(--color-text-main);
     margin-bottom: 1.25rem;
+    letter-spacing: -0.015em;
   }
 
   .ideas-tag-cloud {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.75rem;
   }
 
   .idea-tag {
-    background: #F1F5F9;
-    border: 1px solid #CBD5E1;
-    color: #1E293B;
+    background: #F8FAFC;
+    border: 1px solid var(--color-border);
+    color: #334155;
     font-size: 0.8125rem;
     font-weight: 600;
-    padding: 0.35rem 0.75rem;
-    border-radius: 9999px;
+    padding: 0.35rem 0.85rem;
+    border-radius: var(--radius-pill);
   }
 
   .familiar-body {
-    font-size: 1.0625rem;
+    font-size: 1.05rem;
     line-height: 1.65;
-    color: var(--color-text-body);
-    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+    margin-bottom: 1.75rem;
   }
 
   .familiar-quote-highlight {
     border-left: 3px solid var(--color-accent);
-    padding-left: 1rem;
-    font-size: 1.125rem;
-    font-weight: 700;
+    padding-left: 1.15rem;
+    font-size: 1.1rem;
+    font-weight: 600;
     color: var(--color-accent);
+    letter-spacing: -0.01em;
   }
 
   .os-harmony-card {
-    background: #F8FAFC;
+    background: var(--color-bg-subtle);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-lg);
-    padding: 2rem;
+    padding: 2.25rem;
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
@@ -142,17 +155,18 @@
 
   .harmony-badge {
     align-self: flex-start;
-    font-size: 0.6875rem;
+    font-size: 0.72rem;
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.06em;
-    background: #EBF5FF;
+    letter-spacing: 0.08em;
+    background: var(--color-accent-subtle);
     color: var(--color-accent);
-    padding: 0.25rem 0.65rem;
-    border-radius: 9999px;
+    border: 1px solid var(--color-accent-border);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-pill);
   }
 
-  .harmony-row {
+  .harmony-points-list {
     display: flex;
     flex-direction: column;
     gap: 1.25rem;
@@ -164,10 +178,17 @@
     gap: 1rem;
   }
 
-  .point-icon {
-    font-size: 1.5rem;
-    line-height: 1;
-    margin-top: 0.1rem;
+  .point-icon-box {
+    width: 40px;
+    height: 40px;
+    background: #FFFFFF;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-accent);
+    flex-shrink: 0;
   }
 
   .point-text {
@@ -177,37 +198,31 @@
   }
 
   .point-text strong {
-    font-size: 0.9375rem;
+    font-size: 0.95rem;
     color: var(--color-text-main);
   }
 
   .point-text span {
-    font-size: 0.8125rem;
-    line-height: 1.5;
+    font-size: 0.84rem;
+    line-height: 1.55;
     color: var(--color-text-muted);
   }
 
-  .harmony-plus {
-    text-align: center;
-    font-size: 1.25rem;
-    font-weight: 700;
-    color: #94A3B8;
+  .harmony-divider {
+    height: 1px;
+    background: var(--color-border);
   }
 
   .harmony-footer {
     display: flex;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     font-size: 0.8125rem;
     font-weight: 600;
-    color: #10B981;
-    background: #ECFDF5;
-    border: 1px solid #A7F3D0;
-    padding: 0.5rem 0.75rem;
-    border-radius: 6px;
-  }
-
-  .check-icon {
-    font-size: 1rem;
+    color: var(--color-accent);
+    background: #FFFFFF;
+    border: 1px solid rgba(136, 84, 208, 0.25);
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
   }
 </style>
