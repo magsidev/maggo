@@ -213,6 +213,18 @@ public final class AppState {
         )
     }
 
+    public func triggerQuickLook() {
+        let targetURL: URL?
+        if showSmartPictures {
+            targetURL = selectedPictureURL
+        } else {
+            targetURL = activePane.selectedItems.first?.url
+        }
+        if let targetURL {
+            QuickLookCoordinator.shared.toggleQuickLook(for: targetURL)
+        }
+    }
+
     public func deleteSelected() {
         let selected: [URL]
         if showSmartPictures, let pic = selectedPictureURL {
@@ -224,6 +236,7 @@ public final class AppState {
 
         do {
             _ = try FileOperationEngine.shared.moveToTrash(urls: selected)
+            NSSound(named: "Trash")?.play()
             statusMessage = "Moved \(selected.count) item(s) to Trash"
             refreshAllViews()
         } catch {

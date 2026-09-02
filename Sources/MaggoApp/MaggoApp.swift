@@ -46,13 +46,13 @@ struct MaggoApp: App {
                     appState.cutSelected()
                 }
                 .keyboardShortcut("x", modifiers: .command)
-                .disabled(appState.activePane.selectedURLs.isEmpty)
+                .disabled(!appState.hasSelection)
 
                 Button("Copy") {
                     appState.copySelected()
                 }
                 .keyboardShortcut("c", modifiers: .command)
-                .disabled(appState.activePane.selectedURLs.isEmpty)
+                .disabled(!appState.hasSelection)
 
                 Button("Paste") {
                     appState.paste()
@@ -70,23 +70,31 @@ struct MaggoApp: App {
 
             // Custom File Operations Commands
             CommandMenu("Actions") {
+                Button("Quick Look") {
+                    appState.triggerQuickLook()
+                }
+                .keyboardShortcut(.space, modifiers: [])
+                .disabled(!appState.hasSelection)
+
+                Divider()
+
                 Button("Move To…") {
                     appState.triggerMoveTo()
                 }
                 .keyboardShortcut("m", modifiers: [.command, .shift])
-                .disabled(appState.activePane.selectedURLs.isEmpty)
+                .disabled(!appState.hasSelection)
 
                 Button("Copy To…") {
                     appState.triggerCopyTo()
                 }
                 .keyboardShortcut("c", modifiers: [.command, .shift])
-                .disabled(appState.activePane.selectedURLs.isEmpty)
+                .disabled(!appState.hasSelection)
 
                 Button("Duplicate") {
                     appState.duplicateSelected()
                 }
                 .keyboardShortcut("d", modifiers: .command)
-                .disabled(appState.activePane.selectedURLs.isEmpty)
+                .disabled(!appState.hasSelection)
 
                 Divider()
 
@@ -94,7 +102,7 @@ struct MaggoApp: App {
                     appState.deleteSelected()
                 }
                 .keyboardShortcut(.delete, modifiers: .command)
-                .disabled(appState.activePane.selectedURLs.isEmpty)
+                .disabled(!appState.hasSelection)
             }
 
             // View Menu Commands

@@ -67,11 +67,17 @@ public struct MainView: View {
         // Window-level keyboard fallback shortcuts
         .background(
             HStack {
+                Button("") { appState.triggerQuickLook() }.keyboardShortcut(.space, modifiers: [])
+                Button("") { appState.deleteSelected() }.keyboardShortcut(.delete, modifiers: .command)
+                Button("") { appState.triggerUndo() }.keyboardShortcut("z", modifiers: .command)
                 Button("") { appState.copySelected() }.keyboardShortcut("c", modifiers: .command)
                 Button("") { appState.cutSelected() }.keyboardShortcut("x", modifiers: .command)
                 Button("") { appState.paste() }.keyboardShortcut("v", modifiers: .command)
+                Button("") { appState.duplicateSelected() }.keyboardShortcut("d", modifiers: .command)
+                Button("") { appState.triggerMoveTo() }.keyboardShortcut("m", modifiers: [.command, .shift])
+                Button("") { appState.triggerCopyTo() }.keyboardShortcut("c", modifiers: [.command, .shift])
             }
-            .opacity(0.001)
+            .opacity(0.0001)
         )
     }
 
