@@ -29,6 +29,7 @@ public struct DestinationPickerSheet: View {
     private var quickLocations: [(name: String, icon: String, url: URL)] {
         [
             ("Home", "house.fill", homeURL),
+            ("Applications", "app.badge", URL(fileURLWithPath: "/Applications")),
             ("Documents", "doc.text", homeURL.appendingPathComponent("Documents")),
             ("Downloads", "arrow.down.circle", homeURL.appendingPathComponent("Downloads")),
             ("Desktop", "display", homeURL.appendingPathComponent("Desktop")),

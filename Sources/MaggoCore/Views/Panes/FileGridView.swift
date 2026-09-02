@@ -96,6 +96,11 @@ public struct FileGridView: View {
                             appState.duplicateSelected()
                         }
                         Divider()
+                        if item.isPackage {
+                            Button("Show Package Contents") {
+                                pane.navigate(to: item.url)
+                            }
+                        }
                         Button("Quick Look (Space)") {
                             appState.quickLookURL = item.url
                         }

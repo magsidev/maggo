@@ -13,6 +13,7 @@ public struct SidebarView: View {
 
     private var favoriteLocations: [(name: String, icon: String, url: URL)] {
         [
+            ("Applications", "app.badge", URL(fileURLWithPath: "/Applications")),
             ("Downloads", "arrow.down.circle", homeURL.appendingPathComponent("Downloads")),
             ("Documents", "doc.text", homeURL.appendingPathComponent("Documents")),
             ("Desktop", "display", homeURL.appendingPathComponent("Desktop")),
