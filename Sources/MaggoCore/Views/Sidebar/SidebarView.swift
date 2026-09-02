@@ -7,13 +7,15 @@ public struct SidebarView: View {
         self.appState = appState
     }
 
-    private let homeURL = FileManager.default.homeDirectoryForCurrentUser
+    private var homeURL: URL {
+        FileManager.default.homeDirectoryForCurrentUser
+    }
 
     private var favoriteLocations: [(name: String, icon: String, url: URL)] {
         [
             ("Downloads", "arrow.down.circle", homeURL.appendingPathComponent("Downloads")),
             ("Documents", "doc.text", homeURL.appendingPathComponent("Documents")),
-            ("Desktop", "desktopcomputer", homeURL.appendingPathComponent("Desktop")),
+            ("Desktop", "display", homeURL.appendingPathComponent("Desktop")),
             ("Projects", "folder", homeURL.appendingPathComponent("Projects"))
         ]
     }
@@ -37,8 +39,10 @@ public struct SidebarView: View {
                     .foregroundColor(isHomeActive ? .maggoBlue : Color(hex: "334155"))
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
+                    .frame(maxWidth: .infinity, alignment: .leading)
                     .background(isHomeActive ? Color.maggoSidebarActive : Color.clear)
                     .cornerRadius(6)
+                    .contentShape(RoundedRectangle(cornerRadius: 6))
                 }
                 .buttonStyle(.plain)
                 .dropDestination(for: URL.self) { droppedURLs, _ in
@@ -73,8 +77,10 @@ public struct SidebarView: View {
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .background(isActive ? Color.maggoSidebarActive : Color.clear)
                             .cornerRadius(6)
+                            .contentShape(RoundedRectangle(cornerRadius: 6))
                         }
                         .buttonStyle(.plain)
                         .dropDestination(for: URL.self) { droppedURLs, _ in
@@ -107,8 +113,10 @@ public struct SidebarView: View {
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .background(isPicturesActive ? Color.maggoSidebarActive : Color.clear)
                         .cornerRadius(6)
+                        .contentShape(RoundedRectangle(cornerRadius: 6))
                     }
                     .buttonStyle(.plain)
                 }
@@ -147,8 +155,10 @@ public struct SidebarView: View {
                             }
                             .padding(.horizontal, 10)
                             .padding(.vertical, 4)
+                            .frame(maxWidth: .infinity, alignment: .leading)
                             .background(isSelected ? Color.maggoSidebarActive : Color.clear)
                             .cornerRadius(6)
+                            .contentShape(RoundedRectangle(cornerRadius: 6))
                         }
                         .buttonStyle(.plain)
                         .dropDestination(for: URL.self) { droppedURLs, _ in
@@ -196,8 +206,10 @@ public struct SidebarView: View {
                                 }
                                 .padding(.horizontal, 10)
                                 .padding(.vertical, 4)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                                 .background(Color.clear)
                                 .cornerRadius(6)
+                                .contentShape(RoundedRectangle(cornerRadius: 6))
                             }
                             .buttonStyle(.plain)
                         }
