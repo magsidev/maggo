@@ -175,27 +175,29 @@ public final class PaneModel: Identifiable {
     }
 
     public func displaySize(for item: FileItem) -> String {
-        if item.isDirectory && !item.isPackage {
-            return folderSizes[item.url] ?? "Calculating…"
+        if item.isDirectory || item.isPackage {
+            if let calculated = folderSizes[item.url] {
+                return calculated
+            }
+            return item.isPackage && item.fileSize > 0 ? item.formattedSize : "Calculating…"
         }
         return item.formattedSize
     }
 
     private func calculateFolderSizes(for items: [FileItem]) {
-        let directories = items.filter { $0.isDirectory && !$0.isPackage }
-        guard !directories.isEmpty else { return }
+        let targets = items.filter { $0.isDirectory || $0.isPackage }
+        guard !targets.isEmpty else { return }
 
-        for dir in directories {
+        for target in targets {
             // Check cache synchronously if available
             Task {
-                if let cached = await FolderSizeService.shared.getCachedSize(for: dir.url, currentDateModified: dir.dateModified) {
-                    self.rawFolderSizes[dir.url] = cached
-                    self.folderSizes[dir.url] = ByteCountFormatter.string(fromByteCount: cached, countStyle: .file)
+                if let cached = await FolderSizeService.shared.getCachedSize(for: target.url, currentDateModified: target.dateModified) {
+                    self.rawFolderSizes[target.url] = cached
+                    self.folderSizes[target.url] = ByteCountFormatter.string(fromByteCount: cached, countStyle: .file)
                 } else {
-                    self.folderSizes[dir.url] = "Calculating…"
-                    let size = await FolderSizeService.shared.calculateSize(for: dir.url, currentDateModified: dir.dateModified)
-                    self.rawFolderSizes[dir.url] = size
-                    self.folderSizes[dir.url] = ByteCountFormatter.string(fromByteCount: size, countStyle: .file)
+                    let size = await FolderSizeService.shared.calculateSize(for: target.url, currentDateModified: target.dateModified)
+                    self.rawFolderSizes[target.url] = size
+                    self.folderSizes[target.url] = ByteCountFormatter.string(fromByteCount: size, countStyle: .file)
                 }
             }
         }
