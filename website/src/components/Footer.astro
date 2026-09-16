@@ -8,7 +8,7 @@ const currentYear = new Date().getFullYear();
     <div class="footer-main-row">
       <div class="footer-brand-side">
         <a href="/" class="footer-brand" aria-label="Maggo Home">
-          <img src="/images/maggo-logo.png" alt="Maggo Logo" class="brand-logo-img" width="28" height="28" />
+          <img src={`${import.meta.env.BASE_URL}/images/maggo-logo.png`} alt="Maggo Logo" class="brand-logo-img" width="28" height="28" />
           <span class="brand-title">Maggo</span>
         </a>
         <p class="brand-pitch">
@@ -19,9 +19,9 @@ const currentYear = new Date().getFullYear();
       <div class="footer-nav-side">
         <a href="#features" class="footer-link">Features</a>
         <a href="#comparison" class="footer-link">Why Maggo</a>
-        <a href="#pricing" class="footer-link">Pricing</a>
+        <a href="#download" class="footer-link">Download</a>
         <a href="#faq" class="footer-link">FAQ</a>
-        <a href="#pricing" class="footer-link cta-link">Try Free for 3 Days &rarr;</a>
+        <a href={`${import.meta.env.BASE_URL}/downloads/Maggo-macOS.dmg`} download class="footer-link cta-link">Download Free &rarr;</a>
       </div>
     </div>
 
