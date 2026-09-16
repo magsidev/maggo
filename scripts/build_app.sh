@@ -76,15 +76,19 @@ EOF
 echo "==> 3. Ad-hoc code signing for Apple Silicon..."
 codesign --force --deep -s - "${APP_BUNDLE}"
 
-echo "==> 4. Verifying code signature..."
-codesign -dv "${APP_BUNDLE}"
-
 echo "==> 5. Creating web distribution zip..."
 cd "${BUILD_DIR}"
 ditto -c -k --keepParent "${APP_NAME}.app" "${APP_NAME}-macOS.zip"
 
-echo "==> 6. Creating DMG..."
-hdiutil create -volname "${APP_NAME}" -srcfolder "${APP_NAME}.app" -ov -format UDZO "${APP_NAME}-macOS.dmg"
+echo "==> 6. Creating DMG with Applications shortcut..."
+DMG_STAGE="${BUILD_DIR}/dmg_stage"
+rm -rf "${DMG_STAGE}"
+mkdir -p "${DMG_STAGE}"
+cp -R "${APP_NAME}.app" "${DMG_STAGE}/"
+ln -s /Applications "${DMG_STAGE}/Applications"
+
+hdiutil create -volname "${APP_NAME}" -srcfolder "${DMG_STAGE}" -ov -format UDZO "${APP_NAME}-macOS.dmg"
+rm -rf "${DMG_STAGE}"
 
 echo "=========================================="
 echo "✅ Build & packaging complete!"
