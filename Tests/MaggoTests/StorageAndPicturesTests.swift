@@ -69,4 +69,24 @@ final class StorageAndPicturesTests: XCTestCase {
         XCTAssertFalse(service.isSupportedImage(url: URL(fileURLWithPath: "/path/to/document.pdf")))
         XCTAssertFalse(service.isSupportedImage(url: URL(fileURLWithPath: "/path/to/archive.zip")))
     }
+
+    func testApplicationBundleSizeCalculation() async throws {
+        let service = FolderSizeService.shared
+        let appBundle = tempDirectory.appendingPathComponent("MockApp.app")
+        let macosDir = appBundle.appendingPathComponent("Contents/MacOS")
+        let resDir = appBundle.appendingPathComponent("Contents/Resources")
+        try FileManager.default.createDirectory(at: macosDir, withIntermediateDirectories: true)
+        try FileManager.default.createDirectory(at: resDir, withIntermediateDirectories: true)
+
+        let bin = macosDir.appendingPathComponent("MockApp")
+        let icon = resDir.appendingPathComponent("AppIcon.icns")
+        let data1 = Data(repeating: 0x11, count: 4096)
+        let data2 = Data(repeating: 0x22, count: 2048)
+        try data1.write(to: bin)
+        try data2.write(to: icon)
+
+        let now = Date()
+        let size = await service.calculateSize(for: appBundle, currentDateModified: now)
+        XCTAssertEqual(size, 6144) // 4096 + 2048 = 6144 bytes
+    }
 }

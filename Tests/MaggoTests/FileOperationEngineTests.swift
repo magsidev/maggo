@@ -97,4 +97,37 @@ final class FileOperationEngineTests: XCTestCase {
         XCTAssertEqual(cutURLs.count, 1)
         XCTAssertTrue(isCutTrue)
     }
+
+    func testBatchCopyItemsAndUndo() throws {
+        let engine = FileOperationEngine.shared
+        let dest = tempDirectory.appendingPathComponent("Destination")
+        try FileManager.default.createDirectory(at: dest, withIntermediateDirectories: true)
+
+        let file1 = tempDirectory.appendingPathComponent("batch1.txt")
+        let file2 = tempDirectory.appendingPathComponent("batch2.txt")
+        try "Batch 1".write(to: file1, atomically: true, encoding: .utf8)
+        try "Batch 2".write(to: file2, atomically: true, encoding: .utf8)
+
+        let copied = try engine.copyItems(urls: [file1, file2], to: dest)
+        XCTAssertEqual(copied.count, 2)
+        XCTAssertTrue(FileManager.default.fileExists(atPath: dest.appendingPathComponent("batch1.txt").path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: dest.appendingPathComponent("batch2.txt").path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: file1.path)) // originals preserved
+
+        // Test Undo Copy (removes copied items)
+        try engine.undo()
+        XCTAssertFalse(FileManager.default.fileExists(atPath: dest.appendingPathComponent("batch1.txt").path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: dest.appendingPathComponent("batch2.txt").path))
+        XCTAssertTrue(FileManager.default.fileExists(atPath: file1.path))
+    }
+
+    func testMoveToTrash() throws {
+        let engine = FileOperationEngine.shared
+        let fileURL = tempDirectory.appendingPathComponent("trash_me.txt")
+        try "Trash content".write(to: fileURL, atomically: true, encoding: .utf8)
+
+        let trashed = try engine.moveToTrash(urls: [fileURL])
+        XCTAssertEqual(trashed.count, 1)
+        XCTAssertFalse(FileManager.default.fileExists(atPath: fileURL.path))
+    }
 }
