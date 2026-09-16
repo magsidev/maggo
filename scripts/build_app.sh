@@ -63,6 +63,10 @@ cat <<EOF > "${APP_BUNDLE}/Contents/Info.plist"
     <string>Maggo requires access to Documents to browse and manage your files.</string>
     <key>NSDownloadsFolderUsageDescription</key>
     <string>Maggo requires access to Downloads to browse and manage your files.</string>
+    <key>NSPicturesFolderUsageDescription</key>
+    <string>Maggo requires access to your Pictures and Photo Booth library to display your smart photo gallery.</string>
+    <key>NSPhotoLibraryUsageDescription</key>
+    <string>Maggo requires access to your photo library to display your pictures.</string>
     <key>NSRemovableVolumesUsageDescription</key>
     <string>Maggo requires access to external drives to manage your files.</string>
 </dict>

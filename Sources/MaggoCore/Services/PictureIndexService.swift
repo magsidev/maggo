@@ -13,6 +13,29 @@ public struct PictureItem: Identifiable, Hashable, Sendable {
     public let formatExtension: String
     public let parentDirectoryName: String
     public let relativeDisplayPath: String
+    public let isPhotoBooth: Bool
+
+    public init(
+        url: URL,
+        name: String,
+        fileSize: Int64,
+        dateModified: Date,
+        dateCreated: Date,
+        formatExtension: String,
+        parentDirectoryName: String,
+        relativeDisplayPath: String,
+        isPhotoBooth: Bool = false
+    ) {
+        self.url = url
+        self.name = name
+        self.fileSize = fileSize
+        self.dateModified = dateModified
+        self.dateCreated = dateCreated
+        self.formatExtension = formatExtension
+        self.parentDirectoryName = parentDirectoryName
+        self.relativeDisplayPath = relativeDisplayPath
+        self.isPhotoBooth = isPhotoBooth
+    }
 
     public var formattedSize: String {
         ByteCountFormatter.string(fromByteCount: fileSize, countStyle: .file)
@@ -57,7 +80,7 @@ public actor PictureIndexService {
         return await indexPictures()
     }
 
-    /// Scans primary user media directories (Desktop, Documents, Downloads, Pictures)
+    /// Scans primary user media directories (Pictures, Photo Booth Library, Downloads, Desktop, Documents)
     public func indexPictures() async -> [PictureItem] {
         guard !isIndexing else { return cachedPictures }
         isIndexing = true
@@ -65,15 +88,19 @@ public actor PictureIndexService {
 
         let fm = FileManager()
         let home = fm.homeDirectoryForCurrentUser
+        let picturesURL = home.appendingPathComponent("Pictures")
 
         let searchDirs: [URL] = [
-            home.appendingPathComponent("Pictures"),
+            picturesURL,
+            picturesURL.appendingPathComponent("Photo Booth Library/Pictures"),
+            picturesURL.appendingPathComponent("Photo Booth Library"),
             home.appendingPathComponent("Downloads"),
             home.appendingPathComponent("Desktop"),
             home.appendingPathComponent("Documents")
         ]
 
         var foundItems: [PictureItem] = []
+        var seenURLs: Set<String> = []
         let resourceKeys: Set<URLResourceKey> = [
             .fileSizeKey,
             .contentModificationDateKey,
@@ -85,10 +112,15 @@ public actor PictureIndexService {
         for dir in searchDirs {
             guard fm.fileExists(atPath: dir.path) else { continue }
 
+            let isPhotoBoothDir = dir.path.contains("Photo Booth Library")
+            let options: FileManager.DirectoryEnumerationOptions = isPhotoBoothDir
+                ? [.skipsHiddenFiles]
+                : [.skipsHiddenFiles, .skipsPackageDescendants]
+
             guard let enumerator = fm.enumerator(
                 at: dir,
                 includingPropertiesForKeys: Array(resourceKeys),
-                options: [.skipsHiddenFiles, .skipsPackageDescendants]
+                options: options
             ) else {
                 continue
             }
@@ -100,7 +132,12 @@ public actor PictureIndexService {
                     await Task.yield()
                 }
 
-                // Skip developer, package, and build directories (e.g. node_modules, .git, build, dist)
+                // Avoid duplicate index entries
+                if seenURLs.contains(fileURL.path) {
+                    continue
+                }
+
+                // Skip developer, package, and build directories
                 let pathComponents = Set(fileURL.pathComponents)
                 if !pathComponents.isDisjoint(with: Self.excludedDirectoryNames) {
                     continue
@@ -112,11 +149,14 @@ public actor PictureIndexService {
                 guard let values = try? fileURL.resourceValues(forKeys: resourceKeys),
                       values.isDirectory == false else { continue }
 
+                seenURLs.insert(fileURL.path)
+
                 let size = Int64(values.fileSize ?? 0)
                 let dateMod = values.contentModificationDate ?? Date()
                 let dateCreated = values.creationDate ?? dateMod
 
-                let parentName = fileURL.deletingLastPathComponent().lastPathComponent
+                let isPB = fileURL.path.contains("Photo Booth Library") || fileURL.path.contains("Photo Booth")
+                let parentName = isPB ? "Photo Booth" : fileURL.deletingLastPathComponent().lastPathComponent
                 let relativePath = fileURL.path.replacingOccurrences(of: home.path, with: "~")
 
                 let item = PictureItem(
@@ -127,7 +167,8 @@ public actor PictureIndexService {
                     dateCreated: dateCreated,
                     formatExtension: ext.uppercased(),
                     parentDirectoryName: parentName,
-                    relativeDisplayPath: relativePath
+                    relativeDisplayPath: relativePath,
+                    isPhotoBooth: isPB
                 )
                 foundItems.append(item)
             }

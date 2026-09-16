@@ -2,7 +2,8 @@ import SwiftUI
 
 public enum PictureFilter: String, CaseIterable, Identifiable {
     case all = "All Pictures"
-    case recent = "Recently Modified"
+    case photoBooth = "Photo Booth"
+    case recent = "Recent"
     case large = "Large (> 5 MB)"
 
     public var id: String { rawValue }
@@ -36,6 +37,8 @@ public struct PicturesSmartView: View {
         switch activeFilter {
         case .all:
             break
+        case .photoBooth:
+            result = result.filter { $0.isPhotoBooth }
         case .recent:
             let sevenDaysAgo = Calendar.current.date(byAdding: .day, value: -7, to: Date()) ?? Date()
             result = result.filter { $0.dateModified >= sevenDaysAgo }
